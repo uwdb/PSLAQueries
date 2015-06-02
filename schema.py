@@ -1,0 +1,5 @@
+{
+'public:adhoc10GB:lineitemHash' : [('l_orderkey', 'INT_TYPE'), ('l_linenumber', 'INT_TYPE'), ('l_custkey', 'INT_TYPE'), ('l_partkey', 'INT_TYPE'), ('l_suppkey', 'INT_TYPE'), ('l_orderdate', 'STRING_TYPE'), ('l_orderpriority', 'STRING_TYPE'), ('l_shippriority', 'INT_TYPE'), ('l_quantity', 'FLOAT_TYPE'), ('l_extendedprice', 'FLOAT_TYPE'), ('l_ordtotalprice', 'FLOAT_TYPE'), ('l_discount', 'FLOAT_TYPE'), ('l_revenue', 'INT_TYPE'), ('l_supplycost', 'INT_TYPE'), ('l_tax', 'FLOAT_TYPE'), ('l_commitdate', 'STRING_TYPE'), ('l_shipmode', 'STRING_TYPE')],
+'public:adhoc10GB:supplier' : [('s_suppkey', 'INT_TYPE'), ('s_name', 'STRING_TYPE'), ('s_address', 'STRING_TYPE'), ('s_city', 'STRING_TYPE'), ('s_nation_prefix', 'STRING_TYPE'), ('s_nation', 'STRING_TYPE'), ('s_region', 'STRING_TYPE'), ('s_phone', 'STRING_TYPE')],
+'public:adhoc10GB:customer' : [('c_custkey', 'INT_TYPE'), ('c_name', 'STRING_TYPE'), ('c_address', 'STRING_TYPE'), ('c_city', 'STRING_TYPE'), ('c_nation_prefix', 'STRING_TYPE'), ('c_nation', 'STRING_TYPE'), ('c_region', 'STRING_TYPE'), ('c_phone', 'STRING_TYPE'), ('c_mktsegment', 'STRING_TYPE')],
+}

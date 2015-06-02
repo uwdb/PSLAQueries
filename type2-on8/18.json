@@ -1,0 +1,323 @@
+{
+    "profilingMode": [],
+    "logicalRa": "Store(public:adhoc:query695)[Apply(c_nation=$6,s_nation=$2,p_mfgr=$8,s_name=$0,p_type=$9,c_nation_prefix=$5,s_nation_prefix=$1,c_name=$4,c_phone=$7,s_phone=$3)[ProjectingJoin(($9 = $0); $1,$2,$3,$4,$5,$6,$7,$8,$10,$11)[ProjectingJoin(($6 = $0); $1,$2,$3,$4,$5,$7,$8,$9,$10)[ProjectingJoin(($34 = $4); $2,$3,$35,$38,$39,$41)[ProjectingJoin(($17 = $15); $0,$1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33)[Select((($0 <= 23994434) and ($1 <= 1)))[Scan(public:adhoc10GB8W:lineitemHash)],Scan(public:adhoc10GB:dateReplicate)],Scan(public:adhoc10GB:supplierReplicate)],Apply(c_custkey=$0,c_name=$1,c_nation_prefix=$4,c_nation=$5,c_phone=$7)[Scan(public:adhoc10GB:customerReplicate)]],Apply(p_partkey=$0,p_mfgr=$2,p_type=$6)[Scan(public:adhoc10GB:partReplicate)]]]]",
+    "language": "MyriaL",
+    "rawQuery": "q = [ from scan(public:adhoc10GB8W:lineitemHash) as b,scan(public:adhoc10GB:dateReplicate) as c,scan(public:adhoc10GB:supplierReplicate) as d,scan(public:adhoc10GB:customerReplicate) as e,scan(\"public:adhoc10GB:partReplicate\") as f where c.d_datekey = b.l_commitdate and d.s_suppkey = b.l_suppkey and e.c_custkey = b.l_custkey and f.p_partkey = b.l_partkey and l_linenumber <= 1 and l_orderkey <= 23994434 emit c_nation,s_nation,p_mfgr,s_name,p_type,c_nation_prefix,s_nation_prefix,c_name,c_phone,s_phone]; store(q, query695);",
+    "plan": {
+        "fragments": [
+            {
+              "overrideWorkers": [1,2,3,4,5,6,7,8],
+
+                "operators": [
+                    {
+                        "opName": "V0",
+                        "opType": "SinkRoot",
+                        "opId": 5,
+                        "argChild": 4
+                    },
+                    {
+                        "opType": "SymmetricHashJoin",
+                        "argColumns1": [
+                            0
+                        ],
+                        "argColumns2": [
+                            0
+                        ],
+                        "argColumnNames": [
+                            "s_name",
+                            "s_nation_prefix",
+                            "s_nation",
+                            "s_phone",
+                            "c_name",
+                            "c_nation_prefix",
+                            "c_nation",
+                            "c_phone",
+                            "p_mfgr",
+                            "p_type"
+                        ],
+                        "argChild2": 12,
+                        "argChild1": 11,
+                        "opId": 4,
+                        "argSelect2": [
+                            1,
+                            2
+                        ],
+                        "opName": "MyriaSymmetricHashJoin(($9 = $0); $1,$2,$3,$4,$5,$6,$7,$8,$10,$11)",
+                        "argSelect1": [
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                            6,
+                            7,
+                            8
+                        ]
+                    },
+                    {
+                        "opType": "SymmetricHashJoin",
+                        "argColumns1": [
+                            0
+                        ],
+                        "argColumns2": [
+                            0
+                        ],
+                        "argColumnNames": [
+                            "l_partkey",
+                            "s_name",
+                            "s_nation_prefix",
+                            "s_nation",
+                            "s_phone",
+                            "c_name",
+                            "c_nation_prefix",
+                            "c_nation",
+                            "c_phone"
+                        ],
+                        "argChild2": 18,
+                        "argChild1": 17,
+                        "opId": 11,
+                        "argSelect2": [
+                            1,
+                            2,
+                            3,
+                            4
+                        ],
+                        "opName": "MyriaSymmetricHashJoin(($6 = $0); $1,$2,$3,$4,$5,$7,$8,$9,$10)",
+                        "argSelect1": [
+                            1,
+                            2,
+                            3,
+                            4,
+                            5
+                        ]
+                    },
+                    {
+                        "schema": {
+                            "columnNames": [
+                                "p_partkey",
+                                "p_mfgr",
+                                "p_type"
+                            ],
+                            "columnTypes": [
+                                "LONG_TYPE",
+                                "STRING_TYPE",
+                                "STRING_TYPE"
+                            ]
+                        },
+                        "opName": "MyriaQueryScan('SELECT input.p_partkey AS p_partkey, input.p_mfgr AS p_mfgr, input.p_type AS p_type \\nFROM (SELECT \"public:adhoc10GB:partReplicate\".p_partkey AS p_partkey, \"public:adhoc10GB:partReplicate\".p_name AS p_name, \"public:adhoc10GB:partReplicate\".p_mfgr AS p_mfgr, \"public:adhoc10GB:partReplicate\".p_category AS p_category, \"public:adhoc10GB:partReplicate\".p_brand AS p_brand, \"public:adhoc10GB:partReplicate\".p_color AS p_color, \"public:adhoc10GB:partReplicate\".p_type AS p_type, \"public:adhoc10GB:partReplicate\".p_size AS p_size, \"public:adhoc10GB:partReplicate\".p_container AS p_container \\nFROM \"public:adhoc10GB:partReplicate\") AS input')",
+                        "opType": "DbQueryScan",
+                        "opId": 12,
+                        "sql": "SELECT input.p_partkey AS p_partkey, input.p_mfgr AS p_mfgr, input.p_type AS p_type \nFROM (SELECT \"public:adhoc10GB:partReplicate\".p_partkey AS p_partkey, \"public:adhoc10GB:partReplicate\".p_name AS p_name, \"public:adhoc10GB:partReplicate\".p_mfgr AS p_mfgr, \"public:adhoc10GB:partReplicate\".p_category AS p_category, \"public:adhoc10GB:partReplicate\".p_brand AS p_brand, \"public:adhoc10GB:partReplicate\".p_color AS p_color, \"public:adhoc10GB:partReplicate\".p_type AS p_type, \"public:adhoc10GB:partReplicate\".p_size AS p_size, \"public:adhoc10GB:partReplicate\".p_container AS p_container \nFROM \"public:adhoc10GB:partReplicate\") AS input"
+                    },
+                    {
+                        "opType": "SymmetricHashJoin",
+                        "argColumns1": [
+                            4
+                        ],
+                        "argColumns2": [
+                            0
+                        ],
+                        "argColumnNames": [
+                            "l_custkey",
+                            "l_partkey",
+                            "s_name",
+                            "s_nation_prefix",
+                            "s_nation",
+                            "s_phone"
+                        ],
+                        "argChild2": 24,
+                        "argChild1": 23,
+                        "opId": 17,
+                        "argSelect2": [
+                            1,
+                            4,
+                            5,
+                            7
+                        ],
+                        "opName": "MyriaSymmetricHashJoin(($34 = $4); $2,$3,$35,$38,$39,$41)",
+                        "argSelect1": [
+                            2,
+                            3
+                        ]
+                    },
+                    {
+                        "schema": {
+                            "columnNames": [
+                                "c_custkey",
+                                "c_name",
+                                "c_nation_prefix",
+                                "c_nation",
+                                "c_phone"
+                            ],
+                            "columnTypes": [
+                                "LONG_TYPE",
+                                "STRING_TYPE",
+                                "STRING_TYPE",
+                                "STRING_TYPE",
+                                "STRING_TYPE"
+                            ]
+                        },
+                        "opName": "MyriaQueryScan('SELECT input.c_custkey AS c_custkey, input.c_name AS c_name, input.c_nation_prefix AS c_nation_prefix, input.c_nation AS c_nation, input.c_phone AS c_phone \\nFROM (SELECT \"public:adhoc10GB:customerReplicate\".c_custkey AS c_custkey, \"public:adhoc10GB:customerReplicate\".c_name AS c_name, \"public:adhoc10GB:customerReplicate\".c_address AS c_address, \"public:adhoc10GB:customerReplicate\".c_city AS c_city, \"public:adhoc10GB:customerReplicate\".c_nation_prefix AS c_nation_prefix, \"public:adhoc10GB:customerReplicate\".c_nation AS c_nation, \"public:adhoc10GB:customerReplicate\".c_region AS c_region, \"public:adhoc10GB:customerReplicate\".c_phone AS c_phone, \"public:adhoc10GB:customerReplicate\".c_mktsegment AS c_mktsegment \\nFROM \"public:adhoc10GB:customerReplicate\") AS input')",
+                        "opType": "DbQueryScan",
+                        "opId": 18,
+                        "sql": "SELECT input.c_custkey AS c_custkey, input.c_name AS c_name, input.c_nation_prefix AS c_nation_prefix, input.c_nation AS c_nation, input.c_phone AS c_phone \nFROM (SELECT \"public:adhoc10GB:customerReplicate\".c_custkey AS c_custkey, \"public:adhoc10GB:customerReplicate\".c_name AS c_name, \"public:adhoc10GB:customerReplicate\".c_address AS c_address, \"public:adhoc10GB:customerReplicate\".c_city AS c_city, \"public:adhoc10GB:customerReplicate\".c_nation_prefix AS c_nation_prefix, \"public:adhoc10GB:customerReplicate\".c_nation AS c_nation, \"public:adhoc10GB:customerReplicate\".c_region AS c_region, \"public:adhoc10GB:customerReplicate\".c_phone AS c_phone, \"public:adhoc10GB:customerReplicate\".c_mktsegment AS c_mktsegment \nFROM \"public:adhoc10GB:customerReplicate\") AS input"
+                    },
+                    {
+                        "opType": "SymmetricHashJoin",
+                        "argColumns1": [
+                            15
+                        ],
+                        "argColumns2": [
+                            0
+                        ],
+                        "argColumnNames": [
+                            "l_orderkey",
+                            "l_linenumber",
+                            "l_custkey",
+                            "l_partkey",
+                            "l_suppkey",
+                            "l_orderdate",
+                            "l_orderpriority",
+                            "l_shippriority",
+                            "l_quantity",
+                            "l_extendedprice",
+                            "l_ordtotalprice",
+                            "l_discount",
+                            "l_revenue",
+                            "l_supplycost",
+                            "l_tax",
+                            "l_commitdate",
+                            "l_shipmode",
+                            "d_datekey",
+                            "d_date",
+                            "d_dayofweek",
+                            "d_month",
+                            "d_year",
+                            "d_yearmonthnum",
+                            "d_yearmonth",
+                            "d_daynuminweek",
+                            "d_daynuminmonth",
+                            "d_daynuminyear",
+                            "d_monthnuminyear",
+                            "d_weeknuminyear",
+                            "d_sellingseason",
+                            "d_lastdayinweekfl",
+                            "d_lastdayinmonthfl",
+                            "d_holidayfl",
+                            "d_weekdayfl"
+                        ],
+                        "argChild2": 26,
+                        "argChild1": 25,
+                        "opId": 23,
+                        "argSelect2": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                            6,
+                            7,
+                            8,
+                            9,
+                            10,
+                            11,
+                            12,
+                            13,
+                            14,
+                            15,
+                            16
+                        ],
+                        "opName": "MyriaSymmetricHashJoin(($17 = $15); $0,$1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33)",
+                        "argSelect1": [
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                            6,
+                            7,
+                            8,
+                            9,
+                            10,
+                            11,
+                            12,
+                            13,
+                            14,
+                            15,
+                            16
+                        ]
+                    },
+                    {
+                        "opId": 24,
+                        "opType": "TableScan",
+                        "relationKey": {
+                            "userName": "public",
+                            "relationName": "supplierReplicate",
+                            "programName": "adhoc10GB"
+                        },
+                        "opName": "MyriaScan(public:adhoc10GB:supplierReplicate)"
+                    },
+                    {
+                        "schema": {
+                            "columnNames": [
+                                "l_orderkey",
+                                "l_linenumber",
+                                "l_custkey",
+                                "l_partkey",
+                                "l_suppkey",
+                                "l_orderdate",
+                                "l_orderpriority",
+                                "l_shippriority",
+                                "l_quantity",
+                                "l_extendedprice",
+                                "l_ordtotalprice",
+                                "l_discount",
+                                "l_revenue",
+                                "l_supplycost",
+                                "l_tax",
+                                "l_commitdate",
+                                "l_shipmode"
+                            ],
+                            "columnTypes": [
+                                "LONG_TYPE",
+                                "LONG_TYPE",
+                                "LONG_TYPE",
+                                "LONG_TYPE",
+                                "LONG_TYPE",
+                                "STRING_TYPE",
+                                "STRING_TYPE",
+                                "LONG_TYPE",
+                                "DOUBLE_TYPE",
+                                "DOUBLE_TYPE",
+                                "DOUBLE_TYPE",
+                                "DOUBLE_TYPE",
+                                "LONG_TYPE",
+                                "LONG_TYPE",
+                                "DOUBLE_TYPE",
+                                "LONG_TYPE",
+                                "STRING_TYPE"
+                            ]
+                        },
+                        "opName": "MyriaQueryScan('SELECT input.l_orderkey, input.l_linenumber, input.l_custkey, input.l_partkey, input.l_suppkey, input.l_orderdate, input.l_orderpriority, input.l_shippriority, input.l_quantity, input.l_extendedprice, input.l_ordtotalprice, input.l_discount, input.l_revenue, input.l_supplycost, input.l_tax, input.l_commitdate, input.l_shipmode \\nFROM (SELECT \"public:adhoc10GB8W:lineitemHash\".l_orderkey AS l_orderkey, \"public:adhoc10GB8W:lineitemHash\".l_linenumber AS l_linenumber, \"public:adhoc10GB8W:lineitemHash\".l_custkey AS l_custkey, \"public:adhoc10GB8W:lineitemHash\".l_partkey AS l_partkey, \"public:adhoc10GB8W:lineitemHash\".l_suppkey AS l_suppkey, \"public:adhoc10GB8W:lineitemHash\".l_orderdate AS l_orderdate, \"public:adhoc10GB8W:lineitemHash\".l_orderpriority AS l_orderpriority, \"public:adhoc10GB8W:lineitemHash\".l_shippriority AS l_shippriority, \"public:adhoc10GB8W:lineitemHash\".l_quantity AS l_quantity, \"public:adhoc10GB8W:lineitemHash\".l_extendedprice AS l_extendedprice, \"public:adhoc10GB8W:lineitemHash\".l_ordtotalprice AS l_ordtotalprice, \"public:adhoc10GB8W:lineitemHash\".l_discount AS l_discount, \"public:adhoc10GB8W:lineitemHash\".l_revenue AS l_revenue, \"public:adhoc10GB8W:lineitemHash\".l_supplycost AS l_supplycost, \"public:adhoc10GB8W:lineitemHash\".l_tax AS l_tax, \"public:adhoc10GB8W:lineitemHash\".l_commitdate AS l_commitdate, \"public:adhoc10GB8W:lineitemHash\".l_shipmode AS l_shipmode \\nFROM \"public:adhoc10GB8W:lineitemHash\") AS input \\nWHERE input.l_orderkey <= 23994434 AND input.l_linenumber <= 1')",
+                        "opType": "DbQueryScan",
+                        "opId": 25,
+                        "sql": "SELECT input.l_orderkey, input.l_linenumber, input.l_custkey, input.l_partkey, input.l_suppkey, input.l_orderdate, input.l_orderpriority, input.l_shippriority, input.l_quantity, input.l_extendedprice, input.l_ordtotalprice, input.l_discount, input.l_revenue, input.l_supplycost, input.l_tax, input.l_commitdate, input.l_shipmode \nFROM (SELECT \"public:adhoc10GB8W:lineitemHash\".l_orderkey AS l_orderkey, \"public:adhoc10GB8W:lineitemHash\".l_linenumber AS l_linenumber, \"public:adhoc10GB8W:lineitemHash\".l_custkey AS l_custkey, \"public:adhoc10GB8W:lineitemHash\".l_partkey AS l_partkey, \"public:adhoc10GB8W:lineitemHash\".l_suppkey AS l_suppkey, \"public:adhoc10GB8W:lineitemHash\".l_orderdate AS l_orderdate, \"public:adhoc10GB8W:lineitemHash\".l_orderpriority AS l_orderpriority, \"public:adhoc10GB8W:lineitemHash\".l_shippriority AS l_shippriority, \"public:adhoc10GB8W:lineitemHash\".l_quantity AS l_quantity, \"public:adhoc10GB8W:lineitemHash\".l_extendedprice AS l_extendedprice, \"public:adhoc10GB8W:lineitemHash\".l_ordtotalprice AS l_ordtotalprice, \"public:adhoc10GB8W:lineitemHash\".l_discount AS l_discount, \"public:adhoc10GB8W:lineitemHash\".l_revenue AS l_revenue, \"public:adhoc10GB8W:lineitemHash\".l_supplycost AS l_supplycost, \"public:adhoc10GB8W:lineitemHash\".l_tax AS l_tax, \"public:adhoc10GB8W:lineitemHash\".l_commitdate AS l_commitdate, \"public:adhoc10GB8W:lineitemHash\".l_shipmode AS l_shipmode \nFROM \"public:adhoc10GB8W:lineitemHash\") AS input \nWHERE input.l_orderkey <= 23994434 AND input.l_linenumber <= 1"
+                    },
+                    {
+                        "opId": 26,
+                        "opType": "TableScan",
+                        "relationKey": {
+                            "userName": "public",
+                            "relationName": "dateReplicate",
+                            "programName": "adhoc10GB"
+                        },
+                        "opName": "MyriaScan(public:adhoc10GB:dateReplicate)"
+                    }
+                ]
+            }
+        ],
+        "type": "SubQuery"
+    }
+}
