@@ -1,0 +1,13 @@
+*.pyc
+*.swp
+*~
+output.json
+.DS_Store
+parser.out
+parsetab.py
+build
+raco.egg-info
+.coverage
+.noseids
+.idea/
+*.dot

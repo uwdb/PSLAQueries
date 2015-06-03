@@ -1,0 +1,4 @@
+
+Emp = SCAN(public:adhoc:employee);
+Groups = [FROM Emp EMIT COUNT(salary), Emp.id];
+Store(Groups, OUTPUT, [$1]);

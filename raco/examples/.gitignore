@@ -1,0 +1,10 @@
+*.cpp
+*.cpp.orig
+*.dot
+build/
+log*.rb
+*.logical.pdf
+*.physical*.pdf
+*.logical.ps
+*.physical.ps
+
