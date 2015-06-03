@@ -1,0 +1,58 @@
+{
+    "fragments": [
+        { 
+            "operators": [
+               {
+                   "opType": "DbQueryScan",
+                   "opName": "Scan",
+                   "opId": 1,
+                   "schema": {
+                       "columnNames": [
+                           "FACT_FK1", "FACT_FK2", "FACT_FK3", "FACT_FK4", "FACT_FK5", "FACT_ATT6", "FACT_ATT7","FACT_ATT8","FACT_ATT9","FACT_ATT10","FACT_ATT11","FACT_ATT12","FACT_ATT13","FACT_ATT14","FACT_ATT15","FACT_ATT16","FACT_ATT17","FACT_ATT18","FACT_ATT19","FACT_ATT20","FACT_PK"
+                       ],
+                       "columnTypes": [
+                          "INT_TYPE", "INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE"
+                       ]
+                   },
+                   "sql": "SELECT * FROM \"public:syntheticBenchmark:factFixedCheck\""
+               },
+                {
+                    "argChild": 1,
+                    "argPf": {
+                        "index":20,
+                        "type": "SingleFieldHash"
+                    },
+                    "opName": "Scatter",
+                    "opId": 2,
+                    "opType": "ShuffleProducer"
+                }
+            ]
+        },
+        {
+            "operators": [
+                {
+                    "argOperatorId": 2,
+                    "opName": "Gather",
+                    "opId": 3,
+                    "opType": "ShuffleConsumer"
+                },
+                {
+                    "argChild": 3,
+                    "argOverwriteTable": true,
+                    "opName": "Insert",
+                    "opId": 4,
+                    "opType": "DbInsert",
+                    "relationKey": {
+                        "programName": "syntheticBenchmark",
+                        "relationName": "factHashFixed8W",
+                        "userName": "public"
+                    },
+                    "argOverwriteTable": true
+                }
+            ]
+        }
+    ],
+    "logicalRa": "hashCustomBenchmark",
+    "rawQuery": "hashCustomBenchmark"
+}
+

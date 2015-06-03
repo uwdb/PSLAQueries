@@ -1,0 +1,17 @@
+{
+  "relationKey" : {
+    "userName" : "public",
+    "programName" : "adhoc10GB",
+    "relationName" : "lineitem"
+  },
+  "schema" : {
+    "columnTypes" : ["LONG_TYPE","LONG_TYPE", "LONG_TYPE", "LONG_TYPE", "LONG_TYPE", "STRING_TYPE", "STRING_TYPE", "LONG_TYPE", "FLOAT_TYPE", "FLOAT_TYPE", "FLOAT_TYPE", "FLOAT_TYPE", "LONG_TYPE", "LONG_TYPE", "FLOAT_TYPE", "LONG_TYPE", "STRING_TYPE"],
+    "columnNames" : ["l_orderkey", "l_linenumber", "l_custkey", "l_partkey", "l_suppkey", "l_orderdate", "l_orderpriority", "l_shippriority", "l_quantity", "l_extendedprice", "l_ordtotalprice", "l_discount", "l_revenue", "l_supplycost", "l_tax", "l_commitdate", "l_shipmode"]
+  },
+  "source" : {
+    "dataType" : "File",
+    "filename" : "/disk2/jortiz16/datasetSSB/lineorderOUT.csv"
+  },
+   "overwrite": true,
+  "delimiter": "|"
+}

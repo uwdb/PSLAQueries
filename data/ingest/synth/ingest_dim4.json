@@ -1,0 +1,16 @@
+{
+  "relationKey" : {
+    "userName" : "public",
+    "programName" : "syntheticBenchmark",
+    "relationName" : "dim4"
+  },
+  "schema" : {
+    "columnTypes" : ["LONG_TYPE", "STRING_TYPE", "STRING_TYPE","STRING_TYPE","STRING_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","STRING_TYPE"],
+    "columnNames" : ["dim_pk1_4", "dim_att2_4","dim_att3_4","dim_att4_4","dim_att5_4","dim_att6_4","dim_att7_4","dim_att8_4","dim_att9_4","dim_att10_4"]
+  },
+  "source" : {
+    "dataType" : "File",
+    "filename" : "/vega2/jortiz16/customBenchmark/DIMENSION4.csv"
+  },
+  "delimiter": "|"
+}

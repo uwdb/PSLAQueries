@@ -7,12 +7,12 @@ import raco.algebra as alg
 import raco.language.myrialang
 from raco.language.logical import OptLogicalAlgebra
 from raco.expression.expression import UnnamedAttributeRef
-import schemaDetector
+import schemaHelper
 
 catalog = FromFileCatalog.load_from_file("schema.py")
 _parser = parser.Parser()
 
-use_cases = ['tpch/tpch-myrial.txt'] #, 'synth/synth-myrial.txt']
+use_cases = ['tpch/tpch-myrial.txt','synth/synth-myrial.txt']
 plan_workers = [4,6,8]
 
 type_2 = True
@@ -40,17 +40,27 @@ for current_use_case in use_cases:
 				json_data = json_data_clean_copy
 				json_data['plan']['fragments'][0]['overrideWorkers'] = range(1,w +1)
 
-				#name tables correctly
+				#rename tables correctly
 				if(current_use_case == 'tpch/tpch-myrial.txt'):
-					#name lineitem appropriately
-					json_string = json.dumps(json_data).replace("adhoc10GB:lineitemHash", "adhoc10GB" + str(w) + "W:lineitemHash")
-					json_data = json.loads(json_string)
-				else:
+					list_relations = ['adhoc10GB:lineitemHash', 'adhoc10GB:supplierReplicate', 'adhoc10GB:partReplicate',  'adhoc10GB:dateReplicate', 'adhoc10GB:customerReplicate']
 					json_string = json.dumps(json_data)
+					for l in list_relations:
+						json_string = json_string.replace(l, json_string.split(':')[0] + str(w) + 'W:' + json_string.split(':')[1])
 					json_data = json.loads(json_string)
 
-				with open('tpch/tpch-type2/' + str(w) + '/query' + str(counter) + '.json', 'w') as f:
-					json.dump(json_data, f)
+					directory = 'tpch/tpch-type2/' 
+
+				elif (current_use_case == 'synth/synth-myrial.txt'):
+					list_relations = ['syntheticBenchmark:factHash', 'syntheticBenchmark:dimension1Replicate', 'syntheticBenchmark:dimension2Replicate',  'syntheticBenchmark:dimension3Replicate', 'syntheticBenchmark:dimension4Replicate', 'syntheticBenchmark:dimension5Replicate']
+					json_string = json.dumps(json_data)
+					for l in list_relations:
+						json_string = json_string.replace(l, json_string.split(':')[0] + str(w) + 'W:' + json_string.split(':')[1])
+					json_data = json.loads(json_string)
+
+					directory ='synth/synth-type2/'  
+
+				f = open(directory + str(w) + '/query' + str(counter) + '.json', 'w')
+				json.dump(json_data, f)
 				f.close()	
 
 		#create type-3
@@ -63,7 +73,7 @@ for current_use_case in use_cases:
 			json_data = processor.get_json(push_sql=True, type2=False, type3=True)
 
 			#Manipulate Workers
-			#Type-3a & Type3b - Growth Compute Nodes and Shrink Compute Nodes
+			#Type-3a & Type3b - Grow Compute Nodes and Shrink Compute Nodes
 			for i in plan_workers: #data_nodes
 				for j in plan_workers: #compute_nodes
 					if (i != j) and (len(json_data['plan']['fragments']) > 1): #join queries should only scale
@@ -85,15 +95,24 @@ for current_use_case in use_cases:
 						to_fragment['overrideWorkers'] = range(1,j+1)
 						#name tables correctly
 						if(current_use_case == 'tpch/tpch-myrial.txt'):
-							#name lineitem appropriately
-							json_string = json.dumps(json_data).replace("adhoc10GB:lineitemHash", "adhoc10GB" + str(i) + "W:lineitemHash")
-							json_data = json.loads(json_string)
-						else:
+							list_relations = ['adhoc10GB:lineitemHash', 'adhoc10GB:supplierReplicate', 'adhoc10GB:partReplicate',  'adhoc10GB:dateReplicate', 'adhoc10GB:customerReplicate']
 							json_string = json.dumps(json_data)
+							for l in list_relations:
+								json_string = json_string.replace(l, json_string.split(':')[0] + str(w) + 'W:' + json_string.split(':')[1])
 							json_data = json.loads(json_string)
 
+							directory = 'tpch/tpch-type3/tpch-type3a/' if (i < j) else 'tpch/tpch-type3/tpch-type3b/'
+
+						elif (current_use_case == 'synth/synth-myrial.txt'):
+							list_relations = ['syntheticBenchmark:factHash', 'syntheticBenchmark:dimension1Replicate', 'syntheticBenchmark:dimension2Replicate',  'syntheticBenchmark:dimension3Replicate', 'syntheticBenchmark:dimension4Replicate', 'syntheticBenchmark:dimension5Replicate']
+							json_string = json.dumps(json_data)
+							for l in list_relations:
+								json_string = json_string.replace(l, json_string.split(':')[0] + str(w) + 'W:' + json_string.split(':')[1])
+							json_data = json.loads(json_string)
+
+							directory = 'synth/synth-type3/synth-type3a/' if (i < j) else 'synth/synth-type3/synth-type3b/'
+
 						#write the json to a file
-						directory = 'tpch/tpch-type3/tpch-type3a/' if (i < j) else 'tpch/tpch-type3/tpch-type3b/'
 						f = open(directory+ str(i) + '_datanodes/' + str(j) + '_computenodes/query' + str(counter) + '.json', 'w')
 						json.dump(json_data, f)
 						f.close()

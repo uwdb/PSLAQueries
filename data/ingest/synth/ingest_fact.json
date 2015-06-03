@@ -1,0 +1,16 @@
+{
+  "relationKey" : {
+    "userName" : "public",
+    "programName" : "syntheticBenchmark",
+    "relationName" : "fact"
+  },
+  "schema" : {
+    "columnTypes" : ["LONG_TYPE", "LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE"],
+    "columnNames" : ["fact_fk1", "fact_fk2", "fact_fk3", "fact_fk4", "fact_fk5", "fact_att6", "fact_att7","fact_att8","fact_att9","fact_att10","fact_att11","fact_att12","fact_att13","fact_att14","fact_att15","fact_att16","fact_att17","fact_att18","fact_att19","fact_att20", "fact_pk"]
+  },
+  "source" : {
+    "dataType" : "File",
+    "filename" : "/vega2/jortiz16/customBenchmark/FactAddedColumn.csv"
+  },
+  "delimiter": "|"
+}

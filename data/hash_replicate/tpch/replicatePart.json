@@ -1,0 +1,53 @@
+{
+    "fragments": [
+        {
+            "operators": [
+               {
+                   "opType": "DbQueryScan",
+                    "opId": 1,
+                   "opName": "Scan",
+                   "schema": {
+                       "columnNames": [
+                           "p_partkey", "p_name","p_mfgr", "p_category", "p_brand", "p_color", "p_type", "p_size", "p_container"
+                       ],
+                       "columnTypes": [
+                          "LONG_TYPE","STRING_TYPE", "STRING_TYPE", "STRING_TYPE", "STRING_TYPE", "STRING_TYPE", "STRING_TYPE", "LONG_TYPE", "STRING_TYPE"
+                       ]
+                   },
+                   "sql": "SELECT p_partkey, p_name,p_mfgr, p_category, p_brand, p_color,p_type, p_size, p_container FROM \"public:adhoc10GB:part\" s"
+               },
+
+                {
+                  "argChild": 1,
+                  "opName": "broadcast",
+                  "opId": 2,
+                  "opType": "BroadcastProducer"
+                }
+            ]
+        },
+        {
+            "operators": [
+                {
+          "argOperatorId": 2,
+          "opName": "receive",
+          "opId": 3,
+          "opType": "BroadcastConsumer"
+          },
+                {
+                    "argChild": 3,
+                    "argOverwriteTable": true,
+                    "opName": "Insert",
+                    "opId": 4,
+                    "opType": "DbInsert",
+                    "relationKey": {
+                        "programName": "adhoc10GB",
+                        "relationName": "partReplicate",
+                        "userName": "public"
+                    }
+                }
+            ]
+        }
+    ],
+    "logicalRa": "repPart",
+    "rawQuery": "repPart"
+}
