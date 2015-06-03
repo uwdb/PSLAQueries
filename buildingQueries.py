@@ -16,7 +16,7 @@ use_cases = ['tpch/tpch-myrial.txt'] #, 'synth/synth-myrial.txt']
 plan_workers = [4,6,8]
 
 type_2 = True
-type_3 = True
+type_3 = False
 
 #Queries Transformation:
 for current_use_case in use_cases: 
@@ -34,9 +34,21 @@ for current_use_case in use_cases:
 			p = processor.get_logical_plan()
 			p = processor.get_physical_plan(push_sql=True, type2=True, type3=False)
 			json_data = processor.get_json(push_sql=True, type2=True, type3=False)
+			json_data_clean_copy = json_data
 
 			for w in plan_workers:
+				json_data = json_data_clean_copy
 				json_data['plan']['fragments'][0]['overrideWorkers'] = range(1,w +1)
+
+				#name tables correctly
+				if(current_use_case == 'tpch/tpch-myrial.txt'):
+					#name lineitem appropriately
+					json_string = json.dumps(json_data).replace("adhoc10GB:lineitemHash", "adhoc10GB" + str(w) + "W:lineitemHash")
+					json_data = json.loads(json_string)
+				else:
+					json_string = json.dumps(json_data)
+					json_data = json.loads(json_string)
+
 				with open('tpch/tpch-type2/' + str(w) + '/query' + str(counter) + '.json', 'w') as f:
 					json.dump(json_data, f)
 				f.close()	
@@ -52,8 +64,8 @@ for current_use_case in use_cases:
 
 			#Manipulate Workers
 			#Type-3a & Type3b - Growth Compute Nodes and Shrink Compute Nodes
-			for i in plan_workers:
-				for j in plan_workers:
+			for i in plan_workers: #data_nodes
+				for j in plan_workers: #compute_nodes
 					if (i != j) and (len(json_data['plan']['fragments']) > 1): #join queries should only scale
 						if (len(json_data['plan']['fragments']) > 2):
 							print "ERROR: more than two fragments"
@@ -71,8 +83,16 @@ for current_use_case in use_cases:
 										to_fragment = frag
 						from_fragment['overrideWorkers'] = range(1,i+1)
 						to_fragment['overrideWorkers'] = range(1,j+1)
+						#name tables correctly
+						if(current_use_case == 'tpch/tpch-myrial.txt'):
+							#name lineitem appropriately
+							json_string = json.dumps(json_data).replace("adhoc10GB:lineitemHash", "adhoc10GB" + str(i) + "W:lineitemHash")
+							json_data = json.loads(json_string)
+						else:
+							json_string = json.dumps(json_data)
+							json_data = json.loads(json_string)
 
-						#write the json
+						#write the json to a file
 						directory = 'tpch/tpch-type3/tpch-type3a/' if (i < j) else 'tpch/tpch-type3/tpch-type3b/'
 						f = open(directory+ str(i) + '_datanodes/' + str(j) + '_computenodes/query' + str(counter) + '.json', 'w')
 						json.dump(json_data, f)
