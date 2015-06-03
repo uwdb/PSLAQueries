@@ -7,65 +7,75 @@ import raco.algebra as alg
 import raco.language.myrialang
 from raco.language.logical import OptLogicalAlgebra
 from raco.expression.expression import UnnamedAttributeRef
-from myria import MyriaConnection
-from myria import MyriaSchema
-from myria import MyriaRelation
+import schemaDetector
 
-# building type 3 queries (can also build type 2)
-
-connection = MyriaConnection(hostname = "rest.myria.cs.washington.edu", port=1776, ssl=True, execution_url="https://myria-web.appspot.com")
-
-lineitemRelation = 'public:adhoc10GB:lineitemHash'
-supplierRelation = 'public:adhoc10GB:supplier'
-customerRelation = 'public:adhoc10GB:customer'
-
-f = open('schema.py', 'w')
-f.write("{" + '\n');
-#--1
-current_schema = (MyriaRelation(relation= lineitemRelation, connection=connection).schema.to_dict())
-columnNames = [x.encode('utf-8') for x in current_schema['columnNames']]
-columnTypes = [x.encode('utf-8') for x in current_schema['columnTypes']]
-columns = zip(columnNames, columnTypes)
-f.write("'" + lineitemRelation + "' : " +  str(columns) + ',\n');
-#--2
-current_schema = (MyriaRelation(relation= supplierRelation, connection=connection).schema.to_dict())
-columnNames = [x.encode('utf-8') for x in current_schema['columnNames']]
-columnTypes = [x.encode('utf-8') for x in current_schema['columnTypes']]
-columns = zip(columnNames, columnTypes)
-f.write("'" + supplierRelation + "' : " +  str(columns) + ',\n');
-#--3
-current_schema = (MyriaRelation(relation= customerRelation, connection=connection).schema.to_dict())
-columnNames = [x.encode('utf-8') for x in current_schema['columnNames']]
-columnTypes = [x.encode('utf-8') for x in current_schema['columnTypes']]
-columns = zip(columnNames, columnTypes)
-f.write("'" + customerRelation + "' : " +  str(columns) + ',\n');
-f.write("}" + '\n');
-f.close()
-
-test_query_2join = "T1 = [from scan(public:adhoc10GB:lineitemHash) as l, scan(public:adhoc10GB:supplier) as s, scan(public:adhoc10GB:customer) as c where l.l_suppkey = s.s_suppkey and c.c_custkey = l.l_custkey and l.l_linenumber = 3 emit s.*, c.*]; store(T1, test);"
 catalog = FromFileCatalog.load_from_file("schema.py")
 _parser = parser.Parser()
 
-statement_list = _parser.parse(test_query_2join);
-processor = interpreter.StatementProcessor(catalog, True)
-processor.evaluate(statement_list)
+use_cases = ['tpch/tpch-myrial.txt'] #, 'synth/synth-myrial.txt']
+plan_workers = [4,6,8]
 
-p = processor.get_logical_plan()
+type_2 = False
+type_3 = True
 
-p = processor.get_physical_plan(push_sql=True)
+#Queries Transformation:
+for current_use_case in use_cases: 
+	current_file = open(current_use_case, 'r')
+	counter = 0
+	print '*****Queries for ' + current_use_case + '*****'
+	for line in current_file:
+		current_query = line.strip()
 
-json_data = processor.get_json()
+		#create type-2
+		if(type_2):
+			statement_list = _parser.parse(current_query);
+			processor = interpreter.StatementProcessor(catalog, True)
+			processor.evaluate(statement_list)
+			p = processor.get_logical_plan()
+			p = processor.get_physical_plan(push_sql=True, type2=True, type3=False)
+			json_data = processor.get_json(push_sql=True, type2=True, type3=False)
 
-#there will always be two fragments, so add overrideworkers
-#perhaps check which is the fragment with the shuffle and know that is where the scan  is......
-first_fragment = json_data['plan']['fragments'][0]
-first_fragment['overrideWorkers'] = [1,2,3,4]
+			for w in plan_workers:
+				json_data['plan']['fragments'][0]['overrideWorkers'] = range(1,w +1)
+				with open('tpch/tpch-type2/' + str(w) + '/query' + str(counter) + '.json', 'w') as f:
+					json.dump(json_data, f)
+				f.close()	
 
+		#create type-3
+		if(type_3):
+			statement_list = _parser.parse(current_query);
+			processor = interpreter.StatementProcessor(catalog, True)
+			processor.evaluate(statement_list)
+			p = processor.get_logical_plan()
+			p = processor.get_physical_plan(push_sql=True, type2=False, type3=True)
+			json_data = processor.get_json(push_sql=True, type2=False, type3=True)
 
-second_fragment = json_data['plan']['fragments'][1]
-second_fragment['overrideWorkers'] = [1,2,3,4,5,6,7,8]
+			#Manipulate Workers
+			#Type-3a & Type3b - Growth Compute Nodes and Shrink Compute Nodes
+			for i in plan_workers:
+				for j in plan_workers:
+					if (i != j) and (len(json_data['plan']['fragments']) > 1): #join queries should only scale
+						if (len(json_data['plan']['fragments']) > 2):
+							print "ERROR: more than two fragments"
+							sys.exit(0)
+						from_fragment = None
+						to_fragment = None
+						for frag in json_data['plan']['fragments']: #find to/from fragment
+							for op in frag['operators']:
+								if 'DbQueryScan' in op['opType'] and ('lineitem' in op['sql'] or 'fact' in op['sql']):
+									from_fragment = frag
+								elif 'TableScan' in op['opType'] and ('lineitem' in op['relationKey']['relationName'] or 'fact' in op['relationKey']['relationName']):
+									from_fragment = frag
+								else:
+									if(frag != from_fragment): #this is hacky, but given there are two fragments at most, this works for now
+										to_fragment = frag
+						from_fragment['overrideWorkers'] = range(1,i+1)
+						to_fragment['overrideWorkers'] = range(1,j+1)
 
-
-with open('output.json', 'w') as f:
-	json.dump(json_data, f)	
-
+						#write the json
+						directory = 'tpch/tpch-type3/tpch-type3a/' if (i < j) else 'tpch/tpch-type3/tpch-type3b/'
+						f = open(directory+ str(i) + '_datanodes/' + str(j) + '_computenodes/query' + str(counter) + '.json', 'w')
+						json.dump(json_data, f)
+						f.close()
+		print "Done with Query "  + str(counter)
+		counter = counter + 1
