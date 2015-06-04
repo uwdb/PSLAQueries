@@ -15,15 +15,23 @@ port = 8753
 
 connection = myria.MyriaConnection(hostname=hostname, port=port)
 
-qList = random.sample(range(1, 1223), 500)
-qList.sort()
-r = open(os.path.expanduser("synth-random.txt"), 'w');
-r.write(', '.join(map(str, qList)))
-r.close()
+newList = False
+
+if newList:
+	qList = random.sample(range(1, 1223), 500)
+	qList.sort()
+	r = open(os.path.expanduser("synth-random.txt"), 'w')
+	r.write(', '.join(map(str, qList)))
+	r.close()
+else:
+	qList = open(os.path.expanduser("synth-random.txt"), 'r')
+	qList = qList.read().split(',')
 
 #all possible paths
 
-qPath = ["synth/synth-type2/4/", "synth/synth-type2/6/", "synth/synth-type2/8/", 
+qPath = [#"synth/synth-type2/4/", 
+		 "synth/synth-type2/6/", 
+		 "synth/synth-type2/8/", 
 
 		 "synth/synth-type3/synth-type3a/4_datanodes/6_computenodes/", 
 		 "synth/synth-type3/synth-type3a/4_datanodes/8_computenodes/",
@@ -32,6 +40,7 @@ qPath = ["synth/synth-type2/4/", "synth/synth-type2/6/", "synth/synth-type2/8/",
 		 "synth/synth-type3/synth-type3a/6_datanodes/4_computenodes/",
 		 "synth/synth-type3/synth-type3b/8_datanodes/6_computenodes/",
 		 "synth/synth-type3/synth-type3a/8_datanodes/4_computenodes/"]
+
 
 
 for p in qPath:
@@ -43,15 +52,17 @@ for p in qPath:
 	for q in qList:
 		averageTime = 0.0
 		i = 0
-		while i < 3:
-			#call bash scripts
-			subprocess.call(['/bin/bash',"clear-synth.sh"]);
-			print("postgres and os cleared")
-
+		while i < 1:
 			try:
+				q = q.strip()
+				print 'Query Path: ', p + "query" + str(q) + ".json"
 				json_data=open(os.path.expanduser(p + "query" + str(q) + ".json"))
 				data = json.load(json_data)
 				json_data.close()
+
+				#call bash scripts
+				subprocess.call(['/bin/bash',"clear-synth.sh"]);
+				print("postgres and os cleared")
 
 				#try running the query
 				try:
@@ -87,9 +98,9 @@ for p in qPath:
 					print('Query #' + str(counter));
 			except:
 				print "Query does not exist"
-				f.write('N/A ')
+				f.write('N/A')
 
-		timeSeconds = (averageTime / 3.0) /1000000000.0;
+		timeSeconds = (averageTime / 1.0) /1000000000.0;
 		print('Logging average runtime ' + str(timeSeconds));
 		f.write(str(counter) + ',' + str(timeSeconds) + "\n");
 		counter = counter + 1;
