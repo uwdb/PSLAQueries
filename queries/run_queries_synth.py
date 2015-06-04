@@ -8,22 +8,31 @@ import urllib
 import subprocess
 import time
 import myria
+import random
 
-hostname = 'ec2-54-145-53-252.compute-1.amazonaws.com'
+hostname = 'ec2-54-204-137-94.compute-1.amazonaws.com'
 port = 8753
 
 connection = myria.MyriaConnection(hostname=hostname, port=port)
 
-qList = [3,4,39,40,67,279,280,343,344,383,384,483,484,523,524,655,656,695,696,895];
-qPath = [ 
+qList = random.sample(range(1, 1223), 500)
+qList.sort()
+r = open(os.path.expanduser("synth-random.txt"), 'w');
+r.write(', '.join(map(str, qList)))
+r.close()
 
-		 "tpch/tpch-type3/tpch-type3a/4_datanodes/6_computenodes/", 
-		 "tpch/tpch=-type3/tpch-type3a/4_datanodes/8_computenodes/",
-		 "tpch/tpch-type3/tpch-type3a/6_datanodes/8_computenodes/",
+#all possible paths
 
-		 "tpch/tpch-type3/tpch-type3a/6_datanodes/4_computenodes/",
-		 "tpch/tpch-type3/tpch-type3b/8_datanodes/6_computenodes/",
-		 "tpch/tpch-type3/tpch-type3a/8_datanodes/4_computenodes/"]
+qPath = ["synth/synth-type2/4/", "synth/synth-type2/6/", "synth/synth-type2/8/", 
+
+		 "synth/synth-type3/synth-type3a/4_datanodes/6_computenodes/", 
+		 "synth/synth-type3/synth-type3a/4_datanodes/8_computenodes/",
+		 "synth/synth-type3/synth-type3a/6_datanodes/8_computenodes/",
+
+		 "synth/synth-type3/synth-type3a/6_datanodes/4_computenodes/",
+		 "synth/synth-type3/synth-type3b/8_datanodes/6_computenodes/",
+		 "synth/synth-type3/synth-type3a/8_datanodes/4_computenodes/"]
+
 
 for p in qPath:
 	counter = 0;
@@ -36,7 +45,7 @@ for p in qPath:
 		i = 0
 		while i < 3:
 			#call bash scripts
-			subprocess.call(['/bin/bash',"clear-tpch.sh"]);
+			subprocess.call(['/bin/bash',"clear-synth.sh"]);
 			print("postgres and os cleared")
 
 			try:

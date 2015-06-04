@@ -1,0 +1,1 @@
+./clear/clearOSCache-tpch.sh & ./clear/postgresRestart-tpch.sh

@@ -1,1 +1,0 @@
-./clear/clearOSCache.sh & ./clear/postgresRestart.sh
