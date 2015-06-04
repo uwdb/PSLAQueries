@@ -8,10 +8,10 @@
                    "opName": "Scan",
                    "schema": {
                        "columnNames": [
-                           "DIM_PK1_5", "DIM_ATT2_5","DIM_ATT3_5","DIM_ATT4_5","DIM_ATT5_5","DIM_ATT6_5","DIM_ATT7_5","DIM_ATT8_5","DIM_ATT9_5","DIM_ATT10_5","DIM_ATT11_5","DIM_ATT12_5"
+                           "dim_pk1_5", "dim_att2_5","dim_att3_5","dim_att4_5","dim_att5_5","dim_att6_5","dim_att7_5","dim_att8_5","dim_att9_5","dim_att10_5","dim_att11_5","dim_att12_5"
                        ],
                        "columnTypes": [
-                          "INT_TYPE", "STRING_TYPE", "STRING_TYPE","STRING_TYPE","STRING_TYPE","STRING_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","STRING_TYPE"
+                          "LONG_TYPE", "STRING_TYPE", "STRING_TYPE","STRING_TYPE","STRING_TYPE","STRING_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","STRING_TYPE"
                       ]
                    },
                    "sql": "SELECT * FROM \"public:syntheticBenchmark:dim5\""

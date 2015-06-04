@@ -4,7 +4,7 @@ from myria import MyriaRelation
 
 connection = MyriaConnection(hostname = "rest.myria.cs.washington.edu", port=1776, ssl=True, execution_url="https://myria-web.appspot.com")
 
-listRelations = ['public:adhoc10GB:lineitemHash', 'public:adhoc10GB:supplierReplicate', 'public:adhoc10GB:customerReplicate', 'public:adhoc10GB:partReplicate', 'public:adhoc10GB:dateReplicate','public:syntheticBenchmark:factHash', 'public:syntheticBenchmark:dimension1Replicate', 'public:syntheticBenchmark:dimension2Replicate',  'public:syntheticBenchmark:dimension3Replicate', 'public:syntheticBenchmark:dimension4Replicate', 'public:syntheticBenchmark:dimension5Replicate']
+listRelations = ['public:adhoc10GB:lineitemHash', 'public:adhoc10GB:supplierReplicate', 'public:adhoc10GB:customerReplicate', 'public:adhoc10GB:partReplicate', 'public:adhoc10GB:dateReplicate'] #,'public:syntheticBenchmark:fact', 'public:syntheticBenchmark:dimension1Replicate', 'public:syntheticBenchmark:dimension2Replicate',  'public:syntheticBenchmark:dimension3Replicate', 'public:syntheticBenchmark:dimension4Replicate', 'public:syntheticBenchmark:dimension5Replicate']
 
 f = open('schema.py', 'w')
 f.write("{" + '\n');

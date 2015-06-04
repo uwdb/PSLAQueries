@@ -10,7 +10,8 @@
   },
   "source" : {
     "dataType" : "File",
-    "filename" : "/vega2/jortiz16/customBenchmark/FactAddedColumn.csv"
+    "filename" : "/mnt/raw/FactAddedColumn.csv"
   },
+  "overwrite": true,
   "delimiter": "|"
 }

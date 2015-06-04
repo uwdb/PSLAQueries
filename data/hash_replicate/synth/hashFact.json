@@ -8,13 +8,13 @@
                    "opId": 1,
                    "schema": {
                        "columnNames": [
-                           "FACT_FK1", "FACT_FK2", "FACT_FK3", "FACT_FK4", "FACT_FK5", "FACT_ATT6", "FACT_ATT7","FACT_ATT8","FACT_ATT9","FACT_ATT10","FACT_ATT11","FACT_ATT12","FACT_ATT13","FACT_ATT14","FACT_ATT15","FACT_ATT16","FACT_ATT17","FACT_ATT18","FACT_ATT19","FACT_ATT20","FACT_PK"
+                           "fact_fk1", "fact_fk2", "fact_fk3", "fact_fk4", "fact_fk5", "fact_att6", "fact_att7","fact_att8","fact_att9","fact_att10","fact_att11","fact_att12","fact_att13","fact_att14","fact_att15","fact_att16","fact_att17","fact_att18","fact_att19","fact_att20","fact_pk"
                        ],
                        "columnTypes": [
-                          "INT_TYPE", "INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE","INT_TYPE"
+                          "LONG_TYPE", "LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE"
                        ]
                    },
-                   "sql": "SELECT * FROM \"public:syntheticBenchmark:factFixedCheck\""
+                   "sql": "SELECT * FROM \"public:syntheticBenchmark:fact\""
                },
                 {
                     "argChild": 1,
@@ -44,7 +44,7 @@
                     "opType": "DbInsert",
                     "relationKey": {
                         "programName": "syntheticBenchmark",
-                        "relationName": "factHashFixed8W",
+                        "relationName": "fact",
                         "userName": "public"
                     },
                     "argOverwriteTable": true

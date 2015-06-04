@@ -10,7 +10,7 @@
   },
   "source" : {
     "dataType" : "File",
-    "filename" : "/disk2/jortiz16/datasetSSB/dateOUT.csv"
+    "filename" : "/mnt/raw/dateOUT.csv"
   },
    "overwrite": true,
   "delimiter": "|"

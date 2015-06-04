@@ -8,10 +8,10 @@
                    "opName": "Scan",
                    "schema": {
                        "columnNames": [
-                           "DIM_PK1_1", "DIM_ATT2_1","DIM_ATT3_1","DIM_ATT4_1"
+                           "dim_pk1_1", "dim_att2_1","dim_att3_1","dim_att4_1"
                        ],
                        "columnTypes": [
-                           "INT_TYPE", "STRING_TYPE", "STRING_TYPE","STRING_TYPE"
+                           "LONG_TYPE", "STRING_TYPE", "STRING_TYPE","STRING_TYPE"
                        ]
                    },
                    "sql": "SELECT * FROM \"public:syntheticBenchmark:dim1\""

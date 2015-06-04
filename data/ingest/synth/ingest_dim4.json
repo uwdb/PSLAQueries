@@ -10,7 +10,8 @@
   },
   "source" : {
     "dataType" : "File",
-    "filename" : "/vega2/jortiz16/customBenchmark/DIMENSION4.csv"
+    "filename" : "/mnt/raw/DIMENSION4.csv"
   },
+  "overwrite": true,
   "delimiter": "|"
 }

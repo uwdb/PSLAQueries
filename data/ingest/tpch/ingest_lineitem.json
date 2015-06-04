@@ -10,7 +10,7 @@
   },
   "source" : {
     "dataType" : "File",
-    "filename" : "/disk2/jortiz16/datasetSSB/lineorderOUT.csv"
+    "filename" : "/mnt/raw/lineorderOUT.csv"
   },
    "overwrite": true,
   "delimiter": "|"

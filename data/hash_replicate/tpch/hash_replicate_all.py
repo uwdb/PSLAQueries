@@ -4,10 +4,10 @@ from myria import MyriaRelation
 import json
 import time
 
-master = "rest.myria.cs.washington.edu"
-port = 1776
+master = "ec2-54-145-53-252.compute-1.amazonaws.com"
+port = 8753
 
-connection = MyriaConnection(hostname =master, port=port, ssl=True, execution_url="https://myria-web.appspot.com")
+connection = MyriaConnection(hostname =master, port=port, ssl=False)
 
 configurations = [4,6,8]
 
@@ -17,7 +17,7 @@ for c in configurations:
 	#hash table first
 	hash_file = open('hashLineitem.json', 'r+')
 	hash_json = json.load(hash_file)
-	hash_json['rawQuery'] = "Hash Lineitem on " + c
+	hash_json['rawQuery'] = "Hash Lineitem on " + str(c)
  	hash_json['fragments'][1]['overrideWorkers'] = range(1,c+1)
 	hash_json['fragments'][1]['operators'][1]['relationKey']['programName'] = 'adhoc10GB' + str(c) + 'W'
 
@@ -34,10 +34,10 @@ for c in configurations:
 	for d in dimensionFiles:
 		dim_file = open(d, 'r+')
 		dim_json = json.load(dim_file)
-		dim_json['rawQuery'] = "Replicate " + d + " on " + c
+		dim_json['rawQuery'] = "Replicate " + str(d) + " on " + str(c)
 		dim_json['fragments'][1]['overrideWorkers'] = range(1,c+1)
 		dim_json['fragments'][1]['operators'][1]['relationKey']['programName'] = 'adhoc10GB' + str(c) + 'W'
-		print 'Replicating ' + d +  ' on ' + str(c) + ' workers'
+		print 'Replicating ' + str(d) +  ' on ' + str(c) + ' workers'
 		query_status= connection.submit_query(dim_json)
 		query_id = query_status['queryId']
 		status = (connection.get_query_status(query_id))['status']

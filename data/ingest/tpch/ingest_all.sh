@@ -1,5 +1,5 @@
-MASTER=https://rest.myria.cs.washington.edu
-PORT=1776
+MASTER=ec2-54-145-53-252.compute-1.amazonaws.com
+PORT=8753
 
 curl -i -XPOST $MASTER:$PORT/dataset -H "Content-type: application/json"  -d @./ingest_lineitem.json
 

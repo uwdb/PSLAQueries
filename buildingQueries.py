@@ -12,11 +12,11 @@ import schemaHelper
 catalog = FromFileCatalog.load_from_file("schema.py")
 _parser = parser.Parser()
 
-use_cases = ['tpch/tpch-myrial.txt','synth/synth-myrial.txt']
+use_cases = ['queries/tpch/tpch-myrial.txt'] #,'queries/synth/synth-myrial.txt']
 plan_workers = [4,6,8]
 
 type_2 = True
-type_3 = False
+type_3 = True
 
 #Queries Transformation:
 for current_use_case in use_cases: 
@@ -41,24 +41,19 @@ for current_use_case in use_cases:
 				json_data['plan']['fragments'][0]['overrideWorkers'] = range(1,w +1)
 
 				#rename tables correctly
-				if(current_use_case == 'tpch/tpch-myrial.txt'):
-					list_relations = ['adhoc10GB:lineitemHash', 'adhoc10GB:supplierReplicate', 'adhoc10GB:partReplicate',  'adhoc10GB:dateReplicate', 'adhoc10GB:customerReplicate']
+				if(current_use_case == 'queries/tpch/tpch-myrial.txt'):
 					json_string = json.dumps(json_data)
-					for l in list_relations:
-						json_string = json_string.replace(l, json_string.split(':')[0] + str(w) + 'W:' + json_string.split(':')[1])
+					json_string = json_string.replace('adhoc10GB', 'adhoc10GB' + str(w) + 'W')
 					json_data = json.loads(json_string)
+					directory = 'queries/tpch/tpch-type2/' 
 
-					directory = 'tpch/tpch-type2/' 
-
-				elif (current_use_case == 'synth/synth-myrial.txt'):
-					list_relations = ['syntheticBenchmark:factHash', 'syntheticBenchmark:dimension1Replicate', 'syntheticBenchmark:dimension2Replicate',  'syntheticBenchmark:dimension3Replicate', 'syntheticBenchmark:dimension4Replicate', 'syntheticBenchmark:dimension5Replicate']
+				elif (current_use_case == 'queries/synth/synth-myrial.txt'):
 					json_string = json.dumps(json_data)
-					for l in list_relations:
-						json_string = json_string.replace(l, json_string.split(':')[0] + str(w) + 'W:' + json_string.split(':')[1])
+					json_string = json_string.replace('syntheticBenchmark', 'syntheticBenchmark' + str(w) + 'W')
 					json_data = json.loads(json_string)
+					directory ='queries/synth/synth-type2/'  
 
-					directory ='synth/synth-type2/'  
-
+				json_data['rawQuery'] = 'Query ' + str(counter) + ' for type-2 on ' + str(w) + ' workers'
 				f = open(directory + str(w) + '/query' + str(counter) + '.json', 'w')
 				json.dump(json_data, f)
 				f.close()	
@@ -93,24 +88,38 @@ for current_use_case in use_cases:
 										to_fragment = frag
 						from_fragment['overrideWorkers'] = range(1,i+1)
 						to_fragment['overrideWorkers'] = range(1,j+1)
-						#name tables correctly
-						if(current_use_case == 'tpch/tpch-myrial.txt'):
-							list_relations = ['adhoc10GB:lineitemHash', 'adhoc10GB:supplierReplicate', 'adhoc10GB:partReplicate',  'adhoc10GB:dateReplicate', 'adhoc10GB:customerReplicate']
-							json_string = json.dumps(json_data)
-							for l in list_relations:
-								json_string = json_string.replace(l, json_string.split(':')[0] + str(w) + 'W:' + json_string.split(':')[1])
-							json_data = json.loads(json_string)
 
-							directory = 'tpch/tpch-type3/tpch-type3a/' if (i < j) else 'tpch/tpch-type3/tpch-type3b/'
+						if(current_use_case == 'queries/tpch/tpch-myrial.txt'):
+							for current_operator in from_fragment['operators']:
+								if current_operator['opType'] == 'DbQueryScan':
+									current_operator['sql'] = current_operator['sql'].replace('adhoc10GB', 'adhoc10GB' + str(i) + 'W')
+								if current_operator['opType'] == 'TableScan':
+									current_operator['relationKey']['programName'] =  'adhoc10GB' + str(i) + 'W'
 
-						elif (current_use_case == 'synth/synth-myrial.txt'):
-							list_relations = ['syntheticBenchmark:factHash', 'syntheticBenchmark:dimension1Replicate', 'syntheticBenchmark:dimension2Replicate',  'syntheticBenchmark:dimension3Replicate', 'syntheticBenchmark:dimension4Replicate', 'syntheticBenchmark:dimension5Replicate']
-							json_string = json.dumps(json_data)
-							for l in list_relations:
-								json_string = json_string.replace(l, json_string.split(':')[0] + str(w) + 'W:' + json_string.split(':')[1])
-							json_data = json.loads(json_string)
+							for current_operator in to_fragment['operators']:
+								if current_operator['opType'] == 'DbQueryScan':
+									current_operator['sql'] = current_operator['sql'].replace('adhoc10GB', 'adhoc10GB' + str(j) + 'W')
+								if current_operator['opType'] == 'TableScan':
+									current_operator['relationKey']['programName'] =  'adhoc10GB' + str(j) + 'W'
 
-							directory = 'synth/synth-type3/synth-type3a/' if (i < j) else 'synth/synth-type3/synth-type3b/'
+							directory = 'queries/tpch/tpch-type3/tpch-type3a/' if (i < j) else 'queries/tpch/tpch-type3/tpch-type3b/'
+							json_data['rawQuery'] = 'Query ' + str(counter) + ' for type-3 on ' + str(i) + ' starting datanodes'
+
+						elif (current_use_case == 'queries/synth/synth-myrial.txt'):
+							for current_operator in from_fragment['operators']:
+								if current_operator['opType'] == 'DbQueryScan':
+									current_operator['sql'] = current_operator['sql'].replace('syntheticBenchmark', 'syntheticBenchmark' + str(i) + 'W')
+								if current_operator['opType'] == 'TableScan':
+									current_operator['relationKey']['programName'] =  'syntheticBenchmark' + str(i) + 'W'
+
+							for current_operator in from_fragment['operators']:
+								if current_operator['opType'] == 'DbQueryScan':
+									current_operator['sql'] = current_operator['sql'].replace('syntheticBenchmark', 'syntheticBenchmark' + str(j) + 'W')
+								if current_operator['opType'] == 'TableScan':
+									current_operator['relationKey']['programName'] =  'syntheticBenchmark' + str(j) + 'W'
+
+							directory = 'queries/synth/synth-type3/synth-type3a/' if (i < j) else 'queries/synth/synth-type3/synth-type3b/'
+							json_data['rawQuery'] = 'Query ' + str(counter) + ' for type-3 on ' + str(i) + ' starting datanodes'
 
 						#write the json to a file
 						f = open(directory+ str(i) + '_datanodes/' + str(j) + '_computenodes/query' + str(counter) + '.json', 'w')
