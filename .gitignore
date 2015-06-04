@@ -7,3 +7,12 @@ queries/tpch/tpch-type3/tpch-type3a/6_datanodes/8_computenodes/query*
 queries/tpch/tpch-type3/tpch-type3b/8_datanodes/4_computenodes/query*
 queries/tpch/tpch-type3/tpch-type3b/8_datanodes/6_computenodes/query*
 queries/tpch/tpch-type3/tpch-type3b/6_datanodes/4_computenodes/query*
+queries/synth/synth-type2/4/query*
+queries/synth/synth-type2/6/query*
+queries/synth/synth-type2/8/query*
+queries/synth/synth-type3/synth-type3a/4_datanodes/6_computenodes/query*
+queries/synth/synth-type3/synth-type3a/4_datanodes/8_computenodes/query*
+queries/synth/synth-type3/synth-type3a/6_datanodes/8_computenodes/query*
+queries/synth/synth-type3/synth-type3b/8_datanodes/4_computenodes/query*
+queries/synth/synth-type3/synth-type3b/8_datanodes/6_computenodes/query*
+queries/synth/synth-type3/synth-type3b/6_datanodes/4_computenodes/query*

@@ -7,12 +7,11 @@ import raco.algebra as alg
 import raco.language.myrialang
 from raco.language.logical import OptLogicalAlgebra
 from raco.expression.expression import UnnamedAttributeRef
-import schemaHelper
 
 catalog = FromFileCatalog.load_from_file("schema.py")
 _parser = parser.Parser()
 
-use_cases = ['queries/tpch/tpch-myrial.txt'] #,'queries/synth/synth-myrial.txt']
+use_cases = ['queries/synth/synth-myrial.txt'] # 'queries/tpch/tpch-myrial.txt',
 plan_workers = [4,6,8]
 
 type_2 = True
