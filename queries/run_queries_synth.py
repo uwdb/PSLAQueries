@@ -9,6 +9,7 @@ import subprocess
 import time
 import myria
 import random
+from urllib2 import Request, urlopen
 
 hostname = 'ec2-54-204-137-94.compute-1.amazonaws.com'
 port = 8753
@@ -30,16 +31,16 @@ else:
 #all possible paths
 
 qPath = [#"synth/synth-type2/4/", 
-		 "synth/synth-type2/6/", 
-		 "synth/synth-type2/8/", 
+		 #"synth/synth-type2/6/", 
+		 #"synth/synth-type2/8/", 
 
 		 "synth/synth-type3/synth-type3a/4_datanodes/6_computenodes/", 
 		 "synth/synth-type3/synth-type3a/4_datanodes/8_computenodes/",
 		 "synth/synth-type3/synth-type3a/6_datanodes/8_computenodes/",
 
-		 "synth/synth-type3/synth-type3a/6_datanodes/4_computenodes/",
+		 "synth/synth-type3/synth-type3b/6_datanodes/4_computenodes/",
 		 "synth/synth-type3/synth-type3b/8_datanodes/6_computenodes/",
-		 "synth/synth-type3/synth-type3a/8_datanodes/4_computenodes/"]
+		 "synth/synth-type3/synth-type3b/8_datanodes/4_computenodes/"]
 
 
 
@@ -74,6 +75,10 @@ for p in qPath:
 
 				status = (connection.get_query_status(query_id))['status']
 
+				#for timeouts -- no more than 300 seconds
+				now_time = time.time()
+				future_time = now + 300
+
 				#keep checking, sleep a little
 				while status!='SUCCESS':
 					status = (connection.get_query_status(query_id))['status']
@@ -81,10 +86,16 @@ for p in qPath:
 					if status=='SUCCESS':
 						break;
 					elif status=='ERROR':
+						f.write('ERROR: ')
 						break;
 					elif status=='KILLED':
 						break;
-					time.sleep(2);
+					time.sleep(2)
+					if time.time() > future_time:
+						request = Request(hostname + ":" + port +  "/query/query-" + query_id)
+						request.get_method = lambda: 'DELETE'
+						response_body = urlopen(request).read()
+						#status is now KILLIING
 
 				#if the query was not killed then get the runtime and increase counter by one
 				if status!='KILLED':
@@ -99,7 +110,7 @@ for p in qPath:
 			except:
 				print "Query does not exist"
 				f.write('N/A')
-
+				break
 		timeSeconds = (averageTime / 1.0) /1000000000.0;
 		print('Logging average runtime ' + str(timeSeconds));
 		f.write(str(counter) + ',' + str(timeSeconds) + "\n");

@@ -14,16 +14,15 @@ port = 8753
 
 connection = myria.MyriaConnection(hostname=hostname, port=port)
 
-qList = [3,4,39,40,67,279,280,343,344,383,384,483,484,523,524,655,656,695,696,895];
+qList = [3,4,39,40,67,279,280,343,344,383,384,483,484,523,524,655,656,695,696,895]
 qPath = [ 
+		 #"tpch/tpch-type3/tpch-type3a/4_datanodes/6_computenodes/", 
+		 #"tpch/tpch-type3/tpch-type3a/4_datanodes/8_computenodes/",
+		 #"tpch/tpch-type3/tpch-type3a/6_datanodes/8_computenodes/",
 
-		 "tpch/tpch-type3/tpch-type3a/4_datanodes/6_computenodes/", 
-		 "tpch/tpch=-type3/tpch-type3a/4_datanodes/8_computenodes/",
-		 "tpch/tpch-type3/tpch-type3a/6_datanodes/8_computenodes/",
-
-		 "tpch/tpch-type3/tpch-type3a/6_datanodes/4_computenodes/",
+		 "tpch/tpch-type3/tpch-type3b/6_datanodes/4_computenodes/",
 		 "tpch/tpch-type3/tpch-type3b/8_datanodes/6_computenodes/",
-		 "tpch/tpch-type3/tpch-type3a/8_datanodes/4_computenodes/"]
+		 "tpch/tpch-type3/tpch-type3b/8_datanodes/4_computenodes/"]
 
 for p in qPath:
 	counter = 0;
@@ -35,14 +34,16 @@ for p in qPath:
 		averageTime = 0.0
 		i = 0
 		while i < 3:
-			#call bash scripts
-			subprocess.call(['/bin/bash',"clear-tpch.sh"]);
-			print("postgres and os cleared")
-
 			try:
+				print "Q", q
+				print 'Query Path: ', p + "query" + str(q) + ".json"
 				json_data=open(os.path.expanduser(p + "query" + str(q) + ".json"))
 				data = json.load(json_data)
 				json_data.close()
+
+				#call bash scripts
+				subprocess.call(['/bin/bash',"clear-tpch.sh"]);
+				print("postgres and os cleared")
 
 				#try running the query
 				try:
@@ -61,6 +62,7 @@ for p in qPath:
 					if status=='SUCCESS':
 						break;
 					elif status=='ERROR':
+						f.write('ERROR: ')
 						break;
 					elif status=='KILLED':
 						break;
@@ -79,6 +81,7 @@ for p in qPath:
 			except:
 				print "Query does not exist"
 				f.write('N/A ')
+				break
 
 		timeSeconds = (averageTime / 3.0) /1000000000.0;
 		print('Logging average runtime ' + str(timeSeconds));

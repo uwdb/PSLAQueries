@@ -11,7 +11,7 @@ from raco.expression.expression import UnnamedAttributeRef
 catalog = FromFileCatalog.load_from_file("schema.py")
 _parser = parser.Parser()
 
-use_cases = ['queries/synth/synth-myrial.txt'] # 'queries/tpch/tpch-myrial.txt',
+use_cases = ['queries/tpch/tpch-myrial.txt', 'queries/synth/synth-myrial.txt']
 plan_workers = [4,6,8]
 
 type_2 = True
@@ -71,6 +71,8 @@ for current_use_case in use_cases:
 			for i in plan_workers: #data_nodes
 				for j in plan_workers: #compute_nodes
 					if (i != j) and (len(json_data['plan']['fragments']) > 1): #join queries should only scale
+						json_data = processor.get_json(push_sql=True, type2=False, type3=True)
+
 						if (len(json_data['plan']['fragments']) > 2):
 							print "ERROR: more than two fragments"
 							sys.exit(0)
@@ -91,14 +93,16 @@ for current_use_case in use_cases:
 						if(current_use_case == 'queries/tpch/tpch-myrial.txt'):
 							for current_operator in from_fragment['operators']:
 								if current_operator['opType'] == 'DbQueryScan':
-									current_operator['sql'] = current_operator['sql'].replace('adhoc10GB', 'adhoc10GB' + str(i) + 'W')
-								if current_operator['opType'] == 'TableScan':
+									sql_value = current_operator['sql']
+									current_operator['sql'] = sql_value.replace('adhoc10GB', 'adhoc10GB' + str(i) + 'W')
+								elif current_operator['opType'] == 'TableScan':
 									current_operator['relationKey']['programName'] =  'adhoc10GB' + str(i) + 'W'
 
 							for current_operator in to_fragment['operators']:
 								if current_operator['opType'] == 'DbQueryScan':
-									current_operator['sql'] = current_operator['sql'].replace('adhoc10GB', 'adhoc10GB' + str(j) + 'W')
-								if current_operator['opType'] == 'TableScan':
+									sql_value = current_operator['sql']
+									current_operator['sql'] = sql_value.replace('adhoc10GB', 'adhoc10GB' + str(j) + 'W')
+								elif current_operator['opType'] == 'TableScan':
 									current_operator['relationKey']['programName'] =  'adhoc10GB' + str(j) + 'W'
 
 							directory = 'queries/tpch/tpch-type3/tpch-type3a/' if (i < j) else 'queries/tpch/tpch-type3/tpch-type3b/'
@@ -107,14 +111,16 @@ for current_use_case in use_cases:
 						elif (current_use_case == 'queries/synth/synth-myrial.txt'):
 							for current_operator in from_fragment['operators']:
 								if current_operator['opType'] == 'DbQueryScan':
-									current_operator['sql'] = current_operator['sql'].replace('syntheticBenchmark', 'syntheticBenchmark' + str(i) + 'W')
-								if current_operator['opType'] == 'TableScan':
+									sql_value = current_operator['sql']
+									current_operator['sql'] = sql_value.replace('syntheticBenchmark', 'syntheticBenchmark' + str(i) + 'W')
+								elif current_operator['opType'] == 'TableScan':
 									current_operator['relationKey']['programName'] =  'syntheticBenchmark' + str(i) + 'W'
 
-							for current_operator in from_fragment['operators']:
+							for current_operator in to_fragment['operators']:
 								if current_operator['opType'] == 'DbQueryScan':
-									current_operator['sql'] = current_operator['sql'].replace('syntheticBenchmark', 'syntheticBenchmark' + str(j) + 'W')
-								if current_operator['opType'] == 'TableScan':
+									sql_value = current_operator['sql']
+									current_operator['sql'] = sql_value.replace('syntheticBenchmark', 'syntheticBenchmark' + str(j) + 'W')
+								elif current_operator['opType'] == 'TableScan':
 									current_operator['relationKey']['programName'] =  'syntheticBenchmark' + str(j) + 'W'
 
 							directory = 'queries/synth/synth-type3/synth-type3a/' if (i < j) else 'queries/synth/synth-type3/synth-type3b/'
