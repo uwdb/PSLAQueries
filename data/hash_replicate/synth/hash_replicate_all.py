@@ -4,7 +4,7 @@ from myria import MyriaRelation
 import json
 import time
 
-master = "ec2-54-204-137-94.compute-1.amazonaws.com"
+master = "ec2-174-129-111-140.compute-1.amazonaws.com"
 port = 8753
 
 connection = MyriaConnection(hostname =master, port=port)

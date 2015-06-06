@@ -11,7 +11,7 @@ import myria
 import random
 from urllib2 import Request, urlopen
 
-hostname = 'ec2-54-204-137-94.compute-1.amazonaws.com'
+hostname = 'ec2-174-129-111-140.compute-1.amazonaws.com'
 port = 8753
 
 connection = myria.MyriaConnection(hostname=hostname, port=port)
@@ -19,7 +19,7 @@ connection = myria.MyriaConnection(hostname=hostname, port=port)
 newList = False
 
 if newList:
-	qList = random.sample(range(1, 1223), 500)
+	qList = random.sample(range(1, 1223), 200)
 	qList.sort()
 	r = open(os.path.expanduser("synth-random.txt"), 'w')
 	r.write(', '.join(map(str, qList)))
@@ -30,9 +30,10 @@ else:
 
 #all possible paths
 
-qPath = [#"synth/synth-type2/4/", 
-		 #"synth/synth-type2/6/", 
-		 #"synth/synth-type2/8/", 
+qPath = [
+		#"synth/synth-type2/4/", 
+		 "synth/synth-type2/6/", 
+		 "synth/synth-type2/8/", 
 
 		 "synth/synth-type3/synth-type3a/4_datanodes/6_computenodes/", 
 		 "synth/synth-type3/synth-type3a/4_datanodes/8_computenodes/",
@@ -75,9 +76,9 @@ for p in qPath:
 
 				status = (connection.get_query_status(query_id))['status']
 
-				#for timeouts -- no more than 300 seconds
+				#for timeouts -- no more than 10 min
 				now_time = time.time()
-				future_time = now + 300
+				future_time = now_time + 600
 
 				#keep checking, sleep a little
 				while status!='SUCCESS':
@@ -93,25 +94,23 @@ for p in qPath:
 						break;
 					time.sleep(2)
 					if time.time() > future_time:
+						print "Query Stopped"
 						connection.kill_query(query_id)
 						#status should now be KILLING
+				#Regardless if the query was killed or not, keep going
+				print('Query #' + str(counter) + status);
+				totalElapsedTime = int((connection.get_query_status(query_id))['elapsedNanos'])
+				averageTime = averageTime + totalElapsedTime
+				i = i + 1
+				print averageTime
 
-				#if the query was not killed then get the runtime and increase counter by one
-				if status!='KILLED' and status!='ERROR':
-					print('Query #' + str(counter) + ' Finished with ' + status);
-					totalElapsedTime = int((connection.get_query_status(query_id))['elapsedNanos'])
-					averageTime = averageTime + totalElapsedTime
-					i = i + 1
-					print averageTime
-				else:
-					print("Do over");
-					print('Query #' + str(counter));
 			except:
-				print "Query does not exist"
-				f.write('N/A')
+				print "Query Error"
+				f.write('N/A: ')
 				break
 		timeSeconds = (averageTime / 1.0) /1000000000.0;
 		print('Logging average runtime ' + str(timeSeconds));
 		f.write(str(counter) + ',' + str(timeSeconds) + "\n");
+		f.flush()
 		counter = counter + 1;
 	f.close();
