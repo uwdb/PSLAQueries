@@ -89,16 +89,15 @@ for p in qPath:
 						f.write('ERROR: ')
 						break;
 					elif status=='KILLED':
+						f.write('KILLED TIMEOUT: ')
 						break;
 					time.sleep(2)
 					if time.time() > future_time:
-						request = Request(hostname + ":" + port +  "/query/query-" + query_id)
-						request.get_method = lambda: 'DELETE'
-						response_body = urlopen(request).read()
-						#status is now KILLIING
+						connection.kill_query(query_id)
+						#status should now be KILLING
 
 				#if the query was not killed then get the runtime and increase counter by one
-				if status!='KILLED':
+				if status!='KILLED' and status!='ERROR':
 					print('Query #' + str(counter) + ' Finished with ' + status);
 					totalElapsedTime = int((connection.get_query_status(query_id))['elapsedNanos'])
 					averageTime = averageTime + totalElapsedTime

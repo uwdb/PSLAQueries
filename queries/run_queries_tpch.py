@@ -9,7 +9,7 @@ import subprocess
 import time
 import myria
 
-hostname = 'ec2-54-145-53-252.compute-1.amazonaws.com'
+hostname = 'ec2-54-146-206-145.compute-1.amazonaws.com'
 port = 8753
 
 connection = myria.MyriaConnection(hostname=hostname, port=port)

@@ -4,7 +4,7 @@ from myria import MyriaRelation
 import json
 import time
 
-master = "ec2-54-145-53-252.compute-1.amazonaws.com"
+master = "ec2-54-146-206-145.compute-1.amazonaws.com"
 port = 8753
 
 connection = MyriaConnection(hostname =master, port=port, ssl=False)
@@ -45,5 +45,3 @@ for c in configurations:
 			status = (connection.get_query_status(query_id))['status']
 			time.sleep(2);
 		print 'done'
-
-
