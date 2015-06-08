@@ -8,13 +8,28 @@ import urllib
 import subprocess
 import time
 import myria
+import random
 
 hostname = 'ec2-54-204-127-83.compute-1.amazonaws.com'
 port = 8753
 
 connection = myria.MyriaConnection(hostname=hostname, port=port)
 #68 missing
-qList = [2,3,38,39,66,67,278,279,342,343,382,383,482,483,522,523,654,655,694,695,894]
+#qList = [2,3,38,39,66,67,278,279,342,343,382,383,482,483,522,523,654,655,694,695,894]
+
+newList = True
+
+if newList:
+	qList = random.sample(range(1, 896), 100)
+	qList.sort()
+	r = open(os.path.expanduser("tpch-random.txt"), 'w')
+	r.write(', '.join(map(str, qList)))
+	r.close()
+else:
+	qList = open(os.path.expanduser("tpch-random.txt"), 'r')
+	qList = qList.read().split(',')
+
+
 qPath = [ 
 		"tpch/tpch-type2/4/",
 		"tpch/tpch-type2/6/",
@@ -31,7 +46,7 @@ qPath = [
 for p in qPath:
 	counter = 0;
 	#open the file to log the runtimes
-	f = open(os.path.expanduser(p + "runtimes.txt"), 'w');
+	f = open(os.path.expanduser(p + "runtimes-sample100.txt"), 'w');
 	print "FOR PATH " + p
 	#for each query
 	for q in qList:
