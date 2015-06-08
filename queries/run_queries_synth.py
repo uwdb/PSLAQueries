@@ -22,11 +22,13 @@ newList = True
 skippable = []
 counter_skip = 0
 for s in range(0,1223):
-	if(counter_skip == 4):
+	if(counter_skip == 3):
 		skippable.append(s)
 		counter_skip = 0
 	else:
 		counter_skip = counter_skip + 1
+
+print skippable
 
 if newList:
 	qList = random.sample(range(0, 1223), 200)
@@ -38,12 +40,17 @@ if newList:
 else:
 	qList = open(os.path.expanduser("synth-random.txt"), 'r')
 	qList = qList.read().split(',')
+	qList = [q for q in qList if q not in skippable]
+
+	r = open(os.path.expanduser("synth-random-removed.txt"), 'w')
+	r.write(', '.join(map(str, qList)))
+	r.close()
 
 
 #all possible paths
 
 qPath = [
-		 "synth/synth-type2/4/", 
+		 #"synth/synth-type2/4/", 
 		 "synth/synth-type2/6/", 
 		 "synth/synth-type2/8/", 
 
@@ -68,6 +75,7 @@ for p in qPath:
 		i = 0
 		while i < 1:
 			try:
+				#q = q.strip()
 				print 'Query Path: ', p + "query" + str(q) + ".json"
 				json_data=open(os.path.expanduser(p + "query" + str(q) + ".json"))
 				data = json.load(json_data)
