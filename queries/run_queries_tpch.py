@@ -9,20 +9,24 @@ import subprocess
 import time
 import myria
 
-hostname = 'ec2-54-146-206-145.compute-1.amazonaws.com'
+hostname = 'ec2-54-204-127-83.compute-1.amazonaws.com'
 port = 8753
 
 connection = myria.MyriaConnection(hostname=hostname, port=port)
-
-qList = [3,4,39,40,67,279,280,343,344,383,384,483,484,523,524,655,656,695,696,895]
+#68 missing
+qList = [2,3,38,39,66,67,278,279,342,343,382,383,482,483,522,523,654,655,694,695,894]
 qPath = [ 
-		 #"tpch/tpch-type3/tpch-type3a/4_datanodes/6_computenodes/", 
-		 #"tpch/tpch-type3/tpch-type3a/4_datanodes/8_computenodes/",
-		 #"tpch/tpch-type3/tpch-type3a/6_datanodes/8_computenodes/",
+		"tpch/tpch-type2/4/",
+		"tpch/tpch-type2/6/",
+		"tpch/tpch-type2/8/",
 
-		 "tpch/tpch-type3/tpch-type3b/6_datanodes/4_computenodes/",
-		 "tpch/tpch-type3/tpch-type3b/8_datanodes/6_computenodes/",
-		 "tpch/tpch-type3/tpch-type3b/8_datanodes/4_computenodes/"]
+		"tpch/tpch-type3/tpch-type3a/4_datanodes/6_computenodes/", 
+		"tpch/tpch-type3/tpch-type3a/4_datanodes/8_computenodes/",
+		"tpch/tpch-type3/tpch-type3a/6_datanodes/8_computenodes/",
+
+		"tpch/tpch-type3/tpch-type3b/6_datanodes/4_computenodes/",
+		"tpch/tpch-type3/tpch-type3b/8_datanodes/6_computenodes/",
+		"tpch/tpch-type3/tpch-type3b/8_datanodes/4_computenodes/"]
 
 for p in qPath:
 	counter = 0;
@@ -33,7 +37,7 @@ for p in qPath:
 	for q in qList:
 		averageTime = 0.0
 		i = 0
-		while i < 3:
+		while i < 1:
 			try:
 				print "Q", q
 				print 'Query Path: ', p + "query" + str(q) + ".json"
@@ -83,7 +87,7 @@ for p in qPath:
 				f.write('N/A ')
 				break
 
-		timeSeconds = (averageTime / 3.0) /1000000000.0;
+		timeSeconds = (averageTime / 1.0) /1000000000.0;
 		print('Logging average runtime ' + str(timeSeconds));
 		f.write(str(counter) + ',' + str(timeSeconds) + "\n");
 		counter = counter + 1;

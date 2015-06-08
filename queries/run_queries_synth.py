@@ -32,7 +32,7 @@ else:
 
 qPath = [
 		#"synth/synth-type2/4/", 
-		 "synth/synth-type2/6/", 
+		# "synth/synth-type2/6/", 
 		 "synth/synth-type2/8/", 
 
 		 "synth/synth-type3/synth-type3a/4_datanodes/6_computenodes/", 
