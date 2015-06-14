@@ -9,8 +9,8 @@
     "columnNames" : ["c_custkey", "c_name", "c_address", "c_city", "c_nation_prefix", "c_nation", "c_region", "c_phone", "c_mktsegment"]
   },
   "source" : {
-    "dataType" : "File",
-    "filename" : "/mnt/raw/customerOUT.csv"
+    "dataType" : "URI",
+    "uri" : "https://s3-us-west-2.amazonaws.com/tpchssb/customerOUT.csv"
   },
    "overwrite": true,
   "delimiter": ","

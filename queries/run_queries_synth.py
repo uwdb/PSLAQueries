@@ -11,59 +11,57 @@ import myria
 import random
 from urllib2 import Request, urlopen
 
-hostname = 'ec2-54-204-65-82.compute-1.amazonaws.com'
+hostname = 'localhost'
 port = 8753
 
 connection = myria.MyriaConnection(hostname=hostname, port=port)
 
 newList = True
 
-#skip 100% for now
-skippable = []
-counter_skip = 0
-for s in range(0,1223):
-	if(counter_skip == 3):
-		skippable.append(s)
-		counter_skip = 0
-	else:
-		counter_skip = counter_skip + 1
-
-print skippable
 
 if newList:
 	qList = random.sample(range(0, 1223), 200)
 	qList.sort()
-	qList = [q for q in qList if q not in skippable]
 	r = open(os.path.expanduser("synth-random.txt"), 'w')
 	r.write(', '.join(map(str, qList)))
 	r.close()
 else:
 	qList = open(os.path.expanduser("synth-random.txt"), 'r')
 	qList = qList.read().split(',')
-	qList = [q for q in qList if q not in skippable]
-
-	r = open(os.path.expanduser("synth-random-removed.txt"), 'w')
-	r.write(', '.join(map(str, qList)))
-	r.close()
-
 
 #all possible paths
 
 qPath = [
-		 #"synth/synth-type2/4/", 
-		 "synth/synth-type2/6/", 
-		 "synth/synth-type2/8/", 
+		"synth/synth-type2/4/",
+		"synth/synth-type2/6/",
+		"synth/synth-type2/8/",
+		"synth/synth-type2/10/",
+		"synth/synth-type2/12/"
 
-		 "synth/synth-type3/synth-type3a/4_datanodes/6_computenodes/", 
-		 "synth/synth-type3/synth-type3a/4_datanodes/8_computenodes/",
-		 "synth/synth-type3/synth-type3a/6_datanodes/8_computenodes/",
+		"synth/synth-type3/synth-type3a/4_datanodes/6_computenodes/"
+		"synth/synth-type3/synth-type3a/4_datanodes/8_computenodes/"
+		"synth/synth-type3/synth-type3a/4_datanodes/10_computenodes/"
+		"synth/synth-type3/synth-type3a/4_datanodes/12_computenodes/"
+		"synth/synth-type3/synth-type3a/6_datanodes/8_computenodes/"
+		"synth/synth-type3/synth-type3a/6_datanodes/10_computenodes/"
+		"synth/synth-type3/synth-type3a/6_datanodes/12_computenodes/"
+		"synth/synth-type3/synth-type3a/8_datanodes/10_computenodes/"
+		"synth/synth-type3/synth-type3a/8_datanodes/12_computenodes/"
+		"synth/synth-type3/synth-type3a/10_datanodes/12_computenodes/"
 
-		 "synth/synth-type3/synth-type3b/6_datanodes/4_computenodes/",
-		 "synth/synth-type3/synth-type3b/8_datanodes/6_computenodes/",
-		 "synth/synth-type3/synth-type3b/8_datanodes/4_computenodes/"]
+		"synth/synth-type3/synth-type3b/6_datanodes/4_computenodes/"
+		"synth/synth-type3/synth-type3b/8_datanodes/4_computenodes/"
+		"synth/synth-type3/synth-type3b/8_datanodes/6_computenodes/"
+		"synth/synth-type3/synth-type3b/10_datanodes/4_computenodes/"
+		"synth/synth-type3/synth-type3b/10_datanodes/6_computenodes/"
+		"synth/synth-type3/synth-type3b/10_datanodes/8_computenodes/"
+		"synth/synth-type3/synth-type3b/12_datanodes/4_computenodes/"
+		"synth/synth-type3/synth-type3b/12_datanodes/6_computenodes/"
+		"synth/synth-type3/synth-type3b/12_datanodes/8_computenodes/"
+		"synth/synth-type3/synth-type3b/12_datanodes/10_computenodes/"]
 
 
-
+#pathCounter = 0
 for p in qPath:
 	counter = 0;
 	#open the file to log the runtimes
@@ -124,5 +122,9 @@ for p in qPath:
 		print('Logging average runtime ' + str(timeSeconds));
 		f.write(str(counter) + ',' + str(timeSeconds) + "\n");
 		f.flush()
+		#bashCommand = "aws s3 cp " +  str(p) + "runtimes.txt"+ " s3://benchmarkruntimes/runtimes" + str(pathCounter) + ".txt" 
+		#print bashCommand
+		#os.system(bashCommand)
 		counter = counter + 1;
+	#pathCounter = pathCounter + 1
 	f.close();

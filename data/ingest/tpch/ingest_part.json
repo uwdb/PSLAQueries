@@ -9,8 +9,8 @@
     "columnNames" : ["p_partkey", "p_name","p_mfgr", "p_category", "p_brand", "p_color", "p_type", "p_size", "p_container"]
   },
   "source" : {
-    "dataType" : "File",
-    "filename" : "/mnt/raw/partOUT.csv"
+    "dataType" : "URI",
+    "uri" : "https://s3-us-west-2.amazonaws.com/tpchssb/partOUT.csv"
   },
    "overwrite": true,
   "delimiter": "|"

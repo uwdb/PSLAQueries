@@ -11,8 +11,8 @@ from raco.expression.expression import UnnamedAttributeRef
 catalog = FromFileCatalog.load_from_file("schema.py")
 _parser = parser.Parser()
 
-use_cases = ['queries/tpch/tpch-myrial.txt'] #queries/synth/synth-myrial.txt
-plan_workers = [4,6,8]
+use_cases = ['queries/tpch/tpch-myrial.txt', 'queries/synth/synth-myrial.txt']
+plan_workers = [4,6,8,10,12]
 
 type_2 = True
 type_3 = True

@@ -9,8 +9,8 @@
     "columnNames" : ["s_suppkey", "s_name", "s_address", "s_city", "s_nation_prefix","s_nation", "s_region", "s_phone"]
   },
   "source" : {
-    "dataType" : "File",
-    "filename" : "/mnt/raw/supplierOUT.csv"
+    "dataType" : "URI",
+    "uri" : "https://s3-us-west-2.amazonaws.com/tpchssb/supplierOUT.csv"
   },
   "overwrite": true,
   "delimiter": "|"

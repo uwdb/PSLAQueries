@@ -9,8 +9,8 @@
     "columnNames" : ["dim_pk1_5", "dim_att2_5","dim_att3_5","dim_att4_5","dim_att5_5","dim_att6_5","dim_att7_5","dim_att8_5","dim_att9_5","dim_att10_5","dim_att11_5","dim_att12_5"]
   },
   "source" : {
-    "dataType" : "File",
-    "filename" : "/mnt/raw/DIMENSION5.csv"
+    "dataType" : "URI",
+    "uri" : "https://s3-us-west-2.amazonaws.com/custombenchmark/DIMENSION5.csv"
   },
   "overwrite": true,
   "delimiter": "|"

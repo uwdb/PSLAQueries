@@ -1,7 +1,8 @@
-MASTER=ec2-54-204-65-82.compute-1.amazonaws.com
+MASTER=ec2-54-161-139-10.compute-1.amazonaws.com
 PORT=8753
 
-curl -i -XPOST $MASTER:$PORT/dataset -H "Content-type: application/json"  -d @./ingest_fact.json
+#ingesting all lineitems
+python ingest_parallel_fact.json $MASTER
 
 curl -i -XPOST $MASTER:$PORT/dataset -H "Content-type: application/json"  -d @./ingest_dim1.json
 
