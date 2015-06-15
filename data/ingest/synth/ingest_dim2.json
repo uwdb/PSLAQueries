@@ -10,7 +10,7 @@
   },
   "source" : {
    "dataType" : "URI",
-   "uri" : "https://s3-us-west-2.amazonaws.com/custombenchmark/DIMENSION2.csv"
+   "uri" : "https://s3-us-west-2.amazonaws.com/custombenchmarkv2/DIMENSION2.csv"
   },
   "overwrite": true,
   "delimiter": "|"
