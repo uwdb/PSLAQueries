@@ -63,7 +63,7 @@ qPath = [
 for p in qPath:
 	counter = 0;
 	#open the file to log the runtimes
-	f = open(os.path.expanduser(p + "runtimes-.txt"), 'w');
+	f = open(os.path.expanduser(p + "runtimes.txt"), 'w');
 	print "FOR PATH " + p
 	#for each query
 	for q in qList:
@@ -122,7 +122,7 @@ for p in qPath:
 
 		timeSeconds = (averageTime / 1.0) /1000000000.0;
 		print('Logging average runtime ' + str(timeSeconds));
-		f.write(str(counter) + ',' + str(timeSeconds) + "\n");
+		f.write(str(counter) + ',' + str(q) + ',' +  str(timeSeconds) + "\n");
 		f.flush()
 		pathSplit = p.split('/')
 		bashCommand = "aws s3 cp " +  str(p) + "runtimes.txt"+ " s3://benchmarkruntimes/runtimesTPCH" + str(pathSplit[4]) + ".txt" 
