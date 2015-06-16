@@ -14,7 +14,7 @@ _parser = parser.Parser()
 use_cases = ['queries/synth/synth-myrial.txt']
 plan_workers = [4,6,8,10,12]
 
-type_2 = True
+type_2 = False
 type_3 = True
 
 #Queries Transformation:

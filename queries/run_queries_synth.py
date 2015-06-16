@@ -16,11 +16,11 @@ port = 8753
 
 connection = myria.MyriaConnection(hostname=hostname, port=port)
 
-newList = True
-
+newList = False
 
 if newList:
-	qList = random.sample(range(0, 1223), 200)
+	#join queries only
+	qList = random.sample(range(244, 1223), 500)
 	qList.sort()
 	r = open(os.path.expanduser("synth-random.txt"), 'w')
 	r.write(', '.join(map(str, qList)))
@@ -32,36 +32,37 @@ else:
 #all possible paths
 
 qPath = [
-		"synth/synth-type2/4/",
-		"synth/synth-type2/6/",
-		"synth/synth-type2/8/",
-		"synth/synth-type2/10/",
-		"synth/synth-type2/12/"
+		#"synth/synth-type2/4/",
+		#"synth/synth-type2/6/",
+		#"synth/synth-type2/8/",
+		#"synth/synth-type2/10/",
+		#"synth/synth-type2/12/",
 
-		"synth/synth-type3/synth-type3a/4_datanodes/6_computenodes/"
-		"synth/synth-type3/synth-type3a/4_datanodes/8_computenodes/"
-		"synth/synth-type3/synth-type3a/4_datanodes/10_computenodes/"
-		"synth/synth-type3/synth-type3a/4_datanodes/12_computenodes/"
-		"synth/synth-type3/synth-type3a/6_datanodes/8_computenodes/"
-		"synth/synth-type3/synth-type3a/6_datanodes/10_computenodes/"
-		"synth/synth-type3/synth-type3a/6_datanodes/12_computenodes/"
-		"synth/synth-type3/synth-type3a/8_datanodes/10_computenodes/"
-		"synth/synth-type3/synth-type3a/8_datanodes/12_computenodes/"
-		"synth/synth-type3/synth-type3a/10_datanodes/12_computenodes/"
+		#"synth/synth-type3/synth-type3a/4_datanodes/6_computenodes/",
+		#"synth/synth-type3/synth-type3a/4_datanodes/8_computenodes/",
+		#"synth/synth-type3/synth-type3a/4_datanodes/10_computenodes/",
+		#"synth/synth-type3/synth-type3a/4_datanodes/12_computenodes/",
+		#"synth/synth-type3/synth-type3a/6_datanodes/8_computenodes/",
+		#"synth/synth-type3/synth-type3a/6_datanodes/10_computenodes/",
+		#"synth/synth-type3/synth-type3a/6_datanodes/12_computenodes/",
+		#"synth/synth-type3/synth-type3a/8_datanodes/10_computenodes/",
+		#"synth/synth-type3/synth-type3a/8_datanodes/12_computenodes/",
+		#"synth/synth-type3/synth-type3a/10_datanodes/12_computenodes/",
 
-		"synth/synth-type3/synth-type3b/6_datanodes/4_computenodes/"
-		"synth/synth-type3/synth-type3b/8_datanodes/4_computenodes/"
-		"synth/synth-type3/synth-type3b/8_datanodes/6_computenodes/"
-		"synth/synth-type3/synth-type3b/10_datanodes/4_computenodes/"
-		"synth/synth-type3/synth-type3b/10_datanodes/6_computenodes/"
-		"synth/synth-type3/synth-type3b/10_datanodes/8_computenodes/"
-		"synth/synth-type3/synth-type3b/12_datanodes/4_computenodes/"
-		"synth/synth-type3/synth-type3b/12_datanodes/6_computenodes/"
-		"synth/synth-type3/synth-type3b/12_datanodes/8_computenodes/"
-		"synth/synth-type3/synth-type3b/12_datanodes/10_computenodes/"]
+		#"synth/synth-type3/synth-type3b/6_datanodes/4_computenodes/",
+		#"synth/synth-type3/synth-type3b/8_datanodes/4_computenodes/",
+		#"synth/synth-type3/synth-type3b/8_datanodes/6_computenodes/",
+		#"synth/synth-type3/synth-type3b/10_datanodes/4_computenodes/",
+		#"synth/synth-type3/synth-type3b/10_datanodes/6_computenodes/",
+		#"synth/synth-type3/synth-type3b/10_datanodes/8_computenodes/",
+		#"synth/synth-type3/synth-type3b/12_datanodes/4_computenodes/",
+		#"synth/synth-type3/synth-type3b/12_datanodes/6_computenodes/",
+		"synth/synth-type3/synth-type3b/12_datanodes/8_computenodes/",
+		"synth/synth-type3/synth-type3b/12_datanodes/10_computenodes/"
+		]
 
 
-#pathCounter = 0
+pathCounter = 0
 for p in qPath:
 	counter = 0;
 	#open the file to log the runtimes
@@ -73,7 +74,7 @@ for p in qPath:
 		i = 0
 		while i < 1:
 			try:
-				#q = q.strip()
+				q = q.strip()
 				print 'Query Path: ', p + "query" + str(q) + ".json"
 				json_data=open(os.path.expanduser(p + "query" + str(q) + ".json"))
 				data = json.load(json_data)
@@ -120,11 +121,12 @@ for p in qPath:
 				break
 		timeSeconds = (averageTime / 1.0) /1000000000.0;
 		print('Logging average runtime ' + str(timeSeconds));
-		f.write(str(counter) + ',' + str(timeSeconds) + "\n");
+		f.write(str(counter) + ',' + str(q)  + ',' + str(timeSeconds) + "\n");
 		f.flush()
-		#bashCommand = "aws s3 cp " +  str(p) + "runtimes.txt"+ " s3://benchmarkruntimes/runtimes" + str(pathCounter) + ".txt" 
-		#print bashCommand
-		#os.system(bashCommand)
+		pathSplit = p.split('/')
+		bashCommand = "aws s3 cp " +  str(p) + "runtimes.txt"+ " s3://benchmarkruntimes/runtimes" + str(pathSplit[4]) + ".txt" 
+		print bashCommand
+		os.system(bashCommand)
 		counter = counter + 1;
-	#pathCounter = pathCounter + 1
+	pathCounter = pathCounter + 1
 	f.close();

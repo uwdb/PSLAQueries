@@ -35,28 +35,28 @@ qPath = [
 		"tpch/tpch-type2/6/",
 		"tpch/tpch-type2/8/",
 		"tpch/tpch-type2/10/",
-		"tpch/tpch-type2/12/"
+		"tpch/tpch-type2/12/",
 
-		"tpch/tpch-type3/tpch-type3a/4_datanodes/6_computenodes/"
-		"tpch/tpch-type3/tpch-type3a/4_datanodes/8_computenodes/"
-		"tpch/tpch-type3/tpch-type3a/4_datanodes/10_computenodes/"
-		"tpch/tpch-type3/tpch-type3a/4_datanodes/12_computenodes/"
-		"tpch/tpch-type3/tpch-type3a/6_datanodes/8_computenodes/"
-		"tpch/tpch-type3/tpch-type3a/6_datanodes/10_computenodes/"
-		"tpch/tpch-type3/tpch-type3a/6_datanodes/12_computenodes/"
-		"tpch/tpch-type3/tpch-type3a/8_datanodes/10_computenodes/"
-		"tpch/tpch-type3/tpch-type3a/8_datanodes/12_computenodes/"
-		"tpch/tpch-type3/tpch-type3a/10_datanodes/12_computenodes/"
+		"tpch/tpch-type3/tpch-type3a/4_datanodes/6_computenodes/",
+		"tpch/tpch-type3/tpch-type3a/4_datanodes/8_computenodes/",
+		"tpch/tpch-type3/tpch-type3a/4_datanodes/10_computenodes/",
+		"tpch/tpch-type3/tpch-type3a/4_datanodes/12_computenodes/",
+		"tpch/tpch-type3/tpch-type3a/6_datanodes/8_computenodes/",
+		"tpch/tpch-type3/tpch-type3a/6_datanodes/10_computenodes/",
+		"tpch/tpch-type3/tpch-type3a/6_datanodes/12_computenodes/",
+		"tpch/tpch-type3/tpch-type3a/8_datanodes/10_computenodes/",
+		"tpch/tpch-type3/tpch-type3a/8_datanodes/12_computenodes/",
+		"tpch/tpch-type3/tpch-type3a/10_datanodes/12_computenodes/",
 
-		"tpch/tpch-type3/tpch-type3b/6_datanodes/4_computenodes/"
-		"tpch/tpch-type3/tpch-type3b/8_datanodes/4_computenodes/"
-		"tpch/tpch-type3/tpch-type3b/8_datanodes/6_computenodes/"
-		"tpch/tpch-type3/tpch-type3b/10_datanodes/4_computenodes/"
-		"tpch/tpch-type3/tpch-type3b/10_datanodes/6_computenodes/"
-		"tpch/tpch-type3/tpch-type3b/10_datanodes/8_computenodes/"
-		"tpch/tpch-type3/tpch-type3b/12_datanodes/4_computenodes/"
-		"tpch/tpch-type3/tpch-type3b/12_datanodes/6_computenodes/"
-		"tpch/tpch-type3/tpch-type3b/12_datanodes/8_computenodes/"
+		"tpch/tpch-type3/tpch-type3b/6_datanodes/4_computenodes/",
+		"tpch/tpch-type3/tpch-type3b/8_datanodes/4_computenodes/",
+		"tpch/tpch-type3/tpch-type3b/8_datanodes/6_computenodes/",
+		"tpch/tpch-type3/tpch-type3b/10_datanodes/4_computenodes/",
+		"tpch/tpch-type3/tpch-type3b/10_datanodes/6_computenodes/",
+		"tpch/tpch-type3/tpch-type3b/10_datanodes/8_computenodes/",
+		"tpch/tpch-type3/tpch-type3b/12_datanodes/4_computenodes/",
+		"tpch/tpch-type3/tpch-type3b/12_datanodes/6_computenodes/",
+		"tpch/tpch-type3/tpch-type3b/12_datanodes/8_computenodes/",
 		"tpch/tpch-type3/tpch-type3b/12_datanodes/10_computenodes/"]
 
 for p in qPath:

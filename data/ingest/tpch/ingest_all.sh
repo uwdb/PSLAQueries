@@ -11,3 +11,5 @@ curl -i -XPOST $MASTER:$PORT/dataset -H "Content-type: application/json"  -d @./
 curl -i -XPOST $MASTER:$PORT/dataset -H "Content-type: application/json"  -d @./ingest_part.json
 
 curl -i -XPOST $MASTER:$PORT/dataset -H "Content-type: application/json"  -d @./ingest_supplier.json
+
+python replicate_all.py $MASTER
