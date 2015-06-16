@@ -3,6 +3,7 @@ from myria import MyriaSchema
 from myria import MyriaRelation
 import json
 import time
+import sys
 
 port = 8753
 

@@ -1,4 +1,4 @@
-MASTER=ec2-54-197-145-118.compute-1.amazonaws.com
+MASTER=ec2-54-158-151-56.compute-1.amazonaws.com
 PORT=8753
 
 #ingesting all lineitems

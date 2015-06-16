@@ -10,7 +10,7 @@ import time
 import myria
 import random
 
-hostname = 'ec2-54-204-127-83.compute-1.amazonaws.com'
+hostname = 'localhost'
 port = 8753
 
 connection = myria.MyriaConnection(hostname=hostname, port=port)
@@ -20,7 +20,7 @@ connection = myria.MyriaConnection(hostname=hostname, port=port)
 newList = False
 
 if newList:
-	qList = random.sample(range(1, 896), 100)
+	qList = random.sample(range(240, 896), 100)
 	qList.sort()
 	r = open(os.path.expanduser("tpch-random.txt"), 'w')
 	r.write(', '.join(map(str, qList)))
@@ -31,33 +31,34 @@ else:
 
 
 qPath = [ 
-		"tpch/tpch-type2/4/",
-		"tpch/tpch-type2/6/",
-		"tpch/tpch-type2/8/",
-		"tpch/tpch-type2/10/",
-		"tpch/tpch-type2/12/",
+		#"tpch/tpch-type2/4/",
+		#"tpch/tpch-type2/6/",
+		#"tpch/tpch-type2/8/",
+		#"tpch/tpch-type2/10/",
+		#"tpch/tpch-type2/12/",
 
-		"tpch/tpch-type3/tpch-type3a/4_datanodes/6_computenodes/",
-		"tpch/tpch-type3/tpch-type3a/4_datanodes/8_computenodes/",
-		"tpch/tpch-type3/tpch-type3a/4_datanodes/10_computenodes/",
-		"tpch/tpch-type3/tpch-type3a/4_datanodes/12_computenodes/",
-		"tpch/tpch-type3/tpch-type3a/6_datanodes/8_computenodes/",
-		"tpch/tpch-type3/tpch-type3a/6_datanodes/10_computenodes/",
-		"tpch/tpch-type3/tpch-type3a/6_datanodes/12_computenodes/",
-		"tpch/tpch-type3/tpch-type3a/8_datanodes/10_computenodes/",
-		"tpch/tpch-type3/tpch-type3a/8_datanodes/12_computenodes/",
-		"tpch/tpch-type3/tpch-type3a/10_datanodes/12_computenodes/",
+		#"tpch/tpch-type3/tpch-type3a/4_datanodes/6_computenodes/",
+		#"tpch/tpch-type3/tpch-type3a/4_datanodes/8_computenodes/",
+		#"tpch/tpch-type3/tpch-type3a/4_datanodes/10_computenodes/",
+		#"tpch/tpch-type3/tpch-type3a/4_datanodes/12_computenodes/",
+		#"tpch/tpch-type3/tpch-type3a/6_datanodes/8_computenodes/",
+		#"tpch/tpch-type3/tpch-type3a/6_datanodes/10_computenodes/",
+		#"tpch/tpch-type3/tpch-type3a/6_datanodes/12_computenodes/",
+		#"tpch/tpch-type3/tpch-type3a/8_datanodes/10_computenodes/",
+		#"tpch/tpch-type3/tpch-type3a/8_datanodes/12_computenodes/",
+		#"tpch/tpch-type3/tpch-type3a/10_datanodes/12_computenodes/",
 
-		"tpch/tpch-type3/tpch-type3b/6_datanodes/4_computenodes/",
-		"tpch/tpch-type3/tpch-type3b/8_datanodes/4_computenodes/",
-		"tpch/tpch-type3/tpch-type3b/8_datanodes/6_computenodes/",
-		"tpch/tpch-type3/tpch-type3b/10_datanodes/4_computenodes/",
-		"tpch/tpch-type3/tpch-type3b/10_datanodes/6_computenodes/",
-		"tpch/tpch-type3/tpch-type3b/10_datanodes/8_computenodes/",
+		#"tpch/tpch-type3/tpch-type3b/6_datanodes/4_computenodes/",
+		#"tpch/tpch-type3/tpch-type3b/8_datanodes/4_computenodes/",
+		#"tpch/tpch-type3/tpch-type3b/8_datanodes/6_computenodes/",
+		#"tpch/tpch-type3/tpch-type3b/10_datanodes/4_computenodes/",
+		#"tpch/tpch-type3/tpch-type3b/10_datanodes/6_computenodes/",
+		#"tpch/tpch-type3/tpch-type3b/10_datanodes/8_computenodes/",
 		"tpch/tpch-type3/tpch-type3b/12_datanodes/4_computenodes/",
 		"tpch/tpch-type3/tpch-type3b/12_datanodes/6_computenodes/",
 		"tpch/tpch-type3/tpch-type3b/12_datanodes/8_computenodes/",
-		"tpch/tpch-type3/tpch-type3b/12_datanodes/10_computenodes/"]
+		"tpch/tpch-type3/tpch-type3b/12_datanodes/10_computenodes/"
+		]
 
 for p in qPath:
 	counter = 0;
@@ -70,6 +71,7 @@ for p in qPath:
 		i = 0
 		while i < 1:
 			try:
+				q = q.strip()
 				print "Q", q
 				print 'Query Path: ', p + "query" + str(q) + ".json"
 				json_data=open(os.path.expanduser(p + "query" + str(q) + ".json"))
@@ -121,5 +123,10 @@ for p in qPath:
 		timeSeconds = (averageTime / 1.0) /1000000000.0;
 		print('Logging average runtime ' + str(timeSeconds));
 		f.write(str(counter) + ',' + str(timeSeconds) + "\n");
+		f.flush()
+		pathSplit = p.split('/')
+		bashCommand = "aws s3 cp " +  str(p) + "runtimes.txt"+ " s3://benchmarkruntimes/runtimesTPCH" + str(pathSplit[4]) + ".txt" 
+		print bashCommand
+		os.system(bashCommand)
 		counter = counter + 1;
 	f.close();

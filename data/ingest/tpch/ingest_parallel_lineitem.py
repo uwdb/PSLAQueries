@@ -1,4 +1,5 @@
 from myria import MyriaConnection, MyriaRelation, MyriaQuery, MyriaSchema
+import sys
 
 connection = MyriaConnection(hostname = sys.argv[1], port=8753)
 
