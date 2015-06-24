@@ -1,0 +1,319 @@
+{
+  "logicalRa": "MyriaSink[MyriaApply(c_nation=$5,p_mfgr=$9,p_type=$12,c_nation_prefix=$4,c_name=$2,c_phone=$7,l_orderpriority=$0,p_container=$13,c_region=$6,c_address=$3,p_name=$8,p_color=$11,l_shipmode=$1,p_category=$10)[MyriaSymmetricHashJoin(($9 = $0); $1,$2,$3,$4,$5,$6,$7,$8,$10,$11,$12,$13,$14,$15)[MyriaSymmetricHashJoin(($4 = $0); $1,$2,$3,$5,$6,$7,$8,$9,$10)[MyriaShuffleConsumer[MyriaShuffleProducer(h($0))[MyriaQueryScan('SELECT input.l_custkey AS l_custkey, input.l_partkey AS l_partkey, input.l_orderpriority AS l_orderpriority, input.l_shipmode AS l_shipmode \\nFROM (SELECT \"public:adhoc10GB:lineitem\".l_orderkey AS l_orderkey, \"public:adhoc10GB:lineitem\".l_linenumber AS l_linenumber, \"public:adhoc10GB:lineitem\".l_custkey AS l_custkey, \"public:adhoc10GB:lineitem\".l_partkey AS l_partkey, \"public:adhoc10GB:lineitem\".l_suppkey AS l_suppkey, \"public:adhoc10GB:lineitem\".l_orderdate AS l_orderdate, \"public:adhoc10GB:lineitem\".l_orderpriority AS l_orderpriority, \"public:adhoc10GB:lineitem\".l_shippriority AS l_shippriority, \"public:adhoc10GB:lineitem\".l_quantity AS l_quantity, \"public:adhoc10GB:lineitem\".l_extendedprice AS l_extendedprice, \"public:adhoc10GB:lineitem\".l_ordtotalprice AS l_ordtotalprice, \"public:adhoc10GB:lineitem\".l_discount AS l_discount, \"public:adhoc10GB:lineitem\".l_revenue AS l_revenue, \"public:adhoc10GB:lineitem\".l_supplycost AS l_supplycost, \"public:adhoc10GB:lineitem\".l_tax AS l_tax, \"public:adhoc10GB:lineitem\".l_commitdate AS l_commitdate, \"public:adhoc10GB:lineitem\".l_shipmode AS l_shipmode \\nFROM \"public:adhoc10GB:lineitem\") AS input')]],MyriaQueryScan('SELECT input.c_custkey AS c_custkey, input.c_name AS c_name, input.c_address AS c_address, input.c_nation_prefix AS c_nation_prefix, input.c_nation AS c_nation, input.c_region AS c_region, input.c_phone AS c_phone \\nFROM (SELECT \"public:adhoc10GB:customerReplicate\".c_custkey AS c_custkey, \"public:adhoc10GB:customerReplicate\".c_name AS c_name, \"public:adhoc10GB:customerReplicate\".c_address AS c_address, \"public:adhoc10GB:customerReplicate\".c_city AS c_city, \"public:adhoc10GB:customerReplicate\".c_nation_prefix AS c_nation_prefix, \"public:adhoc10GB:customerReplicate\".c_nation AS c_nation, \"public:adhoc10GB:customerReplicate\".c_region AS c_region, \"public:adhoc10GB:customerReplicate\".c_phone AS c_phone, \"public:adhoc10GB:customerReplicate\".c_mktsegment AS c_mktsegment \\nFROM \"public:adhoc10GB:customerReplicate\") AS input')],MyriaQueryScan('SELECT input.p_partkey AS p_partkey, input.p_name AS p_name, input.p_mfgr AS p_mfgr, input.p_category AS p_category, input.p_color AS p_color, input.p_type AS p_type, input.p_container AS p_container \\nFROM (SELECT \"public:adhoc10GB:partReplicate\".p_partkey AS p_partkey, \"public:adhoc10GB:partReplicate\".p_name AS p_name, \"public:adhoc10GB:partReplicate\".p_mfgr AS p_mfgr, \"public:adhoc10GB:partReplicate\".p_category AS p_category, \"public:adhoc10GB:partReplicate\".p_brand AS p_brand, \"public:adhoc10GB:partReplicate\".p_color AS p_color, \"public:adhoc10GB:partReplicate\".p_type AS p_type, \"public:adhoc10GB:partReplicate\".p_size AS p_size, \"public:adhoc10GB:partReplicate\".p_container AS p_container \\nFROM \"public:adhoc10GB:partReplicate\") AS input')]]]",
+  "language": "myrial",
+  "rawQuery": "Query 399 for type-3 on 12 starting datanodes",
+  "plan": {
+    "fragments": [
+      {
+        "operators": [
+          {
+            "schema": {
+              "columnNames": [
+                "p_partkey",
+                "p_name",
+                "p_mfgr",
+                "p_category",
+                "p_color",
+                "p_type",
+                "p_container"
+              ],
+              "columnTypes": [
+                "LONG_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE"
+              ]
+            },
+            "opName": "MyriaQueryScan('SELECT input.p_partkey AS p_partkey, input.p_name AS p_name, input.p_mfgr AS p_mfgr, input.p_category AS p_category, input.p_color AS p_color, input.p_type AS p_type, input.p_container AS p_container \\nFROM (SELECT \"public:adhoc10GB:partReplicate\".p_partkey AS p_partkey, \"public:adhoc10GB:partReplicate\".p_name AS p_name, \"public:adhoc10GB:partReplicate\".p_mfgr AS p_mfgr, \"public:adhoc10GB:partReplicate\".p_category AS p_category, \"public:adhoc10GB:partReplicate\".p_brand AS p_brand, \"public:adhoc10GB:partReplicate\".p_color AS p_color, \"public:adhoc10GB:partReplicate\".p_type AS p_type, \"public:adhoc10GB:partReplicate\".p_size AS p_size, \"public:adhoc10GB:partReplicate\".p_container AS p_container \\nFROM \"public:adhoc10GB:partReplicate\") AS input')",
+            "opType": "DbQueryScan",
+            "opId": 0,
+            "sql": "SELECT input.p_partkey AS p_partkey, input.p_name AS p_name, input.p_mfgr AS p_mfgr, input.p_category AS p_category, input.p_color AS p_color, input.p_type AS p_type, input.p_container AS p_container \nFROM (SELECT \"public:adhoc10GB_tenant2_6shared:partReplicate\".p_partkey AS p_partkey, \"public:adhoc10GB_tenant2_6shared:partReplicate\".p_name AS p_name, \"public:adhoc10GB_tenant2_6shared:partReplicate\".p_mfgr AS p_mfgr, \"public:adhoc10GB_tenant2_6shared:partReplicate\".p_category AS p_category, \"public:adhoc10GB_tenant2_6shared:partReplicate\".p_brand AS p_brand, \"public:adhoc10GB_tenant2_6shared:partReplicate\".p_color AS p_color, \"public:adhoc10GB_tenant2_6shared:partReplicate\".p_type AS p_type, \"public:adhoc10GB_tenant2_6shared:partReplicate\".p_size AS p_size, \"public:adhoc10GB_tenant2_6shared:partReplicate\".p_container AS p_container \nFROM \"public:adhoc10GB_tenant2_6shared:partReplicate\") AS input"
+          },
+          {
+            "schema": {
+              "columnNames": [
+                "c_custkey",
+                "c_name",
+                "c_address",
+                "c_nation_prefix",
+                "c_nation",
+                "c_region",
+                "c_phone"
+              ],
+              "columnTypes": [
+                "LONG_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE"
+              ]
+            },
+            "opName": "MyriaQueryScan('SELECT input.c_custkey AS c_custkey, input.c_name AS c_name, input.c_address AS c_address, input.c_nation_prefix AS c_nation_prefix, input.c_nation AS c_nation, input.c_region AS c_region, input.c_phone AS c_phone \\nFROM (SELECT \"public:adhoc10GB:customerReplicate\".c_custkey AS c_custkey, \"public:adhoc10GB:customerReplicate\".c_name AS c_name, \"public:adhoc10GB:customerReplicate\".c_address AS c_address, \"public:adhoc10GB:customerReplicate\".c_city AS c_city, \"public:adhoc10GB:customerReplicate\".c_nation_prefix AS c_nation_prefix, \"public:adhoc10GB:customerReplicate\".c_nation AS c_nation, \"public:adhoc10GB:customerReplicate\".c_region AS c_region, \"public:adhoc10GB:customerReplicate\".c_phone AS c_phone, \"public:adhoc10GB:customerReplicate\".c_mktsegment AS c_mktsegment \\nFROM \"public:adhoc10GB:customerReplicate\") AS input')",
+            "opType": "DbQueryScan",
+            "opId": 1,
+            "sql": "SELECT input.c_custkey AS c_custkey, input.c_name AS c_name, input.c_address AS c_address, input.c_nation_prefix AS c_nation_prefix, input.c_nation AS c_nation, input.c_region AS c_region, input.c_phone AS c_phone \nFROM (SELECT \"public:adhoc10GB_tenant2_6shared:customerReplicate\".c_custkey AS c_custkey, \"public:adhoc10GB_tenant2_6shared:customerReplicate\".c_name AS c_name, \"public:adhoc10GB_tenant2_6shared:customerReplicate\".c_address AS c_address, \"public:adhoc10GB_tenant2_6shared:customerReplicate\".c_city AS c_city, \"public:adhoc10GB_tenant2_6shared:customerReplicate\".c_nation_prefix AS c_nation_prefix, \"public:adhoc10GB_tenant2_6shared:customerReplicate\".c_nation AS c_nation, \"public:adhoc10GB_tenant2_6shared:customerReplicate\".c_region AS c_region, \"public:adhoc10GB_tenant2_6shared:customerReplicate\".c_phone AS c_phone, \"public:adhoc10GB_tenant2_6shared:customerReplicate\".c_mktsegment AS c_mktsegment \nFROM \"public:adhoc10GB_tenant2_6shared:customerReplicate\") AS input"
+          },
+          {
+            "opName": "MyriaShuffleConsumer",
+            "opType": "ShuffleConsumer",
+            "opId": 2,
+            "argOperatorId": 3
+          },
+          {
+            "argColumnNames": [
+              "l_partkey",
+              "l_orderpriority",
+              "l_shipmode",
+              "c_name",
+              "c_address",
+              "c_nation_prefix",
+              "c_nation",
+              "c_region",
+              "c_phone"
+            ],
+            "argChild2": "1",
+            "argChild1": "2",
+            "opType": "SymmetricHashJoin",
+            "opId": 4,
+            "opName": "MyriaSymmetricHashJoin(($4 = $0); $1,$2,$3,$5,$6,$7,$8,$9,$10)",
+            "argSelect2": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "argColumns1": [
+              0
+            ],
+            "argColumns2": [
+              0
+            ],
+            "argSelect1": [
+              1,
+              2,
+              3
+            ]
+          },
+          {
+            "argColumnNames": [
+              "l_orderpriority",
+              "l_shipmode",
+              "c_name",
+              "c_address",
+              "c_nation_prefix",
+              "c_nation",
+              "c_region",
+              "c_phone",
+              "p_name",
+              "p_mfgr",
+              "p_category",
+              "p_color",
+              "p_type",
+              "p_container"
+            ],
+            "argChild2": "0",
+            "argChild1": "4",
+            "opType": "SymmetricHashJoin",
+            "opId": 5,
+            "opName": "MyriaSymmetricHashJoin(($9 = $0); $1,$2,$3,$4,$5,$6,$7,$8,$10,$11,$12,$13,$14,$15)",
+            "argSelect2": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "argColumns1": [
+              0
+            ],
+            "argColumns2": [
+              0
+            ],
+            "argSelect1": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ]
+          },
+          {
+            "emitExpressions": [
+              {
+                "outputName": "c_nation",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 5
+                }
+              },
+              {
+                "outputName": "p_mfgr",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 9
+                }
+              },
+              {
+                "outputName": "p_type",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 12
+                }
+              },
+              {
+                "outputName": "c_nation_prefix",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 4
+                }
+              },
+              {
+                "outputName": "c_name",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 2
+                }
+              },
+              {
+                "outputName": "c_phone",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 7
+                }
+              },
+              {
+                "outputName": "l_orderpriority",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 0
+                }
+              },
+              {
+                "outputName": "p_container",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 13
+                }
+              },
+              {
+                "outputName": "c_region",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 6
+                }
+              },
+              {
+                "outputName": "c_address",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 3
+                }
+              },
+              {
+                "outputName": "p_name",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 8
+                }
+              },
+              {
+                "outputName": "p_color",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 11
+                }
+              },
+              {
+                "outputName": "l_shipmode",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 1
+                }
+              },
+              {
+                "outputName": "p_category",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 10
+                }
+              }
+            ],
+            "opName": "MyriaApply(c_nation=$5,p_mfgr=$9,p_type=$12,c_nation_prefix=$4,c_name=$2,c_phone=$7,l_orderpriority=$0,p_container=$13,c_region=$6,c_address=$3,p_name=$8,p_color=$11,l_shipmode=$1,p_category=$10)",
+            "opType": "Apply",
+            "opId": 6,
+            "argChild": 5
+          },
+          {
+            "opName": "MyriaSink",
+            "opType": "SinkRoot",
+            "opId": 7,
+            "argChild": 6
+          }
+        ],
+        "overrideWorkers": [
+          15,16,17,18
+        ]
+      },
+      {
+        "operators": [
+          {
+            "schema": {
+              "columnNames": [
+                "l_custkey",
+                "l_partkey",
+                "l_orderpriority",
+                "l_shipmode"
+              ],
+              "columnTypes": [
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE"
+              ]
+            },
+            "opName": "MyriaQueryScan('SELECT input.l_custkey AS l_custkey, input.l_partkey AS l_partkey, input.l_orderpriority AS l_orderpriority, input.l_shipmode AS l_shipmode \\nFROM (SELECT \"public:adhoc10GB:lineitem\".l_orderkey AS l_orderkey, \"public:adhoc10GB:lineitem\".l_linenumber AS l_linenumber, \"public:adhoc10GB:lineitem\".l_custkey AS l_custkey, \"public:adhoc10GB:lineitem\".l_partkey AS l_partkey, \"public:adhoc10GB:lineitem\".l_suppkey AS l_suppkey, \"public:adhoc10GB:lineitem\".l_orderdate AS l_orderdate, \"public:adhoc10GB:lineitem\".l_orderpriority AS l_orderpriority, \"public:adhoc10GB:lineitem\".l_shippriority AS l_shippriority, \"public:adhoc10GB:lineitem\".l_quantity AS l_quantity, \"public:adhoc10GB:lineitem\".l_extendedprice AS l_extendedprice, \"public:adhoc10GB:lineitem\".l_ordtotalprice AS l_ordtotalprice, \"public:adhoc10GB:lineitem\".l_discount AS l_discount, \"public:adhoc10GB:lineitem\".l_revenue AS l_revenue, \"public:adhoc10GB:lineitem\".l_supplycost AS l_supplycost, \"public:adhoc10GB:lineitem\".l_tax AS l_tax, \"public:adhoc10GB:lineitem\".l_commitdate AS l_commitdate, \"public:adhoc10GB:lineitem\".l_shipmode AS l_shipmode \\nFROM \"public:adhoc10GB:lineitem\") AS input')",
+            "opType": "DbQueryScan",
+            "opId": 8,
+            "sql": "SELECT input.l_custkey AS l_custkey, input.l_partkey AS l_partkey, input.l_orderpriority AS l_orderpriority, input.l_shipmode AS l_shipmode \nFROM (SELECT \"public:adhoc10GB12W:lineitem_tenant2_6shared\".l_orderkey AS l_orderkey, \"public:adhoc10GB12W:lineitem_tenant2_6shared\".l_linenumber AS l_linenumber, \"public:adhoc10GB12W:lineitem_tenant2_6shared\".l_custkey AS l_custkey, \"public:adhoc10GB12W:lineitem_tenant2_6shared\".l_partkey AS l_partkey, \"public:adhoc10GB12W:lineitem_tenant2_6shared\".l_suppkey AS l_suppkey, \"public:adhoc10GB12W:lineitem_tenant2_6shared\".l_orderdate AS l_orderdate, \"public:adhoc10GB12W:lineitem_tenant2_6shared\".l_orderpriority AS l_orderpriority, \"public:adhoc10GB12W:lineitem_tenant2_6shared\".l_shippriority AS l_shippriority, \"public:adhoc10GB12W:lineitem_tenant2_6shared\".l_quantity AS l_quantity, \"public:adhoc10GB12W:lineitem_tenant2_6shared\".l_extendedprice AS l_extendedprice, \"public:adhoc10GB12W:lineitem_tenant2_6shared\".l_ordtotalprice AS l_ordtotalprice, \"public:adhoc10GB12W:lineitem_tenant2_6shared\".l_discount AS l_discount, \"public:adhoc10GB12W:lineitem_tenant2_6shared\".l_revenue AS l_revenue, \"public:adhoc10GB12W:lineitem_tenant2_6shared\".l_supplycost AS l_supplycost, \"public:adhoc10GB12W:lineitem_tenant2_6shared\".l_tax AS l_tax, \"public:adhoc10GB12W:lineitem_tenant2_6shared\".l_commitdate AS l_commitdate, \"public:adhoc10GB12W:lineitem_tenant2_6shared\".l_shipmode AS l_shipmode \nFROM \"public:adhoc10GB12W:lineitem_tenant2_6shared\") AS input"
+          },
+          {
+            "opName": "MyriaShuffleProducer(h($0))",
+            "opType": "ShuffleProducer",
+            "opId": 3,
+            "argChild": 8,
+            "argPf": {
+              "index": 0,
+              "type": "SingleFieldHash"
+            }
+          }
+        ],
+        "overrideWorkers": [
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ]
+      }
+    ],
+    "type": "SubQuery"
+  }
+}
