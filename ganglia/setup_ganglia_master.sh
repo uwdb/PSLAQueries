@@ -1,6 +1,6 @@
 # View README.txt
 # Configure gmond and gmetad on master
-sudo apt-get install ganglia-monitor rrdtool gmetad
+sudo apt-get install ganglia-monitor rrdtool gmetad ganglia-webfrontend
 tar -xvf ganglia-web-3.7.0.tar
 make install -C ganglia-web-3.7.0/
 sudo cp /etc/ganglia-webfrontend/apache.conf /etc/apache2/sites-enabled/ganglia.conf

@@ -1,12 +1,13 @@
 To install ganglia on an AWS cluster, do the following:
 
-1.  Update list of workers in setup_ganglia_workers.sh with correct cluster name
-
-2.  Copy ganglia folder to master node:
+1.  Copy ganglia folder to master node:
       starcluster put mycluster --node mycluster-master ./ganglia /root/
 
-3.  SSH to the master node:
+2.  SSH to the master node:
       starcluster sshmaster mycluster
+
+3.  Update list of workers in setup_ganglia_workers.sh with correct cluster name. 
+	(Optional: also update the workers list in stop-ganglia.sh and restart-ganglia.sh)
 
 4.  Replace {REPLACE_ME} in workerGangliaFiles/gmond.conf with IP
     address of cluster master.
