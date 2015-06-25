@@ -1,1 +1,0 @@
-./clear/clearOSCache-tpch-msp.sh & ./clear/postgresRestart-tpch-msp.sh
