@@ -1,8 +1,8 @@
-MASTER=ec2-54-147-206-120.compute-1.amazonaws.com
+MASTER=localhost
 PORT=8753
 
 #ingesting all lineitems
-#python ingest_parallel_lineitem.py $MASTER
+python ingest_parallel_lineitem.py $MASTER
 
 curl -i -XPOST $MASTER:$PORT/dataset -H "Content-type: application/json"  -d @./ingest_customer.json
 
