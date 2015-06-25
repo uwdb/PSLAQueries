@@ -1,4 +1,4 @@
-run ./start.sh with the first argument as your starcluster cluster name (i.e. ./start.sh mycluster). This script moves data to the master, installs raco, aws and ingests TPC-H data for 12 workers.
+run ./start.sh with the first argument as your starcluster cluster name (i.e. ./start.sh mycluster). This script moves data to the master, installs raco, aws, gnu parallel, myria-python
 
 If you need to delete generated queries, run ./queries/remove_queries.sh
 
