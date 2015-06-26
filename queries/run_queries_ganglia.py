@@ -127,8 +127,39 @@ for p in qPath:
 		f.write(',' +  str(time.time()) + "\n");
 		f.flush()
 		pathSplit = p.split('/')
-		bashCommand = "aws s3 cp " +  str(p) + "runtimes.txt"+ " s3://ganglia-runtimes/timesTPCH" + str(pathSplit[4]) + ".txt" 
+		bashCommand = "aws s3 cp " +  str(p) + "runtimes.txt"+ " s3://ganglia-runtimes/timesTPCH" + str(pathSplit[2]) + ".txt"
 		print bashCommand
 		os.system(bashCommand)
-		counter = counter + 1;
+
+		#ganglia metics
+		xml_file = "cpu_user-12w-node001.xml"
+
+		bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/mycluster-node001/cpu_user.rrd >> " + xml_file
+		print bashCommand
+		os.system(bashCommand)
+		bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
+		print bashCommand
+		os.system(bashCommand)
+
+		xml_file = "mem_cached-12w-node001.xml"
+
+		bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/mycluster-node001/mem_cached.rrd >> " + xml_file
+		print bashCommand
+		os.system(bashCommand)
+		bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
+		print bashCommand
+		os.system(bashCommand)
+
+		xml_file = "mem_buffers-12w-node001.xml"
+
+		bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/mycluster-node001/mem_buffers.rrd >> " + xml_file
+		print bashCommand
+		os.system(bashCommand)
+		bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
+		print bashCommand
+		os.system(bashCommand)
+
+		counter = counter + 1
+		#time buffer for metrics
+		time.sleep(30)
 	f.close();
