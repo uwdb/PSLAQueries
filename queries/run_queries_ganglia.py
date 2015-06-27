@@ -27,6 +27,13 @@ else:
 	qList = open(os.path.expanduser("tpch-random.txt"), 'r')
 	qList = qList.read().split(',')
 
+#params
+cluster_name = "mycluster"
+output_shortname = "12w"
+
+first_worker_obs = "node001"
+second_worker_obs = "node012"
+
 
 qPath = [ 
 		#"tpch/tpch-type2/4/",
@@ -132,35 +139,61 @@ for p in qPath:
 		os.system(bashCommand)
 		#time buffer for metrics
 		time.sleep(30)
+		counter = counter + 1
 
 	#ganglia metics
-	xml_file = "cpu_user-12w-node001.xml"
+	xml_file = "cpu_user-" + output_shortname + "-" + first_worker_obs + ".xml"
 
-	bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/mycluster-node001/cpu_user.rrd >> " + xml_file
+	bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/" + cluster_name + "-" + first_worker_obs + "/cpu_user.rrd >> " + xml_file
 	print bashCommand
 	os.system(bashCommand)
 	bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
 	print bashCommand
 	os.system(bashCommand)
 
-	xml_file = "mem_cached-12w-node001.xml"
+	xml_file = "mem_cached-" + output_shortname + "-" + first_worker_obs + ".xml"
 
-	bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/mycluster-node001/mem_cached.rrd >> " + xml_file
+	bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/" + cluster_name + "-" + first_worker_obs + "/mem_cached.rrd >> " + xml_file
 	print bashCommand
 	os.system(bashCommand)
 	bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
 	print bashCommand
 	os.system(bashCommand)
 
-	xml_file = "mem_buffers-12w-node001.xml"
+	xml_file = "mem_buffers-" + output_shortname + "-" + first_worker_obs + ".xml"
 
-	bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/mycluster-node001/mem_buffers.rrd >> " + xml_file
+	bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/" + cluster_name + "-" + first_worker_obs + "/mem_buffers.rrd >> " + xml_file
 	print bashCommand
 	os.system(bashCommand)
 	bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
 	print bashCommand
 	os.system(bashCommand)
 
-	counter = counter + 1
+	xml_file = "cpu_user-" + output_shortname + "-" + second_worker_obs + ".xml"
+
+	bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/" + cluster_name + "-" + second_worker_obs + "/cpu_user.rrd >> " + xml_file
+	print bashCommand
+	os.system(bashCommand)
+	bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
+	print bashCommand
+	os.system(bashCommand)
+
+	xml_file = "mem_cached-" + output_shortname + "-" + second_worker_obs + ".xml"
+
+	bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/" + cluster_name + "-" + second_worker_obs + "/mem_cached.rrd >> " + xml_file
+	print bashCommand
+	os.system(bashCommand)
+	bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
+	print bashCommand
+	os.system(bashCommand)
+
+	xml_file = "mem_buffers-" + output_shortname + "-" + second_worker_obs + ".xml"
+
+	bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/" + cluster_name + "-" + second_worker_obs + "/mem_buffers.rrd >> " + xml_file
+	print bashCommand
+	os.system(bashCommand)
+	bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
+	print bashCommand
+	os.system(bashCommand)
 
 	f.close();
