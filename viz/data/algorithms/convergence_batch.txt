@@ -1,0 +1,16 @@
+type,underestimate,time
+direct,0.5,173.3
+direct,0.6,181.1
+direct,0.7,204.6
+direct,0.8,99.8
+direct,0.9,99.8
+ewma,0.5,370.7
+ewma,0.6,286.3
+ewma,0.7,204.6
+ewma,0.8,99.8
+ewma,0.9,99.8
+windowed,0.5,3954.1
+windowed,0.6,3211.9
+windowed,0.7,2376.9
+windowed,0.8,1340.4
+windowed,0.9,1340.4

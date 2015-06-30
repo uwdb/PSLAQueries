@@ -1,0 +1,17 @@
+{
+  "relationKey" : {
+    "userName" : "public",
+    "programName" : "syntheticBenchmark",
+    "relationName" : "dim3"
+  },
+  "schema" : {
+    "columnTypes" : ["LONG_TYPE", "STRING_TYPE", "STRING_TYPE","STRING_TYPE","LONG_TYPE","LONG_TYPE","LONG_TYPE","STRING_TYPE"],
+    "columnNames" : ["dim_pk1_3", "dim_att2_3","dim_att3_3","dim_att4_3","dim_att5_3","dim_att6_3","dim_att7_3","dim_att8_3"]
+  },
+  "source" : {
+     "dataType" : "URI",
+   "uri" : "https://s3-us-west-2.amazonaws.com/custombenchmarkv2/DIMENSION3.csv"
+  },
+  "overwrite": true,
+  "delimiter": "|"
+}

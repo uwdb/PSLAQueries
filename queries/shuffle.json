@@ -1,0 +1,59 @@
+{
+    "profilingMode": [],
+    "logicalRa": "shuffle",
+    "rawQuery": "shuffle",
+    "language": "MyriaL",
+    "plan": {
+        "fragments": [
+            {
+                "overrideWorkers": [1,2,3,4,5,6,7,8,9,10],
+                "operators": [
+                    {
+                        "opId": 1,
+                        "opType": "ShuffleConsumer",
+                        "opName": "MyriaShuffleConsumer",
+                        "argOperatorId": 3
+                    },
+                    {
+                        "opId": 0,
+                        "opType": "DbInsert",
+                        "argOverwriteTable": true,
+                        "argChild": 1,
+                        "opName": "MyriaStore(public:adhoc:temp)",
+                        "relationKey": {
+                            "userName": "public",
+                            "programName": "adhoc",
+                            "relationName": "temp"
+                        }
+                    }
+                ]
+            },
+            {
+                "overrideWorkers": [1,2,3,4,5,6,7,8,9,10,11,12],
+                "operators": [
+                    {
+                      "relationKey": {
+                        "programName": "adhoc10GB12W",
+                        "userName": "public",
+                        "relationName": "lineitem"
+                      },
+                      "opId": 2,
+                      "opName": "MyriaScan(lineitem)",
+                      "opType": "TableScan"
+                    },
+                    {
+                        "opId": 3,
+                        "opType": "ShuffleProducer",
+                        "opName": "MyriaShuffleProducer(h($0))",
+                        "argChild": 2,
+                        "argPf": {
+                            "index": 0,
+                            "type": "SingleFieldHash"
+                        }
+                    }
+                ]
+            }
+        ],
+        "type": "SubQuery"
+    }
+}

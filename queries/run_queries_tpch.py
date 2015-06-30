@@ -30,7 +30,7 @@ else:
 	qList = qList.read().split(',')
 
 
-qPath = [ 
+qPath = [
 		#"tpch/tpch-type2/4/",
 		#"tpch/tpch-type2/6/",
 		#"tpch/tpch-type2/8/",
@@ -125,7 +125,7 @@ for p in qPath:
 		f.write(str(counter) + ',' + str(q) + ',' +  str(timeSeconds) + "\n");
 		f.flush()
 		pathSplit = p.split('/')
-		bashCommand = "aws s3 cp " +  str(p) + "runtimes.txt"+ " s3://benchmarkruntimes/runtimesTPCH" + str(pathSplit[4]) + ".txt" 
+		bashCommand = "aws s3 cp " +  str(p) + "runtimes.txt"+ " s3://benchmarkruntimes/runtimesTPCH" + str(pathSplit[4]) + ".txt"
 		print bashCommand
 		os.system(bashCommand)
 		counter = counter + 1;
