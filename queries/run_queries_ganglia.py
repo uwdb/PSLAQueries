@@ -1,4 +1,3 @@
-#imported some  from myria-web-py
 import copy
 import json
 import os
@@ -28,30 +27,30 @@ else:
 	qList = qList.read().split(',')
 
 #params
-cluster_name = "mycluster"
-output_shortname = "12w"
+cluster_name = "mycluster-ganglia"
+output_shortname = "final"
 
 first_worker_obs = "node001"
 second_worker_obs = "node012"
 
 
 qPath = [ 
-		#"tpch/tpch-type2/4/",
-		#"tpch/tpch-type2/6/",
-		#"tpch/tpch-type2/8/",
-		#"tpch/tpch-type2/10/",
+		"tpch/tpch-type2/4/",
+		"tpch/tpch-type2/6/",
+		"tpch/tpch-type2/8/",
+		"tpch/tpch-type2/10/",
 		"tpch/tpch-type2/12/",
 
 		#"tpch/tpch-type3/tpch-type3a/4_datanodes/6_computenodes/",
 		#"tpch/tpch-type3/tpch-type3a/4_datanodes/8_computenodes/",
 		#"tpch/tpch-type3/tpch-type3a/4_datanodes/10_computenodes/",
-		#"tpch/tpch-type3/tpch-type3a/4_datanodes/12_computenodes/",
+		"tpch/tpch-type3/tpch-type3a/4_datanodes/12_computenodes/",
 		#"tpch/tpch-type3/tpch-type3a/6_datanodes/8_computenodes/",
 		#"tpch/tpch-type3/tpch-type3a/6_datanodes/10_computenodes/",
-		#"tpch/tpch-type3/tpch-type3a/6_datanodes/12_computenodes/",
+		"tpch/tpch-type3/tpch-type3a/6_datanodes/12_computenodes/",
 		#"tpch/tpch-type3/tpch-type3a/8_datanodes/10_computenodes/",
-		#"tpch/tpch-type3/tpch-type3a/8_datanodes/12_computenodes/",
-		#"tpch/tpch-type3/tpch-type3a/10_datanodes/12_computenodes/",
+		"tpch/tpch-type3/tpch-type3a/8_datanodes/12_computenodes/",
+		"tpch/tpch-type3/tpch-type3a/10_datanodes/12_computenodes/",
 
 		#"tpch/tpch-type3/tpch-type3b/6_datanodes/4_computenodes/",
 		#"tpch/tpch-type3/tpch-type3b/8_datanodes/4_computenodes/",
@@ -61,14 +60,15 @@ qPath = [
 		#"tpch/tpch-type3/tpch-type3b/10_datanodes/8_computenodes/",
 
 		#RUN THESE FOR GANGLIA
-		#"tpch/tpch-type3/tpch-type3b/12_datanodes/4_computenodes/",
-		#"tpch/tpch-type3/tpch-type3b/12_datanodes/6_computenodes/",
-		#"tpch/tpch-type3/tpch-type3b/12_datanodes/8_computenodes/",
-		#"tpch/tpch-type3/tpch-type3b/12_datanodes/10_computenodes/"
+		"tpch/tpch-type3/tpch-type3b/12_datanodes/4_computenodes/",
+		"tpch/tpch-type3/tpch-type3b/12_datanodes/6_computenodes/",
+		"tpch/tpch-type3/tpch-type3b/12_datanodes/8_computenodes/",
+		"tpch/tpch-type3/tpch-type3b/12_datanodes/10_computenodes/"
 		]
 
+currentPath = 0
 for p in qPath:
-	counter = 0;
+	counter = 0
 	#open the file to log the runtimes
 	f = open(os.path.expanduser(p + "runtimes.txt"), 'w');
 	print "FOR PATH " + p
@@ -134,66 +134,67 @@ for p in qPath:
 		f.write(',' +  str(time.time()) + "\n");
 		f.flush()
 		pathSplit = p.split('/')
-		bashCommand = "aws s3 cp " +  str(p) + "runtimes.txt"+ " s3://ganglia-runtimes/timesTPCH" + str(pathSplit[2]) + ".txt"
+		bashCommand = "aws s3 cp " +  str(p) + "runtimes.txt"+ " s3://ganglia-runtimes/timesTPCH" + str(currentPath) + ".txt"
 		print bashCommand
 		os.system(bashCommand)
 		#time buffer for metrics
 		time.sleep(30)
 		counter = counter + 1
+	
+	currentPath = currentPath + 1
+	f.close()
 
-	#ganglia metics
-	xml_file = "cpu_user-" + output_shortname + "-" + first_worker_obs + ".xml"
+#ganglia metics
+xml_file = "cpu_user-" + output_shortname + "-" + first_worker_obs + ".xml"
 
-	bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/" + cluster_name + "-" + first_worker_obs + "/cpu_user.rrd >> " + xml_file
-	print bashCommand
-	os.system(bashCommand)
-	bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
-	print bashCommand
-	os.system(bashCommand)
+bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/" + cluster_name + "-" + first_worker_obs + "/cpu_user.rrd >> " + xml_file
+print bashCommand
+os.system(bashCommand)
+bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
+print bashCommand
+os.system(bashCommand)
 
-	xml_file = "mem_cached-" + output_shortname + "-" + first_worker_obs + ".xml"
+xml_file = "mem_cached-" + output_shortname + "-" + first_worker_obs + ".xml"
 
-	bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/" + cluster_name + "-" + first_worker_obs + "/mem_cached.rrd >> " + xml_file
-	print bashCommand
-	os.system(bashCommand)
-	bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
-	print bashCommand
-	os.system(bashCommand)
+bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/" + cluster_name + "-" + first_worker_obs + "/mem_cached.rrd >> " + xml_file
+print bashCommand
+os.system(bashCommand)
+bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
+print bashCommand
+os.system(bashCommand)
 
-	xml_file = "mem_buffers-" + output_shortname + "-" + first_worker_obs + ".xml"
+xml_file = "mem_buffers-" + output_shortname + "-" + first_worker_obs + ".xml"
 
-	bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/" + cluster_name + "-" + first_worker_obs + "/mem_buffers.rrd >> " + xml_file
-	print bashCommand
-	os.system(bashCommand)
-	bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
-	print bashCommand
-	os.system(bashCommand)
+bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/" + cluster_name + "-" + first_worker_obs + "/mem_buffers.rrd >> " + xml_file
+print bashCommand
+os.system(bashCommand)
+bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
+print bashCommand
+os.system(bashCommand)
 
-	xml_file = "cpu_user-" + output_shortname + "-" + second_worker_obs + ".xml"
+xml_file = "cpu_user-" + output_shortname + "-" + second_worker_obs + ".xml"
 
-	bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/" + cluster_name + "-" + second_worker_obs + "/cpu_user.rrd >> " + xml_file
-	print bashCommand
-	os.system(bashCommand)
-	bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
-	print bashCommand
-	os.system(bashCommand)
+bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/" + cluster_name + "-" + second_worker_obs + "/cpu_user.rrd >> " + xml_file
+print bashCommand
+os.system(bashCommand)
+bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
+print bashCommand
+os.system(bashCommand)
 
-	xml_file = "mem_cached-" + output_shortname + "-" + second_worker_obs + ".xml"
+xml_file = "mem_cached-" + output_shortname + "-" + second_worker_obs + ".xml"
 
-	bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/" + cluster_name + "-" + second_worker_obs + "/mem_cached.rrd >> " + xml_file
-	print bashCommand
-	os.system(bashCommand)
-	bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
-	print bashCommand
-	os.system(bashCommand)
+bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/" + cluster_name + "-" + second_worker_obs + "/mem_cached.rrd >> " + xml_file
+print bashCommand
+os.system(bashCommand)
+bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
+print bashCommand
+os.system(bashCommand)
 
-	xml_file = "mem_buffers-" + output_shortname + "-" + second_worker_obs + ".xml"
+xml_file = "mem_buffers-" + output_shortname + "-" + second_worker_obs + ".xml"
 
-	bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/" + cluster_name + "-" + second_worker_obs + "/mem_buffers.rrd >> " + xml_file
-	print bashCommand
-	os.system(bashCommand)
-	bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
-	print bashCommand
-	os.system(bashCommand)
-
-	f.close();
+bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/" + cluster_name + "-" + second_worker_obs + "/mem_buffers.rrd >> " + xml_file
+print bashCommand
+os.system(bashCommand)
+bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
+print bashCommand
+os.system(bashCommand)

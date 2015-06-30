@@ -9,6 +9,7 @@ cp ./masterGangliaFiles/gmetad.conf /etc/ganglia/
 cp ./masterGangliaFiles/apache2.conf /etc/apache2/
 cp ./masterGangliaFiles/ports.conf /etc/apache2/
 cp ./masterGangliaFiles/000-default /etc/apache2/sites-enabled/
+sudo apt-get install libapache2-mod-php5
 
 sudo service gmetad start
 sudo service ganglia-monitor start

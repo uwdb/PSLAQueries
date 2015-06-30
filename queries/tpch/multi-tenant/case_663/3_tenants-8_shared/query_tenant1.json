@@ -1,0 +1,298 @@
+{
+  "logicalRa": "MyriaSink[MyriaSymmetricHashJoin(($3 = $0); $2,$1)[MyriaSymmetricHashJoin(($3 = $0); $1,$2,$4)[MyriaSymmetricHashJoin(($3 = $2); $0,$1,$4)[MyriaSymmetricHashJoin(($4 = $3); $0,$1,$2)[MyriaApply(l_custkey=$2,l_partkey=$3,l_suppkey=$4,l_commitdate=$15)[MyriaShuffleConsumer[MyriaShuffleProducer(h($15))[MyriaScan(public:adhoc10GB42W_tenant_1:lineitem)]]],MyriaQueryScan('SELECT input.d_datekey AS d_datekey \\nFROM (SELECT \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_datekey AS d_datekey, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_date AS d_date, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_dayofweek AS d_dayofweek, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_month AS d_month, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_year AS d_year, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_yearmonthnum AS d_yearmonthnum, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_yearmonth AS d_yearmonth, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_daynuminweek AS d_daynuminweek, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_daynuminmonth AS d_daynuminmonth, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_daynuminyear AS d_daynuminyear, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_monthnuminyear AS d_monthnuminyear, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_weeknuminyear AS d_weeknuminyear, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_sellingseason AS d_sellingseason, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_lastdayinweekfl AS d_lastdayinweekfl, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_lastdayinmonthfl AS d_lastdayinmonthfl, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_holidayfl AS d_holidayfl, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_weekdayfl AS d_weekdayfl \\nFROM \"public:adhoc10GB42W_tenant_1:dateReplicate\") AS input')],MyriaQueryScan('SELECT input.s_suppkey AS s_suppkey, input.s_nation AS s_nation \\nFROM (SELECT \"public:adhoc10GB42W_tenant_1:supplierReplicate\".s_suppkey AS s_suppkey, \"public:adhoc10GB42W_tenant_1:supplierReplicate\".s_name AS s_name, \"public:adhoc10GB42W_tenant_1:supplierReplicate\".s_address AS s_address, \"public:adhoc10GB42W_tenant_1:supplierReplicate\".s_city AS s_city, \"public:adhoc10GB42W_tenant_1:supplierReplicate\".s_nation_prefix AS s_nation_prefix, \"public:adhoc10GB42W_tenant_1:supplierReplicate\".s_nation AS s_nation, \"public:adhoc10GB42W_tenant_1:supplierReplicate\".s_region AS s_region, \"public:adhoc10GB42W_tenant_1:supplierReplicate\".s_phone AS s_phone \\nFROM \"public:adhoc10GB42W_tenant_1:supplierReplicate\") AS input')],MyriaQueryScan('SELECT input.c_custkey AS c_custkey, input.c_nation AS c_nation \\nFROM (SELECT \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_custkey AS c_custkey, \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_name AS c_name, \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_address AS c_address, \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_city AS c_city, \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_nation_prefix AS c_nation_prefix, \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_nation AS c_nation, \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_region AS c_region, \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_phone AS c_phone, \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_mktsegment AS c_mktsegment \\nFROM \"public:adhoc10GB42W_tenant_1:customerReplicate\") AS input')],MyriaQueryScan('SELECT input.p_partkey AS p_partkey \\nFROM (SELECT \"public:adhoc10GB42W_tenant_1:partReplicate\".p_partkey AS p_partkey, \"public:adhoc10GB42W_tenant_1:partReplicate\".p_name AS p_name, \"public:adhoc10GB42W_tenant_1:partReplicate\".p_mfgr AS p_mfgr, \"public:adhoc10GB42W_tenant_1:partReplicate\".p_category AS p_category, \"public:adhoc10GB42W_tenant_1:partReplicate\".p_brand AS p_brand, \"public:adhoc10GB42W_tenant_1:partReplicate\".p_color AS p_color, \"public:adhoc10GB42W_tenant_1:partReplicate\".p_type AS p_type, \"public:adhoc10GB42W_tenant_1:partReplicate\".p_size AS p_size, \"public:adhoc10GB42W_tenant_1:partReplicate\".p_container AS p_container \\nFROM \"public:adhoc10GB42W_tenant_1:partReplicate\") AS input')]]",
+  "language": "myrial",
+  "rawQuery": "Query 663 for type-3 on 12 starting datanodes",
+  "plan": {
+    "fragments": [
+      {
+        "operators": [
+          {
+            "schema": {
+              "columnNames": [
+                "p_partkey"
+              ],
+              "columnTypes": [
+                "LONG_TYPE"
+              ]
+            },
+            "opName": "MyriaQueryScan('SELECT input.p_partkey AS p_partkey \\nFROM (SELECT \"public:adhoc10GB42W_tenant_1:partReplicate\".p_partkey AS p_partkey, \"public:adhoc10GB42W_tenant_1:partReplicate\".p_name AS p_name, \"public:adhoc10GB42W_tenant_1:partReplicate\".p_mfgr AS p_mfgr, \"public:adhoc10GB42W_tenant_1:partReplicate\".p_category AS p_category, \"public:adhoc10GB42W_tenant_1:partReplicate\".p_brand AS p_brand, \"public:adhoc10GB42W_tenant_1:partReplicate\".p_color AS p_color, \"public:adhoc10GB42W_tenant_1:partReplicate\".p_type AS p_type, \"public:adhoc10GB42W_tenant_1:partReplicate\".p_size AS p_size, \"public:adhoc10GB42W_tenant_1:partReplicate\".p_container AS p_container \\nFROM \"public:adhoc10GB42W_tenant_1:partReplicate\") AS input')",
+            "opType": "DbQueryScan",
+            "opId": 0,
+            "sql": "SELECT input.p_partkey AS p_partkey \nFROM (SELECT \"public:adhoc10GB42W_tenant_1:partReplicate\".p_partkey AS p_partkey, \"public:adhoc10GB42W_tenant_1:partReplicate\".p_name AS p_name, \"public:adhoc10GB42W_tenant_1:partReplicate\".p_mfgr AS p_mfgr, \"public:adhoc10GB42W_tenant_1:partReplicate\".p_category AS p_category, \"public:adhoc10GB42W_tenant_1:partReplicate\".p_brand AS p_brand, \"public:adhoc10GB42W_tenant_1:partReplicate\".p_color AS p_color, \"public:adhoc10GB42W_tenant_1:partReplicate\".p_type AS p_type, \"public:adhoc10GB42W_tenant_1:partReplicate\".p_size AS p_size, \"public:adhoc10GB42W_tenant_1:partReplicate\".p_container AS p_container \nFROM \"public:adhoc10GB42W_tenant_1:partReplicate\") AS input"
+          },
+          {
+            "schema": {
+              "columnNames": [
+                "c_custkey",
+                "c_nation"
+              ],
+              "columnTypes": [
+                "LONG_TYPE",
+                "STRING_TYPE"
+              ]
+            },
+            "opName": "MyriaQueryScan('SELECT input.c_custkey AS c_custkey, input.c_nation AS c_nation \\nFROM (SELECT \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_custkey AS c_custkey, \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_name AS c_name, \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_address AS c_address, \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_city AS c_city, \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_nation_prefix AS c_nation_prefix, \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_nation AS c_nation, \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_region AS c_region, \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_phone AS c_phone, \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_mktsegment AS c_mktsegment \\nFROM \"public:adhoc10GB42W_tenant_1:customerReplicate\") AS input')",
+            "opType": "DbQueryScan",
+            "opId": 1,
+            "sql": "SELECT input.c_custkey AS c_custkey, input.c_nation AS c_nation \nFROM (SELECT \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_custkey AS c_custkey, \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_name AS c_name, \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_address AS c_address, \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_city AS c_city, \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_nation_prefix AS c_nation_prefix, \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_nation AS c_nation, \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_region AS c_region, \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_phone AS c_phone, \"public:adhoc10GB42W_tenant_1:customerReplicate\".c_mktsegment AS c_mktsegment \nFROM \"public:adhoc10GB42W_tenant_1:customerReplicate\") AS input"
+          },
+          {
+            "schema": {
+              "columnNames": [
+                "s_suppkey",
+                "s_nation"
+              ],
+              "columnTypes": [
+                "LONG_TYPE",
+                "STRING_TYPE"
+              ]
+            },
+            "opName": "MyriaQueryScan('SELECT input.s_suppkey AS s_suppkey, input.s_nation AS s_nation \\nFROM (SELECT \"public:adhoc10GB42W_tenant_1:supplierReplicate\".s_suppkey AS s_suppkey, \"public:adhoc10GB42W_tenant_1:supplierReplicate\".s_name AS s_name, \"public:adhoc10GB42W_tenant_1:supplierReplicate\".s_address AS s_address, \"public:adhoc10GB42W_tenant_1:supplierReplicate\".s_city AS s_city, \"public:adhoc10GB42W_tenant_1:supplierReplicate\".s_nation_prefix AS s_nation_prefix, \"public:adhoc10GB42W_tenant_1:supplierReplicate\".s_nation AS s_nation, \"public:adhoc10GB42W_tenant_1:supplierReplicate\".s_region AS s_region, \"public:adhoc10GB42W_tenant_1:supplierReplicate\".s_phone AS s_phone \\nFROM \"public:adhoc10GB42W_tenant_1:supplierReplicate\") AS input')",
+            "opType": "DbQueryScan",
+            "opId": 2,
+            "sql": "SELECT input.s_suppkey AS s_suppkey, input.s_nation AS s_nation \nFROM (SELECT \"public:adhoc10GB42W_tenant_1:supplierReplicate\".s_suppkey AS s_suppkey, \"public:adhoc10GB42W_tenant_1:supplierReplicate\".s_name AS s_name, \"public:adhoc10GB42W_tenant_1:supplierReplicate\".s_address AS s_address, \"public:adhoc10GB42W_tenant_1:supplierReplicate\".s_city AS s_city, \"public:adhoc10GB42W_tenant_1:supplierReplicate\".s_nation_prefix AS s_nation_prefix, \"public:adhoc10GB42W_tenant_1:supplierReplicate\".s_nation AS s_nation, \"public:adhoc10GB42W_tenant_1:supplierReplicate\".s_region AS s_region, \"public:adhoc10GB42W_tenant_1:supplierReplicate\".s_phone AS s_phone \nFROM \"public:adhoc10GB42W_tenant_1:supplierReplicate\") AS input"
+          },
+          {
+            "schema": {
+              "columnNames": [
+                "d_datekey"
+              ],
+              "columnTypes": [
+                "LONG_TYPE"
+              ]
+            },
+            "opName": "MyriaQueryScan('SELECT input.d_datekey AS d_datekey \\nFROM (SELECT \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_datekey AS d_datekey, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_date AS d_date, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_dayofweek AS d_dayofweek, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_month AS d_month, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_year AS d_year, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_yearmonthnum AS d_yearmonthnum, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_yearmonth AS d_yearmonth, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_daynuminweek AS d_daynuminweek, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_daynuminmonth AS d_daynuminmonth, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_daynuminyear AS d_daynuminyear, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_monthnuminyear AS d_monthnuminyear, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_weeknuminyear AS d_weeknuminyear, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_sellingseason AS d_sellingseason, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_lastdayinweekfl AS d_lastdayinweekfl, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_lastdayinmonthfl AS d_lastdayinmonthfl, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_holidayfl AS d_holidayfl, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_weekdayfl AS d_weekdayfl \\nFROM \"public:adhoc10GB42W_tenant_1:dateReplicate\") AS input')",
+            "opType": "DbQueryScan",
+            "opId": 3,
+            "sql": "SELECT input.d_datekey AS d_datekey \nFROM (SELECT \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_datekey AS d_datekey, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_date AS d_date, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_dayofweek AS d_dayofweek, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_month AS d_month, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_year AS d_year, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_yearmonthnum AS d_yearmonthnum, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_yearmonth AS d_yearmonth, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_daynuminweek AS d_daynuminweek, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_daynuminmonth AS d_daynuminmonth, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_daynuminyear AS d_daynuminyear, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_monthnuminyear AS d_monthnuminyear, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_weeknuminyear AS d_weeknuminyear, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_sellingseason AS d_sellingseason, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_lastdayinweekfl AS d_lastdayinweekfl, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_lastdayinmonthfl AS d_lastdayinmonthfl, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_holidayfl AS d_holidayfl, \"public:adhoc10GB42W_tenant_1:dateReplicate\".d_weekdayfl AS d_weekdayfl \nFROM \"public:adhoc10GB42W_tenant_1:dateReplicate\") AS input"
+          },
+          {
+            "opName": "MyriaShuffleConsumer",
+            "opType": "ShuffleConsumer",
+            "opId": 4,
+            "argOperatorId": 5
+          },
+          {
+            "emitExpressions": [
+              {
+                "outputName": "l_custkey",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 2
+                }
+              },
+              {
+                "outputName": "l_partkey",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 3
+                }
+              },
+              {
+                "outputName": "l_suppkey",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 4
+                }
+              },
+              {
+                "outputName": "l_commitdate",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 15
+                }
+              }
+            ],
+            "opName": "MyriaApply(l_custkey=$2,l_partkey=$3,l_suppkey=$4,l_commitdate=$15)",
+            "opType": "Apply",
+            "opId": 6,
+            "argChild": 4
+          },
+          {
+            "argColumnNames": [
+              "l_custkey",
+              "l_partkey",
+              "l_suppkey"
+            ],
+            "argChild2": "3",
+            "argChild1": "6",
+            "opType": "SymmetricHashJoin",
+            "opId": 7,
+            "opName": "MyriaSymmetricHashJoin(($4 = $3); $0,$1,$2)",
+            "argSelect2": [],
+            "argColumns1": [
+              3
+            ],
+            "argColumns2": [
+              0
+            ],
+            "argSelect1": [
+              0,
+              1,
+              2
+            ]
+          },
+          {
+            "argColumnNames": [
+              "l_custkey",
+              "l_partkey",
+              "s_nation"
+            ],
+            "argChild2": "2",
+            "argChild1": "7",
+            "opType": "SymmetricHashJoin",
+            "opId": 8,
+            "opName": "MyriaSymmetricHashJoin(($3 = $2); $0,$1,$4)",
+            "argSelect2": [
+              1
+            ],
+            "argColumns1": [
+              2
+            ],
+            "argColumns2": [
+              0
+            ],
+            "argSelect1": [
+              0,
+              1
+            ]
+          },
+          {
+            "argColumnNames": [
+              "l_partkey",
+              "s_nation",
+              "c_nation"
+            ],
+            "argChild2": "1",
+            "argChild1": "8",
+            "opType": "SymmetricHashJoin",
+            "opId": 9,
+            "opName": "MyriaSymmetricHashJoin(($3 = $0); $1,$2,$4)",
+            "argSelect2": [
+              1
+            ],
+            "argColumns1": [
+              0
+            ],
+            "argColumns2": [
+              0
+            ],
+            "argSelect1": [
+              1,
+              2
+            ]
+          },
+          {
+            "argColumnNames": [
+              "c_nation",
+              "s_nation"
+            ],
+            "argChild2": "0",
+            "argChild1": "9",
+            "opType": "SymmetricHashJoin",
+            "opId": 10,
+            "opName": "MyriaSymmetricHashJoin(($3 = $0); $2,$1)",
+            "argSelect2": [],
+            "argColumns1": [
+              0
+            ],
+            "argColumns2": [
+              0
+            ],
+            "argSelect1": [
+              2,
+              1
+            ]
+          },
+          {
+            "opName": "MyriaSink",
+            "opType": "SinkRoot",
+            "opId": 11,
+            "argChild": 10
+          }
+        ],
+        "overrideWorkers": [
+          9,
+          10,
+          11,
+          12
+        ]
+      },
+      {
+        "operators": [
+          {
+            "opName": "MyriaQueryScan('SELECT input.l_orderkey, input.l_linenumber, input.l_custkey, input.l_partkey, input.l_suppkey, input.l_orderdate, input.l_orderpriority, input.l_shippriority, input.l_quantity, input.l_extendedprice, input.l_ordtotalprice, input.l_discount, input.l_revenue, input.l_supplycost, input.l_tax, input.l_commitdate, input.l_shipmode \\nFROM (SELECT \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_orderkey AS l_orderkey, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_linenumber AS l_linenumber, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_custkey AS l_custkey, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_partkey AS l_partkey, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_suppkey AS l_suppkey, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_orderdate AS l_orderdate, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_orderpriority AS l_orderpriority, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_shippriority AS l_shippriority, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_quantity AS l_quantity, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_extendedprice AS l_extendedprice, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_ordtotalprice AS l_ordtotalprice, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_discount AS l_discount, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_revenue AS l_revenue, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_supplycost AS l_supplycost, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_tax AS l_tax, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_commitdate AS l_commitdate, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_shipmode AS l_shipmode \\nFROM \"public:adhoc10GB12W_tenant1_8shared:lineitem\") AS input')",
+            "schema": {
+              "columnNames": [
+                "l_orderkey",
+                "l_linenumber",
+                "l_custkey",
+                "l_partkey",
+                "l_suppkey",
+                "l_orderdate",
+                "l_orderpriority",
+                "l_shippriority",
+                "l_quantity",
+                "l_extendedprice",
+                "l_ordtotalprice",
+                "l_discount",
+                "l_revenue",
+                "l_supplycost",
+                "l_tax",
+                "l_commitdate",
+                "l_shipmode"
+              ],
+              "columnTypes": [
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE",
+                "LONG_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "DOUBLE_TYPE",
+                "LONG_TYPE",
+                "STRING_TYPE"
+              ]
+            },
+            "sql": "SELECT input.l_orderkey, input.l_linenumber, input.l_custkey, input.l_partkey, input.l_suppkey, input.l_orderdate, input.l_orderpriority, input.l_shippriority, input.l_quantity, input.l_extendedprice, input.l_ordtotalprice, input.l_discount, input.l_revenue, input.l_supplycost, input.l_tax, input.l_commitdate, input.l_shipmode \nFROM (SELECT \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_orderkey AS l_orderkey, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_linenumber AS l_linenumber, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_custkey AS l_custkey, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_partkey AS l_partkey, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_suppkey AS l_suppkey, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_orderdate AS l_orderdate, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_orderpriority AS l_orderpriority, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_shippriority AS l_shippriority, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_quantity AS l_quantity, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_extendedprice AS l_extendedprice, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_ordtotalprice AS l_ordtotalprice, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_discount AS l_discount, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_revenue AS l_revenue, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_supplycost AS l_supplycost, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_tax AS l_tax, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_commitdate AS l_commitdate, \"public:adhoc10GB12W_tenant1_8shared:lineitem\".l_shipmode AS l_shipmode \nFROM \"public:adhoc10GB12W_tenant1_8shared:lineitem\") AS input",
+            "opId": 12,
+            "opType": "DbQueryScan"
+          },
+          {
+            "opName": "MyriaShuffleProducer(h($15))",
+            "opType": "ShuffleProducer",
+            "opId": 5,
+            "argChild": 12,
+            "argPf": {
+              "index": 15,
+              "type": "SingleFieldHash"
+            }
+          }
+        ],
+        "overrideWorkers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      }
+    ],
+    "type": "SubQuery"
+  }
+}
