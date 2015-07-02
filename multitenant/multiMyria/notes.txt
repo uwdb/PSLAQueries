@@ -1,0 +1,18 @@
+1. Launch 23 node cluster
+
+2. Fill out T1_master, T2_master, and workers in make_configs.py
+
+3. Fill out master in ingest/ingest_*.sh with appropriate value
+
+4. Copy multiMyria folder to cluster
+    starcluster put lbrendanlcluster --node lbrendanlcluster-master ./multiMyria /root/
+
+5. Run make_configs.py from multiMyria directory
+
+6. Run setup_cluster.sh
+    First set first four variables to appropriate cfg files
+    replace * /root/multiMyria/ingest/ingest_*.sh with number of shared data nodes
+
+7. Run time_multitenants.py
+
+8. Repeat 6,7,8 for each different cluster size

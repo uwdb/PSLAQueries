@@ -1,0 +1,16 @@
+type,estimate,time
+direct,2.0,34.8
+direct,1.8,34.8
+direct,1.6,34.8
+direct,1.4,34.8
+direct,1.2,34.8
+ewma,2.0,1627.0
+ewma,1.8,1627.0
+ewma,1.6,1627.0
+ewma,1.4,1627.0
+ewma,1.2,1627.0
+windowed,2.0,3139.1
+windowed,1.8,3139.1
+windowed,1.6,3139.1
+windowed,1.4,3139.1
+windowed,1.2,3139.1
