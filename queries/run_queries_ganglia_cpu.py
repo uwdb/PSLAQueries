@@ -28,7 +28,7 @@ else:
 
 #params
 cluster_name = "mycluster-ganglia"
-output_shortname = "DataNodes"
+output_shortname = "cpu_measure"
 
 first_worker_obs = "node001"
 second_worker_obs = "node012"
@@ -70,7 +70,7 @@ currentPath = 0
 for p in qPath:
 	counter = 0
 	#open the file to log the runtimes
-	f = open(os.path.expanduser(p + "DATA_MEMORY_runtimes.txt"), 'w');
+	f = open(os.path.expanduser(p + "runtimes.txt"), 'w');
 	print "FOR PATH " + p
 	#for each query
 	for q in qList:
@@ -88,6 +88,7 @@ for p in qPath:
 				#call bash scripts
 				subprocess.call(['/bin/bash',"clear-tpch.sh"]);
 				print("postgres and os cleared")
+				time.sleep(10)
 
 				#try running the query
 				try:
@@ -140,9 +141,11 @@ for p in qPath:
 		f.flush()
 		#save to s3
 		pathSplit = p.split('/')
-		bashCommand = "aws s3 cp " +  str(p) + "DATA_MEMORY_runtimes.txt"+ " s3://ganglia-runtimes/DATA_MEMORY_timesTPCH" + str(currentPath) + ".txt"
+		bashCommand = "aws s3 cp " +  str(p) + "runtimes.txt"+ " s3://ganglia-runtimes/CPU_timesTPCH" + str(currentPath) + ".txt"
 		print bashCommand
 		os.system(bashCommand)
+
+		time.sleep(10)
 
 		#kill myria/re-launch
 		os.chdir("/root/myria/myriadeploy/")
@@ -164,47 +167,33 @@ for p in qPath:
 		print bashCommand
 		os.system(bashCommand)
 
-        	os.chdir("/root/PSLAQueries/queries/")
-	        print os.getcwd()
+		os.chdir("/root/PSLAQueries/queries/")
+    	print os.getcwd()
 		#time buffer for metrics
 		time.sleep(30)
-	
+
 	currentPath = currentPath + 1
 	f.close()
 
+
+time.sleep(100)
 #ganglia metics
-xml_file = "mem_cached-" + output_shortname + "-" + second_worker_obs + ".xml"
+xml_file = "cpu_user-" + output_shortname + "-" + first_worker_obs + ".xml"
 
-bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/" + cluster_name + "-" + second_worker_obs + "/mem_cached.rrd >> " + xml_file
+bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/" + cluster_name + "-" + first_worker_obs + "/cpu_user.rrd >> " + xml_file
 print bashCommand
 os.system(bashCommand)
 bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
 print bashCommand
 os.system(bashCommand)
 
-xml_file = "mem_buffers-" + output_shortname + "-" + second_worker_obs + ".xml"
 
-bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/" + cluster_name + "-" + second_worker_obs + "/mem_buffers.rrd >> " + xml_file
+xml_file = "cpu_user-" + output_shortname + "-" + second_worker_obs + ".xml"
+
+bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/" + cluster_name + "-" + second_worker_obs + "/cpu_user.rrd >> " + xml_file
 print bashCommand
 os.system(bashCommand)
 bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
 print bashCommand
 os.system(bashCommand)
 
-xml_file = "mem_free-" + output_shortname + "-" + second_worker_obs + ".xml"
-
-bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/" + cluster_name + "-" + second_worker_obs + "/mem_free.rrd >> " + xml_file
-print bashCommand
-os.system(bashCommand)
-bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
-print bashCommand
-os.system(bashCommand)
-
-xml_file = "mem_total-" + output_shortname + "-" + second_worker_obs + ".xml"
-
-bashCommand = "rrdtool dump /var/lib/ganglia/rrds/myCluster/" + cluster_name + "-" + second_worker_obs + "/mem_total.rrd >> " + xml_file
-print bashCommand
-os.system(bashCommand)
-bashCommand = "aws s3 cp " + xml_file + " s3://ganglia-runtimes/"
-print bashCommand
-os.system(bashCommand)
