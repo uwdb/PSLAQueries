@@ -1,0 +1,203 @@
+{
+  "logicalRa": "",
+  "language": "myrial",
+  "rawQuery": "Complexity Q10",
+  "plan": {
+    "fragments": [
+      {
+        "operators": [
+          {
+            "opName": "MyriaShuffleConsumer",
+            "opType": "ShuffleConsumer",
+            "opId": 1,
+            "argOperatorId": 2
+          },
+           {
+            "schema": {
+              "columnNames": [
+                "d_datekey",
+                "d_date",
+                "d_dayofweek",
+                "d_month",
+                "d_year",
+                "d_yearmonthnum",
+                "d_yearmonth",
+                "d_daynuminweek",
+                "d_daynuminmonth",
+                "d_daynuminyear",
+                "d_monthnuminyear",
+                "d_weeknuminyear",
+                "d_sellingseason",
+                "d_lastdayinweekfl",
+                "d_lastdayinmonthfl",
+                "d_holidayfl",
+                "d_weekdayfl"
+              ],
+              "columnTypes": [
+                "LONG_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "STRING_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE"
+              ]
+            },
+            "opName": "MyriaQueryScan",
+            "opType": "DbQueryScan",
+            "opId": 3,
+            "sql": "SELECT input.d_datekey AS d_datekey, input.d_date AS d_date, input.d_dayofweek AS d_dayofweek, input.d_month AS d_month, input.d_year AS d_year, input.d_yearmonthnum AS d_yearmonthnum, input.d_yearmonth AS d_yearmonth, input.d_daynuminweek AS d_daynuminweek, input.d_daynuminmonth AS d_daynuminmonth, input.d_daynuminyear AS d_daynuminyear, input.d_monthnuminyear AS d_monthnuminyear, input.d_weeknuminyear AS d_weeknuminyear, input.d_sellingseason AS d_sellingseason, input.d_lastdayinweekfl AS d_lastdayinweekfl, input.d_lastdayinmonthfl AS d_lastdayinmonthfl, input.d_holidayfl AS d_holidayfl, input.d_weekdayfl AS d_weekdayfl \nFROM (SELECT \"public:adhoc10GB10W:dateReplicate\".d_datekey AS d_datekey, \"public:adhoc10GB10W:dateReplicate\".d_date AS d_date, \"public:adhoc10GB10W:dateReplicate\".d_dayofweek AS d_dayofweek, \"public:adhoc10GB10W:dateReplicate\".d_month AS d_month, \"public:adhoc10GB10W:dateReplicate\".d_year AS d_year, \"public:adhoc10GB10W:dateReplicate\".d_yearmonthnum AS d_yearmonthnum, \"public:adhoc10GB10W:dateReplicate\".d_yearmonth AS d_yearmonth, \"public:adhoc10GB10W:dateReplicate\".d_daynuminweek AS d_daynuminweek, \"public:adhoc10GB10W:dateReplicate\".d_daynuminmonth AS d_daynuminmonth, \"public:adhoc10GB10W:dateReplicate\".d_daynuminyear AS d_daynuminyear, \"public:adhoc10GB10W:dateReplicate\".d_monthnuminyear AS d_monthnuminyear, \"public:adhoc10GB10W:dateReplicate\".d_weeknuminyear AS d_weeknuminyear, \"public:adhoc10GB10W:dateReplicate\".d_sellingseason AS d_sellingseason, \"public:adhoc10GB10W:dateReplicate\".d_lastdayinweekfl AS d_lastdayinweekfl, \"public:adhoc10GB10W:dateReplicate\".d_lastdayinmonthfl AS d_lastdayinmonthfl, \"public:adhoc10GB10W:dateReplicate\".d_holidayfl AS d_holidayfl, \"public:adhoc10GB10W:dateReplicate\".d_weekdayfl AS d_weekdayfl \nFROM \"public:adhoc10GB10W:dateReplicate\", \"public:adhoc10GB10W:dateReplicate\" as p, \"public:adhoc10GB10W:dateReplicate\" as q, \"public:adhoc10GB10W:dateReplicate\" as r, \"public:adhoc10GB10W:dateReplicate\" as s, \"public:adhoc10GB10W:dateReplicate\" as t, \"public:adhoc10GB10W:dateReplicate\" as u, \"public:adhoc10GB10W:dateReplicate\" as v, \"public:adhoc10GB10W:dateReplicate\" as w   where \"public:adhoc10GB10W:dateReplicate\".d_datekey = p.d_datekey and p.d_datekey = q.d_datekey and q.d_datekey = r.d_datekey and r.d_datekey = s.d_datekey and s.d_datekey = t.d_datekey and t.d_datekey = u.d_datekey and u.d_datekey = v.d_datekey and v.d_datekey = w.d_datekey) AS input"
+          },
+          {
+            "argColumnNames": [
+              "l_orderkey",
+              "l_linenumber",
+              "l_custkey",
+              "l_partkey",
+              "l_suppkey",
+              "l_orderdate",
+              "l_orderpriority",
+              "l_shippriority",
+              "l_quantity",
+              "l_extendedprice",
+              "l_ordtotalprice",
+              "l_discount",
+              "l_revenue",
+              "l_supplycost",
+              "l_tax",
+              "l_commitdate",
+              "l_shipmode",
+              "d_datekey",
+              "d_date",
+              "d_dayofweek",
+              "d_month",
+              "d_year",
+              "d_yearmonthnum",
+              "d_yearmonth",
+              "d_daynuminweek",
+              "d_daynuminmonth",
+              "d_daynuminyear",
+              "d_monthnuminyear",
+              "d_weeknuminyear",
+              "d_sellingseason",
+              "d_lastdayinweekfl",
+              "d_lastdayinmonthfl",
+              "d_holidayfl",
+              "d_weekdayfl"
+            ],
+            "argChild2": "3",
+            "argChild1": "1",
+            "opType": "SymmetricHashJoin",
+            "opId": 6,
+            "opName": "MyriaSymmetricHashJoin(($17 = $15); $0,$1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31,$32,$33)",
+            "argSelect2": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16
+            ],
+            "argColumns1": [
+              15
+            ],
+            "argColumns2": [
+              0
+            ],
+            "argSelect1": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16
+            ]
+          },
+          {
+            "opName": "MyriaSink",
+            "opType": "SinkRoot",
+            "opId": 4,
+            "argChild": 6
+          }
+        ],
+        "overrideWorkers": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "operators": [
+           {
+            "relationKey": {
+              "userName": "public",
+              "relationName": "lineitem",
+              "programName": "adhoc10GB12W"
+            },
+            "opType": "TableScan",
+            "opName": "MyriaScan(public:adhoc10GB:lineitem)",
+            "opId": 5
+          },
+          {
+            "opName": "MyriaShuffleProducer(h($15))",
+            "opType": "ShuffleProducer",
+            "opId": 2,
+            "argChild": 5,
+            "argPf": {
+              "index": 15,
+              "type": "SingleFieldHash"
+            }
+          }
+        ],
+        "overrideWorkers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      }
+    ],
+    "type": "SubQuery"
+  }
+}

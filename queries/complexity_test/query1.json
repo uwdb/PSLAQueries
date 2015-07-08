@@ -1,0 +1,70 @@
+{
+  "logicalRa": "",
+  "language": "myrial",
+  "rawQuery": "Complexity Q1",
+  "plan": {
+    "fragments": [
+      {
+        "operators": [
+          {
+            "opName": "MyriaShuffleConsumer",
+            "opType": "ShuffleConsumer",
+            "opId": 1,
+            "argOperatorId": 2
+          },
+          {
+            "opName": "MyriaSink",
+            "opType": "SinkRoot",
+            "opId": 4,
+            "argChild": 1
+          }
+        ],
+        "overrideWorkers": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "operators": [
+           {
+            "relationKey": {
+              "userName": "public",
+              "relationName": "lineitem",
+              "programName": "adhoc10GB12W"
+            },
+            "opType": "TableScan",
+            "opName": "MyriaScan(public:adhoc10GB:lineitem)",
+            "opId": 5
+          },
+          {
+            "opName": "MyriaShuffleProducer(h($15))",
+            "opType": "ShuffleProducer",
+            "opId": 2,
+            "argChild": 5,
+            "argPf": {
+              "index": 15,
+              "type": "SingleFieldHash"
+            }
+          }
+        ],
+        "overrideWorkers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ]
+      }
+    ],
+    "type": "SubQuery"
+  }
+}
