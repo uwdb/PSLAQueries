@@ -2,7 +2,7 @@ MASTER=localhost
 PORT=8753
 
 #ingesting all lineitems
-python ingest_parallel_lineitem.py $MASTER
+python ingest_parallel_lineitem-part1.py $MASTER
 
 curl -i -XPOST $MASTER:$PORT/dataset -H "Content-type: application/json"  -d @./ingest_customer.json
 

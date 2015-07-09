@@ -1,0 +1,1 @@
+./clear/clearOSCache-many.sh & ./clear/postgresRestart-many.sh
