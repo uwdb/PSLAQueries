@@ -59,6 +59,43 @@ qPath = [
 		#"tpch/multi-tenant/4_tenants-4_shared/",
 		#"tpch/multi-tenant/4_tenants-6_shared/",
 		#"tpch/multi-tenant/4_tenants-8_shared/"
+
+		#"tpch/multi-tenant/4_tenants-2_shared/",
+		#"tpch/multi-tenant/4_tenants-4_shared/",
+		#"tpch/multi-tenant/4_tenants-6_shared/",
+		#"tpch/multi-tenant/4_tenants-8_shared/"
+
+		#"tpch/multi-tenant/5_tenants-2_shared/",
+		#"tpch/multi-tenant/5_tenants-4_shared/",
+		#"tpch/multi-tenant/5_tenants-6_shared/",
+		#"tpch/multi-tenant/5_tenants-8_shared/"
+
+		#"tpch/multi-tenant/6_tenants-2_shared/",
+		#"tpch/multi-tenant/6_tenants-4_shared/",
+		#"tpch/multi-tenant/6_tenants-6_shared/",
+		#"tpch/multi-tenant/6_tenants-8_shared/"
+
+		#"tpch/multi-tenant/7_tenants-2_shared/",
+		#"tpch/multi-tenant/7_tenants-4_shared/",
+		#"tpch/multi-tenant/7_tenants-6_shared/",
+		#"tpch/multi-tenant/7_tenants-8_shared/"
+
+		#"tpch/multi-tenant/8_tenants-2_shared/",
+		#"tpch/multi-tenant/8_tenants-4_shared/",
+		#"tpch/multi-tenant/8_tenants-6_shared/",
+		#"tpch/multi-tenant/8_tenants-8_shared/"
+
+		#"tpch/multi-tenant/9_tenants-2_shared/",
+		#"tpch/multi-tenant/9_tenants-4_shared/",
+		#"tpch/multi-tenant/9_tenants-6_shared/",
+		#"tpch/multi-tenant/9_tenants-8_shared/"
+
+		#won't be able to run this
+		#"tpch/multi-tenant/10_tenants-2_shared/",
+		
+		#"tpch/multi-tenant/10_tenants-4_shared/",
+		#"tpch/multi-tenant/10_tenants-6_shared/",
+		#"tpch/multi-tenant/10_tenants-8_shared/"
 		]
 
 
@@ -71,7 +108,7 @@ for p in qPath:
 	qList = os.listdir("/root/PSLAQueries/queries/"+ p)
 
 	#call bash scripts
-	subprocess.call(['/bin/bash',"clear-tpch.sh"]);
+	subprocess.call(['/bin/bash',"clear-mt.sh"]);
 	print("postgres and os cleared")
 
 	#for each query in the path

@@ -9,10 +9,10 @@ port = 8753
 
 connection = MyriaConnection(hostname = sys.argv[1], port=8753)
 
-configurations = [42]
+configurations = [93]
 
 dimensionFiles = ['replicateCustomer.json', 'replicateDate.json', 'replicatePart.json', 'replicateSupplier.json']
-tenants = ['tenant_1', 'tenant_2', 'tenant_3', 'tenant_4']
+tenants = ['tenant1', 'tenant2', 'tenant3', 'tenant4', 'tenant5', 'tenant6','tenant7', 'tenant8', 'tenant9' ,'tenant10']
 
 for t in tenants:
 	for c in configurations:
