@@ -98,6 +98,7 @@ qPath = [
 		#"tpch/multi-tenant/10_tenants-8_shared/"
 		]
 
+f = open(os.path.expanduser("/root/runtimes.txt"), 'w');
 
 for p in qPath:
 	counter = 0;
@@ -107,13 +108,11 @@ for p in qPath:
 	
 	qList = os.listdir("/root/PSLAQueries/queries/"+ p)
 
-	f = open(os.path.expanduser(p + "runtimes.txt"), 'w');
-
 	#call bash scripts
 	subprocess.call(['/bin/bash',"clear-mt.sh"]);
 	print("postgres and os cleared")
 
-	connection_mapper = []
+	query_id_mapper = []
 
 	#for each query in the path
 	for q in qList:
@@ -128,11 +127,12 @@ for p in qPath:
 			#try running the query
 			try:
 				query_status = connection.submit_query(data)
-				connection_mapper.append(query_status)
 				query_id = query_status['queryId']
 			except myria.MyriaError as e:
 				print("MyriaError")
 				print('Query #' + str(counter));
+
+			query_id_mapper.append(query_id)
 
 		except:
 			print "Query does not exist"
@@ -142,18 +142,19 @@ for p in qPath:
 	done = False
 	while not done:
 		done = True
-		for c in connection_mapper:
-			status = int((c.get_query_status(query_id))['elapsedNanos'])
+		for q in query_id_mapper:
+			status = (connection.get_query_status(q))['status']
+			print status
 			if status!='SUCCESS':
 				done = False
 
 	#record the runtimes
-	f.write(p)
-	for c in connection_mapper:
-		totalElapsedTime = int((connection.get_query_status(query_id))['elapsedNanos'])
-		f.write(totalElapsedTime)
-
-	f.flush()
-	f.close()
+	f.write(p + "\n")
+	for q in query_id_mapper:
+		totalElapsedTime =  (connection.get_query_status(q))['elapsedNanos']
+		f.write(str(totalElapsedTime)+ ",")
+	f.write(p + "\n")
+f.flush()
+f.close()
 
 
