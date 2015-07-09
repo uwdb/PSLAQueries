@@ -74,7 +74,7 @@ qPath = [
 for p in qPath:
 	counter = 0;
 	print "FOR PATH " + p
-
+	
 	#open the file to log the runtimes
 	f = open(os.path.expanduser(p + "runtimes.txt"), 'w');
 
@@ -83,6 +83,7 @@ for p in qPath:
 
 	#for each query in the path
 	for q in qList:
+		averageTime = 0.0
 		try:
 			q = q.strip()
 			print "Q", q

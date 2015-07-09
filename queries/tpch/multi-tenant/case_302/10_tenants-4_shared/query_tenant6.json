@@ -1,0 +1,291 @@
+{
+  "logicalRa": "MyriaSink[MyriaApply(p_mfgr=$10,p_type=$14,l_orderpriority=$2,p_container=$15,p_name=$9,p_color=$13,l_shipmode=$8,p_category=$11,p_brand=$12,l_extendedprice=$4,l_quantity=$3,l_ordtotalprice=$5,l_discount=$6,l_tax=$7,l_custkey=$0,l_suppkey=$1)[MyriaSymmetricHashJoin(($10 = $1); $0,$2,$3,$4,$5,$6,$7,$8,$9,$11,$12,$13,$14,$15,$16,$17)[MyriaShuffleConsumer[MyriaShuffleProducer(h($1))[MyriaQueryScan('SELECT input.l_custkey AS l_custkey, input.l_partkey AS l_partkey, input.l_suppkey AS l_suppkey, input.l_orderpriority AS l_orderpriority, input.l_quantity AS l_quantity, input.l_extendedprice AS l_extendedprice, input.l_ordtotalprice AS l_ordtotalprice, input.l_discount AS l_discount, input.l_tax AS l_tax, input.l_shipmode AS l_shipmode \\nFROM (SELECT input.l_orderkey AS l_orderkey, input.l_linenumber AS l_linenumber, input.l_custkey AS l_custkey, input.l_partkey AS l_partkey, input.l_suppkey AS l_suppkey, input.l_orderdate AS l_orderdate, input.l_orderpriority AS l_orderpriority, input.l_shippriority AS l_shippriority, input.l_quantity AS l_quantity, input.l_extendedprice AS l_extendedprice, input.l_ordtotalprice AS l_ordtotalprice, input.l_discount AS l_discount, input.l_revenue AS l_revenue, input.l_supplycost AS l_supplycost, input.l_tax AS l_tax, input.l_commitdate AS l_commitdate, input.l_shipmode AS l_shipmode \\nFROM (SELECT \"public:adhoc10GB102W_tenant6:lineitem\".l_orderkey AS l_orderkey, \"public:adhoc10GB102W_tenant6:lineitem\".l_linenumber AS l_linenumber, \"public:adhoc10GB102W_tenant6:lineitem\".l_custkey AS l_custkey, \"public:adhoc10GB102W_tenant6:lineitem\".l_partkey AS l_partkey, \"public:adhoc10GB102W_tenant6:lineitem\".l_suppkey AS l_suppkey, \"public:adhoc10GB102W_tenant6:lineitem\".l_orderdate AS l_orderdate, \"public:adhoc10GB102W_tenant6:lineitem\".l_orderpriority AS l_orderpriority, \"public:adhoc10GB102W_tenant6:lineitem\".l_shippriority AS l_shippriority, \"public:adhoc10GB102W_tenant6:lineitem\".l_quantity AS l_quantity, \"public:adhoc10GB102W_tenant6:lineitem\".l_extendedprice AS l_extendedprice, \"public:adhoc10GB102W_tenant6:lineitem\".l_ordtotalprice AS l_ordtotalprice, \"public:adhoc10GB102W_tenant6:lineitem\".l_discount AS l_discount, \"public:adhoc10GB102W_tenant6:lineitem\".l_revenue AS l_revenue, \"public:adhoc10GB102W_tenant6:lineitem\".l_supplycost AS l_supplycost, \"public:adhoc10GB102W_tenant6:lineitem\".l_tax AS l_tax, \"public:adhoc10GB102W_tenant6:lineitem\".l_commitdate AS l_commitdate, \"public:adhoc10GB102W_tenant6:lineitem\".l_shipmode AS l_shipmode \\nFROM \"public:adhoc10GB102W_tenant6:lineitem\") AS input \\nWHERE input.l_orderkey <= 23994434 AND input.l_linenumber <= 1) AS input')]],MyriaQueryScan('SELECT input.p_partkey AS p_partkey, input.p_name AS p_name, input.p_mfgr AS p_mfgr, input.p_category AS p_category, input.p_brand AS p_brand, input.p_color AS p_color, input.p_type AS p_type, input.p_container AS p_container \\nFROM (SELECT \"public:adhoc10GB102W_tenant6:partReplicate\".p_partkey AS p_partkey, \"public:adhoc10GB102W_tenant6:partReplicate\".p_name AS p_name, \"public:adhoc10GB102W_tenant6:partReplicate\".p_mfgr AS p_mfgr, \"public:adhoc10GB102W_tenant6:partReplicate\".p_category AS p_category, \"public:adhoc10GB102W_tenant6:partReplicate\".p_brand AS p_brand, \"public:adhoc10GB102W_tenant6:partReplicate\".p_color AS p_color, \"public:adhoc10GB102W_tenant6:partReplicate\".p_type AS p_type, \"public:adhoc10GB102W_tenant6:partReplicate\".p_size AS p_size, \"public:adhoc10GB102W_tenant6:partReplicate\".p_container AS p_container \\nFROM \"public:adhoc10GB102W_tenant6:partReplicate\") AS input')]]]",
+  "language": "myrial",
+  "rawQuery": "Query 302 for type-3 on 12 starting datanodes",
+  "plan": {
+    "fragments": [
+      {
+        "operators": [
+          {
+            "schema": {
+              "columnNames": [
+                "p_partkey",
+                "p_name",
+                "p_mfgr",
+                "p_category",
+                "p_brand",
+                "p_color",
+                "p_type",
+                "p_container"
+              ],
+              "columnTypes": [
+                "LONG_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE"
+              ]
+            },
+            "opName": "MyriaQueryScan('SELECT input.p_partkey AS p_partkey, input.p_name AS p_name, input.p_mfgr AS p_mfgr, input.p_category AS p_category, input.p_brand AS p_brand, input.p_color AS p_color, input.p_type AS p_type, input.p_container AS p_container \\nFROM (SELECT \"public:adhoc10GB102W_tenant6:partReplicate\".p_partkey AS p_partkey, \"public:adhoc10GB102W_tenant6:partReplicate\".p_name AS p_name, \"public:adhoc10GB102W_tenant6:partReplicate\".p_mfgr AS p_mfgr, \"public:adhoc10GB102W_tenant6:partReplicate\".p_category AS p_category, \"public:adhoc10GB102W_tenant6:partReplicate\".p_brand AS p_brand, \"public:adhoc10GB102W_tenant6:partReplicate\".p_color AS p_color, \"public:adhoc10GB102W_tenant6:partReplicate\".p_type AS p_type, \"public:adhoc10GB102W_tenant6:partReplicate\".p_size AS p_size, \"public:adhoc10GB102W_tenant6:partReplicate\".p_container AS p_container \\nFROM \"public:adhoc10GB102W_tenant6:partReplicate\") AS input')",
+            "opType": "DbQueryScan",
+            "opId": 0,
+            "sql": "SELECT input.p_partkey AS p_partkey, input.p_name AS p_name, input.p_mfgr AS p_mfgr, input.p_category AS p_category, input.p_brand AS p_brand, input.p_color AS p_color, input.p_type AS p_type, input.p_container AS p_container \nFROM (SELECT \"public:adhoc10GB102W_tenant6:partReplicate\".p_partkey AS p_partkey, \"public:adhoc10GB102W_tenant6:partReplicate\".p_name AS p_name, \"public:adhoc10GB102W_tenant6:partReplicate\".p_mfgr AS p_mfgr, \"public:adhoc10GB102W_tenant6:partReplicate\".p_category AS p_category, \"public:adhoc10GB102W_tenant6:partReplicate\".p_brand AS p_brand, \"public:adhoc10GB102W_tenant6:partReplicate\".p_color AS p_color, \"public:adhoc10GB102W_tenant6:partReplicate\".p_type AS p_type, \"public:adhoc10GB102W_tenant6:partReplicate\".p_size AS p_size, \"public:adhoc10GB102W_tenant6:partReplicate\".p_container AS p_container \nFROM \"public:adhoc10GB102W_tenant6:partReplicate\") AS input"
+          },
+          {
+            "opName": "MyriaShuffleConsumer",
+            "opType": "ShuffleConsumer",
+            "opId": 1,
+            "argOperatorId": 2
+          },
+          {
+            "argColumnNames": [
+              "l_custkey",
+              "l_suppkey",
+              "l_orderpriority",
+              "l_quantity",
+              "l_extendedprice",
+              "l_ordtotalprice",
+              "l_discount",
+              "l_tax",
+              "l_shipmode",
+              "p_name",
+              "p_mfgr",
+              "p_category",
+              "p_brand",
+              "p_color",
+              "p_type",
+              "p_container"
+            ],
+            "argChild2": "0",
+            "argChild1": "1",
+            "opType": "SymmetricHashJoin",
+            "opId": 3,
+            "opName": "MyriaSymmetricHashJoin(($10 = $1); $0,$2,$3,$4,$5,$6,$7,$8,$9,$11,$12,$13,$14,$15,$16,$17)",
+            "argSelect2": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "argColumns1": [
+              1
+            ],
+            "argColumns2": [
+              0
+            ],
+            "argSelect1": [
+              0,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ]
+          },
+          {
+            "emitExpressions": [
+              {
+                "outputName": "p_mfgr",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 10
+                }
+              },
+              {
+                "outputName": "p_type",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 14
+                }
+              },
+              {
+                "outputName": "l_orderpriority",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 2
+                }
+              },
+              {
+                "outputName": "p_container",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 15
+                }
+              },
+              {
+                "outputName": "p_name",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 9
+                }
+              },
+              {
+                "outputName": "p_color",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 13
+                }
+              },
+              {
+                "outputName": "l_shipmode",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 8
+                }
+              },
+              {
+                "outputName": "p_category",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 11
+                }
+              },
+              {
+                "outputName": "p_brand",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 12
+                }
+              },
+              {
+                "outputName": "l_extendedprice",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 4
+                }
+              },
+              {
+                "outputName": "l_quantity",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 3
+                }
+              },
+              {
+                "outputName": "l_ordtotalprice",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 5
+                }
+              },
+              {
+                "outputName": "l_discount",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 6
+                }
+              },
+              {
+                "outputName": "l_tax",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 7
+                }
+              },
+              {
+                "outputName": "l_custkey",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 0
+                }
+              },
+              {
+                "outputName": "l_suppkey",
+                "rootExpressionOperator": {
+                  "type": "VARIABLE",
+                  "columnIdx": 1
+                }
+              }
+            ],
+            "opName": "MyriaApply(p_mfgr=$10,p_type=$14,l_orderpriority=$2,p_container=$15,p_name=$9,p_color=$13,l_shipmode=$8,p_category=$11,p_brand=$12,l_extendedprice=$4,l_quantity=$3,l_ordtotalprice=$5,l_discount=$6,l_tax=$7,l_custkey=$0,l_suppkey=$1)",
+            "opType": "Apply",
+            "opId": 4,
+            "argChild": 3
+          },
+          {
+            "opName": "MyriaSink",
+            "opType": "SinkRoot",
+            "opId": 5,
+            "argChild": 4
+          }
+        ],
+        "overrideWorkers": [
+                    49,
+          50,
+          51,
+          52
+        ]
+      },
+      {
+        "operators": [
+          {
+            "schema": {
+              "columnNames": [
+                "l_custkey",
+                "l_partkey",
+                "l_suppkey",
+                "l_orderpriority",
+                "l_quantity",
+                "l_extendedprice",
+                "l_ordtotalprice",
+                "l_discount",
+                "l_tax",
+                "l_shipmode"
+              ],
+              "columnTypes": [
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "STRING_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "STRING_TYPE"
+              ]
+            },
+            "opName": "MyriaQueryScan('SELECT input.l_custkey AS l_custkey, input.l_partkey AS l_partkey, input.l_suppkey AS l_suppkey, input.l_orderpriority AS l_orderpriority, input.l_quantity AS l_quantity, input.l_extendedprice AS l_extendedprice, input.l_ordtotalprice AS l_ordtotalprice, input.l_discount AS l_discount, input.l_tax AS l_tax, input.l_shipmode AS l_shipmode \\nFROM (SELECT input.l_orderkey AS l_orderkey, input.l_linenumber AS l_linenumber, input.l_custkey AS l_custkey, input.l_partkey AS l_partkey, input.l_suppkey AS l_suppkey, input.l_orderdate AS l_orderdate, input.l_orderpriority AS l_orderpriority, input.l_shippriority AS l_shippriority, input.l_quantity AS l_quantity, input.l_extendedprice AS l_extendedprice, input.l_ordtotalprice AS l_ordtotalprice, input.l_discount AS l_discount, input.l_revenue AS l_revenue, input.l_supplycost AS l_supplycost, input.l_tax AS l_tax, input.l_commitdate AS l_commitdate, input.l_shipmode AS l_shipmode \\nFROM (SELECT \"public:adhoc10GB102W_tenant6:lineitem\".l_orderkey AS l_orderkey, \"public:adhoc10GB102W_tenant6:lineitem\".l_linenumber AS l_linenumber, \"public:adhoc10GB102W_tenant6:lineitem\".l_custkey AS l_custkey, \"public:adhoc10GB102W_tenant6:lineitem\".l_partkey AS l_partkey, \"public:adhoc10GB102W_tenant6:lineitem\".l_suppkey AS l_suppkey, \"public:adhoc10GB102W_tenant6:lineitem\".l_orderdate AS l_orderdate, \"public:adhoc10GB102W_tenant6:lineitem\".l_orderpriority AS l_orderpriority, \"public:adhoc10GB102W_tenant6:lineitem\".l_shippriority AS l_shippriority, \"public:adhoc10GB102W_tenant6:lineitem\".l_quantity AS l_quantity, \"public:adhoc10GB102W_tenant6:lineitem\".l_extendedprice AS l_extendedprice, \"public:adhoc10GB102W_tenant6:lineitem\".l_ordtotalprice AS l_ordtotalprice, \"public:adhoc10GB102W_tenant6:lineitem\".l_discount AS l_discount, \"public:adhoc10GB102W_tenant6:lineitem\".l_revenue AS l_revenue, \"public:adhoc10GB102W_tenant6:lineitem\".l_supplycost AS l_supplycost, \"public:adhoc10GB102W_tenant6:lineitem\".l_tax AS l_tax, \"public:adhoc10GB102W_tenant6:lineitem\".l_commitdate AS l_commitdate, \"public:adhoc10GB102W_tenant6:lineitem\".l_shipmode AS l_shipmode \\nFROM \"public:adhoc10GB102W_tenant6:lineitem\") AS input \\nWHERE input.l_orderkey <= 23994434 AND input.l_linenumber <= 1) AS input')",
+            "opType": "DbQueryScan",
+            "opId": 6,
+            "sql": "SELECT input.l_custkey AS l_custkey, input.l_partkey AS l_partkey, input.l_suppkey AS l_suppkey, input.l_orderpriority AS l_orderpriority, input.l_quantity AS l_quantity, input.l_extendedprice AS l_extendedprice, input.l_ordtotalprice AS l_ordtotalprice, input.l_discount AS l_discount, input.l_tax AS l_tax, input.l_shipmode AS l_shipmode \nFROM (SELECT input.l_orderkey AS l_orderkey, input.l_linenumber AS l_linenumber, input.l_custkey AS l_custkey, input.l_partkey AS l_partkey, input.l_suppkey AS l_suppkey, input.l_orderdate AS l_orderdate, input.l_orderpriority AS l_orderpriority, input.l_shippriority AS l_shippriority, input.l_quantity AS l_quantity, input.l_extendedprice AS l_extendedprice, input.l_ordtotalprice AS l_ordtotalprice, input.l_discount AS l_discount, input.l_revenue AS l_revenue, input.l_supplycost AS l_supplycost, input.l_tax AS l_tax, input.l_commitdate AS l_commitdate, input.l_shipmode AS l_shipmode \nFROM (SELECT \"public:adhoc10GB12W_tenant6_4shared:lineitem\".l_orderkey AS l_orderkey, \"public:adhoc10GB12W_tenant6_4shared:lineitem\".l_linenumber AS l_linenumber, \"public:adhoc10GB12W_tenant6_4shared:lineitem\".l_custkey AS l_custkey, \"public:adhoc10GB12W_tenant6_4shared:lineitem\".l_partkey AS l_partkey, \"public:adhoc10GB12W_tenant6_4shared:lineitem\".l_suppkey AS l_suppkey, \"public:adhoc10GB12W_tenant6_4shared:lineitem\".l_orderdate AS l_orderdate, \"public:adhoc10GB12W_tenant6_4shared:lineitem\".l_orderpriority AS l_orderpriority, \"public:adhoc10GB12W_tenant6_4shared:lineitem\".l_shippriority AS l_shippriority, \"public:adhoc10GB12W_tenant6_4shared:lineitem\".l_quantity AS l_quantity, \"public:adhoc10GB12W_tenant6_4shared:lineitem\".l_extendedprice AS l_extendedprice, \"public:adhoc10GB12W_tenant6_4shared:lineitem\".l_ordtotalprice AS l_ordtotalprice, \"public:adhoc10GB12W_tenant6_4shared:lineitem\".l_discount AS l_discount, \"public:adhoc10GB12W_tenant6_4shared:lineitem\".l_revenue AS l_revenue, \"public:adhoc10GB12W_tenant6_4shared:lineitem\".l_supplycost AS l_supplycost, \"public:adhoc10GB12W_tenant6_4shared:lineitem\".l_tax AS l_tax, \"public:adhoc10GB12W_tenant6_4shared:lineitem\".l_commitdate AS l_commitdate, \"public:adhoc10GB12W_tenant6_4shared:lineitem\".l_shipmode AS l_shipmode \nFROM \"public:adhoc10GB12W_tenant6_4shared:lineitem\") AS input \nWHERE input.l_orderkey <= 23994434 AND input.l_linenumber <= 1) AS input"
+          },
+          {
+            "opName": "MyriaShuffleProducer(h($1))",
+            "opType": "ShuffleProducer",
+            "opId": 2,
+            "argChild": 6,
+            "argPf": {
+              "index": 1,
+              "type": "SingleFieldHash"
+            }
+          }
+        ],
+        "overrideWorkers": [
+          1,
+          2,
+          3,
+          4,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52
+        ]
+      }
+    ],
+    "type": "SubQuery"
+  }
+}
