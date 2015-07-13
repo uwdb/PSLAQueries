@@ -1,8 +1,7 @@
-FILES=/configs/$1
+FILES=/root/PSLAQueries/multitenant/multiMyria-many-process/configs/$1/*
 
 cd /root/myria/myriadeploy
 for f in $FILES
 do
-	./stop_all_by_force.py $f
-	./kill_all_java_processes.py $f
+	./remove_deployment.py $f
 done

@@ -45,57 +45,57 @@ qPath = [
 		#"tpch/tpch-type3/tpch-type3b/12_datanodes/8_computenodes/",
 		#"tpch/tpch-type3/tpch-type3b/12_datanodes/10_computenodes/"
 
-		#"tpch/multi-tenant/2_tenants-2_shared/",
-		#"tpch/multi-tenant/2_tenants-4_shared/",
-		#"tpch/multi-tenant/2_tenants-6_shared/",
-		#"tpch/multi-tenant/2_tenants-8_shared/",
+		"tpch/multi-tenant/case_302/2_tenants-2_shared/",
+		"tpch/multi-tenant/case_302/2_tenants-4_shared/",
+		#"tpch/multi-tenant/case_302/2_tenants-6_shared/",
+		#"tpch/multi-tenant/case_302/2_tenants-8_shared/",
 
-		#"tpch/multi-tenant/3_tenants-2_shared/",
-		#"tpch/multi-tenant/3_tenants-4_shared/",
-		#"tpch/multi-tenant/3_tenants-6_shared/",
-		#"tpch/multi-tenant/3_tenants-8_shared/",
+		"tpch/multi-tenant/case_302/3_tenants-2_shared/",
+		"tpch/multi-tenant/case_302/3_tenants-4_shared/",
+		#"tpch/multi-tenant/case_302/3_tenants-6_shared/",
+		#"tpch/multi-tenant/case_302/3_tenants-8_shared/",
 
-		#"tpch/multi-tenant/4_tenants-2_shared/",
-		#"tpch/multi-tenant/4_tenants-4_shared/",
-		#"tpch/multi-tenant/4_tenants-6_shared/",
-		#"tpch/multi-tenant/4_tenants-8_shared/"
+		"tpch/multi-tenant/case_302/4_tenants-2_shared/",
+		"tpch/multi-tenant/case_302/4_tenants-4_shared/",
+		#"tpch/multi-tenant/case_302/4_tenants-6_shared/",
+		#"tpch/multi-tenant/case_302/4_tenants-8_shared/",
 
-		#"tpch/multi-tenant/4_tenants-2_shared/",
-		#"tpch/multi-tenant/4_tenants-4_shared/",
-		#"tpch/multi-tenant/4_tenants-6_shared/",
-		#"tpch/multi-tenant/4_tenants-8_shared/"
+		"tpch/multi-tenant/case_302/4_tenants-2_shared/",
+		"tpch/multi-tenant/case_302/4_tenants-4_shared/",
+		#"tpch/multi-tenant/case_302/4_tenants-6_shared/",
+		#"tpch/multi-tenant/case_302/4_tenants-8_shared/",
 
-		#"tpch/multi-tenant/5_tenants-2_shared/",
-		#"tpch/multi-tenant/5_tenants-4_shared/",
-		#"tpch/multi-tenant/5_tenants-6_shared/",
-		#"tpch/multi-tenant/5_tenants-8_shared/"
+		"tpch/multi-tenant/case_302/5_tenants-2_shared/",
+		"tpch/multi-tenant/case_302/5_tenants-4_shared/",
+		#"tpch/multi-tenant/case_302/5_tenants-6_shared/",
+		#"tpch/multi-tenant/case_302/5_tenants-8_shared/",
 
-		#"tpch/multi-tenant/6_tenants-2_shared/",
-		#"tpch/multi-tenant/6_tenants-4_shared/",
-		#"tpch/multi-tenant/6_tenants-6_shared/",
-		#"tpch/multi-tenant/6_tenants-8_shared/"
+		"tpch/multi-tenant/case_302/6_tenants-2_shared/",
+		"tpch/multi-tenant/case_302/6_tenants-4_shared/",
+		#"tpch/multi-tenant/case_302/6_tenants-6_shared/",
+		#"tpch/multi-tenant/case_302/6_tenants-8_shared/",
 
-		"tpch/multi-tenant/case_663/7_tenants-2_shared/",
-		"tpch/multi-tenant/case_663/7_tenants-4_shared/",
-		#"tpch/multi-tenant/7_tenants-6_shared/",
-		#"tpch/multi-tenant/7_tenants-8_shared/"
+		"tpch/multi-tenant/case_302/7_tenants-2_shared/",
+		"tpch/multi-tenant/case_302/7_tenants-4_shared/",
+		#"tpch/multi-tenant/case_302/7_tenants-6_shared/",
+		#"tpch/multi-tenant/case_302/7_tenants-8_shared/",
 
-		"tpch/multi-tenant/case_663/8_tenants-2_shared/",
-		"tpch/multi-tenant/case_663/8_tenants-4_shared/",
-		#"tpch/multi-tenant/8_tenants-6_shared/",
-		#"tpch/multi-tenant/8_tenants-8_shared/"
+		"tpch/multi-tenant/case_302/8_tenants-2_shared/",
+		"tpch/multi-tenant/case_302/8_tenants-4_shared/",
+		#"tpch/multi-tenant/case_302/8_tenants-6_shared/",
+		#"tpch/multi-tenant/case_302/8_tenants-8_shared/",
 
-		"tpch/multi-tenant/case_663/9_tenants-2_shared/",
-		"tpch/multi-tenant/case_663/9_tenants-4_shared/",
-		#"tpch/multi-tenant/9_tenants-6_shared/",
-		#"tpch/multi-tenant/9_tenants-8_shared/"
+		"tpch/multi-tenant/case_302/9_tenants-2_shared/",
+		"tpch/multi-tenant/case_302/9_tenants-4_shared/",
+		#"tpch/multi-tenant/case_302/9_tenants-6_shared/",
+		#"tpch/multi-tenant/case_302/9_tenants-8_shared/",
 
 		#won't be able to run this
 		#"tpch/multi-tenant/10_tenants-2_shared/",
 		
-		"tpch/multi-tenant/case_663/10_tenants-4_shared/",
-		#"tpch/multi-tenant/10_tenants-6_shared/",
-		#"tpch/multi-tenant/10_tenants-8_shared/"
+		"tpch/multi-tenant/case_302/10_tenants-4_shared/",
+		#"tpch/multi-tenant/case_302/10_tenants-6_shared/",
+		#"tpch/multi-tenant/case_302/10_tenants-8_shared/",
 		]
 
 f = open(os.path.expanduser("/root/runtimes.txt"), 'w');
@@ -154,7 +154,7 @@ for p in qPath:
 		totalElapsedTime =  (connection.get_query_status(q))['elapsedNanos']
 		f.write(str(totalElapsedTime)+ ",")
 	f.write(p + "\n")
-f.flush()
+	f.flush()
 f.close()
 
 

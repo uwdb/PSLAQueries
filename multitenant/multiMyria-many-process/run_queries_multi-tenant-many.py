@@ -11,12 +11,14 @@ import random
 from os import listdir
 from os.path import isfile, join
 
-hostname = 'mycluster-large-master'
+hostname = 'mycluster-master'
 port_list = ["9001","9002","9003","9004","9005","9006","9007","9008","9009","9010"]
 
 qPath = [ 
 		"queries/case_663/"
 		]
+
+numberTenants = [1,2]
 
 
 for p in qPath:
@@ -28,7 +30,7 @@ for p in qPath:
 	print("postgres and os cleared")
 
 	#for each tenant...run the query on that port
-	for c in range(1,10+1):
+	for c in numberTenants:
 		q = "query_to_run_tenant" + c +  ".json"
 		connection = myria.MyriaConnection(hostname=hostname, port=port_list[c-1])
 		try:

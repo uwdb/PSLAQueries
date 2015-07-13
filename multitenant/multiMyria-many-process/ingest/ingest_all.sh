@@ -1,6 +1,6 @@
-MASTER= $1
-PORT= $2
-TENANT= $3
+MASTER=$1
+PORT=$2
+TENANT=$3
 
 #ingesting all lineitems
 python ingest_parallel_lineitem.py $MASTER $PORT $TENANT

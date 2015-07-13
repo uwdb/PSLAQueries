@@ -3,6 +3,7 @@ starcluster sshmaster $1 'mkdir /root/PSLAQueries'
 starcluster put $1 --node $1-master queries /root/PSLAQueries
 starcluster put $1 --node $1-master data /root/PSLAQueries
 starcluster put $1 --node $1-master raco /root/PSLAQueries
+starcluster put $1 --node $1-master multitenant /root/PSLAQueries
 starcluster put $1 --node $1-master schema.py /root/PSLAQueries
 starcluster put $1 --node $1-master buildingQueries.py /root/PSLAQueries
 starcluster put $1 --node $1-master ganglia /root/PSLAQueries

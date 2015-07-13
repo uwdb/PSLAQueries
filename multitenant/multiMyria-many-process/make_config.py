@@ -1,8 +1,12 @@
 #!/usr/bin/python
 import os
 
+#cluster name
+cluster_name = "mycluster"
+
+
 #for master
-master_name = "mycluster-large-master"
+master_name = cluster_name + "-master"
 master_ports = ["8001", "8002", "8003", "8004", "8005", "8006", "8007", "8008", "8009" ,"8010"] 
 master_rest_ports = ["9001", "9002", "9003", "9004", "9005", "9006", "9007", "9008", "9009" ,"9010"] 
 
@@ -25,7 +29,7 @@ for t in range(0,num_tenants):
     preamble_file.close()
 
 #2shared configure
-shared_nodes = ["mycluster-large-node001","mycluster-large-node002"]
+shared_nodes = [ cluster_name + "-node001",cluster_name + "-node002"]
 marker = len(shared_nodes) + 1
 
 for t in range(0,num_tenants):
@@ -42,7 +46,7 @@ for t in range(0,num_tenants):
             d_name =  "myria"
         else:
             w_num = str(w)
-            n_name = "mycluster-large-node0" + ("0" + str(marker) if marker < 10 else str(marker))
+            n_name = cluster_name + "-node0" + ("0" + str(marker) if marker < 10 else str(marker))
             n_port = worker_port
             d_name =  "myria"
             marker = marker + 1
@@ -52,7 +56,7 @@ for t in range(0,num_tenants):
     current_config.close()
 
 #4shared configure
-shared_nodes = ["mycluster-large-node001","mycluster-large-node002", "mycluster-large-node003", "mycluster-large-node004"]
+shared_nodes = [cluster_name + "-node001",cluster_name + "-node002", cluster_name + "-node003", cluster_name + "-node004"]
 marker = len(shared_nodes) + 1
 
 for t in range(0,num_tenants):
@@ -69,7 +73,7 @@ for t in range(0,num_tenants):
             d_name =  "myria"
         else:
             w_num = str(w)
-            n_name = "mycluster-large-node0" + ("0" + str(marker) if marker < 10 else str(marker))
+            n_name = cluster_name + "-node0" + ("0" + str(marker) if marker < 10 else str(marker))
             n_port = worker_port
             d_name =  "myria"
             marker = marker + 1
@@ -79,7 +83,7 @@ for t in range(0,num_tenants):
     current_config.close()
 
 #6shared configure
-shared_nodes = ["mycluster-large-node001","mycluster-large-node002", "mycluster-large-node003", "mycluster-large-node004", "mycluster-large-node005", "mycluster-large-node006"]
+shared_nodes = [cluster_name + "-node001",cluster_name + "-node002", cluster_name + "-node003", cluster_name + "-node004", cluster_name + "-node005", cluster_name + "-node006"]
 marker = len(shared_nodes) + 1
 
 for t in range(0,num_tenants):
@@ -96,7 +100,7 @@ for t in range(0,num_tenants):
             d_name =  "myria"
         else:
             w_num = str(w)
-            n_name = "mycluster-large-node0" + ("0" + str(marker) if marker < 10 else str(marker))
+            n_name = cluster_name + "-node0" + ("0" + str(marker) if marker < 10 else str(marker))
             n_port = worker_port
             d_name =  "myria"
             marker = marker + 1
@@ -106,7 +110,7 @@ for t in range(0,num_tenants):
     current_config.close()
 
 #8shared configure
-shared_nodes = ["mycluster-large-node001","mycluster-large-node002", "mycluster-large-node003", "mycluster-large-node004", "mycluster-large-node005", "mycluster-large-node006", "mycluster-large-node007",  "mycluster-large-node008"]
+shared_nodes = [cluster_name + "-node001",cluster_name + "-node002", cluster_name + "-node003", cluster_name + "-node004", cluster_name + "-node005", cluster_name + "-node006", cluster_name + "-node007",  cluster_name + "-node008"]
 marker = len(shared_nodes) + 1
 
 for t in range(0,num_tenants):
@@ -123,7 +127,7 @@ for t in range(0,num_tenants):
             d_name =  "myria"
         else:
             w_num = str(w)
-            n_name = "mycluster-large-node0" + ("0" + str(marker) if marker < 10 else str(marker))
+            n_name = cluster_name + "-node0" + ("0" + str(marker) if marker < 10 else str(marker))
             n_port = worker_port
             d_name =  "myria"
             marker = marker + 1
