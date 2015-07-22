@@ -54,10 +54,20 @@ qPath = [
 		#"tpch/tpch-type3/tpch-type3b/10_datanodes/4_computenodes/",
 		#"tpch/tpch-type3/tpch-type3b/10_datanodes/6_computenodes/",
 		#"tpch/tpch-type3/tpch-type3b/10_datanodes/8_computenodes/",
-		"tpch/tpch-type3/tpch-type3b/12_datanodes/4_computenodes/",
-		"tpch/tpch-type3/tpch-type3b/12_datanodes/6_computenodes/",
-		"tpch/tpch-type3/tpch-type3b/12_datanodes/8_computenodes/",
-		"tpch/tpch-type3/tpch-type3b/12_datanodes/10_computenodes/"
+		#"tpch/tpch-type3/tpch-type3b/12_datanodes/4_computenodes/",
+		#"tpch/tpch-type3/tpch-type3b/12_datanodes/6_computenodes/",
+		#"tpch/tpch-type3/tpch-type3b/12_datanodes/8_computenodes/",
+		#"tpch/tpch-type3/tpch-type3b/12_datanodes/10_computenodes/"
+
+		#sm to large for baseline comparison
+		"tpch/tpch-type3/tpch-type3b/4_datanodes/10_computenodes/",
+		"tpch/tpch-type3/tpch-type3b/4_datanodes/11_computenodes/",
+		"tpch/tpch-type3/tpch-type3b/4_datanodes/12_computenodes/",
+		"tpch/tpch-type3/tpch-type3b/4_datanodes/13_computenodes/",
+		"tpch/tpch-type3/tpch-type3b/4_datanodes/14_computenodes/",
+		"tpch/tpch-type3/tpch-type3b/4_datanodes/15_computenodes/",
+		"tpch/tpch-type3/tpch-type3b/4_datanodes/16_computenodes/",
+
 		]
 
 for p in qPath:
@@ -125,7 +135,7 @@ for p in qPath:
 		f.write(str(counter) + ',' + str(q) + ',' +  str(timeSeconds) + "\n");
 		f.flush()
 		pathSplit = p.split('/')
-		bashCommand = "aws s3 cp " +  str(p) + "runtimes.txt"+ " s3://benchmarkruntimes/runtimesTPCH" + str(pathSplit[4]) + ".txt"
+		bashCommand = "aws s3 cp " +  str(p) + "runtimes.txt"+ " s3://baselinecomparison/runtimesTPCH" + str(pathSplit[4]) + ".txt"
 		print bashCommand
 		os.system(bashCommand)
 		counter = counter + 1;

@@ -12,7 +12,7 @@ catalog = FromFileCatalog.load_from_file("schema.py")
 _parser = parser.Parser()
 
 use_cases = ['queries/tpch/tpch-myrial.txt']
-plan_workers = [4,6,8,10,12]
+plan_workers = [4,6,8,10,11,12,13,14,15,16]
 
 type_2 = False
 type_3 = True
