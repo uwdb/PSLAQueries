@@ -1,0 +1,4 @@
+#change the workers
+sed -i 's/syntheticBenchmark12W/syntheticBenchmark12W/g' SQLQueries-SYNTH.txt
+
+sed -i 's/adhoc10GB12W/adhoc10GB12W/g' SQLQueries-TPCH.txt

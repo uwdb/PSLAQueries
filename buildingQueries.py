@@ -12,10 +12,12 @@ catalog = FromFileCatalog.load_from_file("schema.py")
 _parser = parser.Parser()
 
 use_cases = ['queries/tpch/tpch-myrial.txt']
-plan_workers = [4,6,8,10,11,12,13,14,15,16]
+plan_dataNodes = [4,6,8,10,12]
+plan_computeNodes = [12]
 
 type_2 = False
-type_3 = True
+type_3a = False
+type_3b = False
 
 #Queries Transformation:
 for current_use_case in use_cases: 
@@ -35,7 +37,7 @@ for current_use_case in use_cases:
 			json_data = processor.get_json(push_sql=True, type2=True, type3=False)
 			json_data_clean_copy = json_data
 
-			for w in plan_workers:
+			for w in plan_computeNodes:
 				json_data = json_data_clean_copy
 				json_data['plan']['fragments'][0]['overrideWorkers'] = range(1,w +1)
 
@@ -58,7 +60,7 @@ for current_use_case in use_cases:
 				f.close()	
 
 		#create type-3
-		if(type_3):
+		if(type_3a or type_3b):
 			statement_list = _parser.parse(current_query);
 			processor = interpreter.StatementProcessor(catalog, True)
 			processor.evaluate(statement_list)
@@ -68,8 +70,8 @@ for current_use_case in use_cases:
 
 			#Manipulate Workers
 			#Type-3a & Type3b - Grow Compute Nodes and Shrink Compute Nodes
-			for i in plan_workers: #data_nodes
-				for j in plan_workers: #compute_nodes
+			for i in plan_dataNodes: #data_nodes
+				for j in plan_computeNodes: #compute_nodes
 					if (i != j) and (len(json_data['plan']['fragments']) > 1): #join queries should only scale
 						json_data = processor.get_json(push_sql=True, type2=False, type3=True)
 
@@ -105,7 +107,7 @@ for current_use_case in use_cases:
 								elif current_operator['opType'] == 'TableScan':
 									current_operator['relationKey']['programName'] =  'adhoc10GB' + str(j) + 'W'
 
-							directory = 'queries/tpch/tpch-type3/tpch-type3a/' if (i < j) else 'queries/tpch/tpch-type3/tpch-type3b/'
+							directory = 'queries/tpch/tpch-type3/tpch-type3a/' if (i < j and type_3a) else 'queries/tpch/tpch-type3/tpch-type3b/'
 							json_data['rawQuery'] = 'Query ' + str(counter) + ' for type-3 on ' + str(i) + ' starting datanodes'
 
 						elif (current_use_case == 'queries/synth/synth-myrial.txt'):
@@ -123,7 +125,7 @@ for current_use_case in use_cases:
 								elif current_operator['opType'] == 'TableScan':
 									current_operator['relationKey']['programName'] =  'syntheticBenchmark' + str(j) + 'W'
 
-							directory = 'queries/synth/synth-type3/synth-type3a/' if (i < j) else 'queries/synth/synth-type3/synth-type3b/'
+							directory = 'queries/synth/synth-type3/synth-type3a/' if (i < j and type_3a) else 'queries/synth/synth-type3/synth-type3b/'
 							json_data['rawQuery'] = 'Query ' + str(counter) + ' for type-3 on ' + str(i) + ' starting datanodes'
 
 						#write the json to a file

@@ -1,4 +1,4 @@
-MASTER=ec2-54-204-118-137.compute-1.amazonaws.com
+MASTER=localhost
 PORT=8753
 
 #ingesting all
