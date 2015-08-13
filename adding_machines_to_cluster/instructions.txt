@@ -1,0 +1,12 @@
+1. list machines in machines_to_add.txt and run 'python create_scripts.py'. In create_scripts.py, change the password. 
+
+2. change ICMP and TCP settings for the clusters (on Amazon)
+
+3. scp public amazon ec-2 key to the master (from local machine)
+
+scp -i /Users/jortiz16/.ssh/jortiz16Key.rsa /Users/jortiz16/.ssh/jortiz16Key.rsa root@MASTER:~/PSLAQueries/adding_machines_to_cluster/
+
+4. From the master, ensure passwordless ssh to the new machines run ./passwordless_ssh.sh
+
+5. From the master, get the postgres password changed on all the machines of the added cluster. The password should be from the first. Run ./change_passwords.sh 
+

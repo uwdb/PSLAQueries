@@ -1,0 +1,2 @@
+8 = machine-example-1@amazon.com:9001:myria
+9 = machine-example-2@amazon.com:9001:myria

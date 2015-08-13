@@ -1,0 +1,2 @@
+machine-example-1@amazon.com
+machine-example-2@amazon.com
