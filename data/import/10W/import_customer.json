@@ -1,0 +1,12 @@
+{
+  "relationKey" : {
+    "userName" : "public",
+    "programName" : "adhoc10GB10W",
+    "relationName" : "customerReplicate"
+  },
+  "schema" : {
+    "columnTypes" : ["LONG_TYPE","STRING_TYPE", "STRING_TYPE", "STRING_TYPE", "STRING_TYPE", "STRING_TYPE", "STRING_TYPE", "STRING_TYPE", "STRING_TYPE"],
+    "columnNames" : ["c_custkey", "c_name", "c_address", "c_city", "c_nation_prefix", "c_nation", "c_region", "c_phone", "c_mktsegment"]
+  },
+  "importFromDatabase": true
+}
