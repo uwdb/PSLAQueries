@@ -1,4 +1,7 @@
 #import replication tables and lineitem
+MASTER=localhost
+PORT=8753
+
 FOLDERLIST=("4W" "6W" "8W" "10W" "12W")
 
 for currentFolder in "${FOLDERLIST[@]}"
