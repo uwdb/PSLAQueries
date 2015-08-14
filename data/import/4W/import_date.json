@@ -1,4 +1,5 @@
 {
+  "workers":[1,2,3,4],
   "relationKey" : {
     "userName" : "public",
     "programName" : "adhoc10GB4W",
