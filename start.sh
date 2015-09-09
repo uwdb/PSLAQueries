@@ -8,6 +8,7 @@ starcluster put $1 --node $1-master schema.py /root/PSLAQueries
 starcluster put $1 --node $1-master buildingQueries.py /root/PSLAQueries
 starcluster put $1 --node $1-master ganglia /root/PSLAQueries
 starcluster put $1 --node $1-master adding_machines_to_cluster /root/PSLAQueries
+starcluster put $1 --node $1-master read_chunks /root/PSLAQueries
 
 echo "finished moving files"
 

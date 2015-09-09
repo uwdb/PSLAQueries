@@ -12,11 +12,11 @@ catalog = FromFileCatalog.load_from_file("schema.py")
 _parser = parser.Parser()
 
 use_cases = ['queries/tpch/tpch-myrial.txt']
-plan_dataNodes = [4,6,8,10,12]
+plan_dataNodes = [4]
 plan_computeNodes = [12]
 
 type_2 = False
-type_3a = False
+type_3a = True
 type_3b = False
 
 #Queries Transformation:
