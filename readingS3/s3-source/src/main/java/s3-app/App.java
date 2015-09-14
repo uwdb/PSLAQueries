@@ -8,18 +8,18 @@ import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import java.io.*;
-
 import java.util.Iterator;
 import java.util.List;
+import org.apache.commons.lang.time.StopWatch;
 
 public class App 
 {
 	AmazonS3 s3;
 	public static void main(String[] args) {
     App base = new App();
-    
+    base.init("AKIAIROCOMWS6PB36HKQ", "yemtUbgksKO7+u/E7by3mZ4WMELOhBQKYgwRDHSs");
     try{
-    base.readFromS3("tpchssb", "4Workers/date-part1");
+    base.readFromS3("tpchssb", "testFiles/testfile100MB");
 	}
 	catch(Exception e){
 	System.out.println("error on reading from bucket");
@@ -38,10 +38,15 @@ public class App
     System.out.println(s3object.getObjectMetadata().getContentType());
     System.out.println(s3object.getObjectMetadata().getContentLength());
 
+    StopWatch sw = new StopWatch();
+    sw.start();
     BufferedReader reader = new BufferedReader(new InputStreamReader(s3object.getObjectContent()));
     String line;
     while((line = reader.readLine()) != null) {
       //System.out.println(line);
     }
+   sw.stop();
+
+   System.out.println("Watch Time: " + sw.getTime());  
   }  
 }
