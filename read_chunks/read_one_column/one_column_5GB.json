@@ -1,0 +1,37 @@
+{
+  "logicalRa": "",
+  "language": "myrial",
+  "rawQuery": "Query 243 for type-3 on 4 starting datanodes",
+  "plan": {
+    "fragments": [
+      {
+        "operators": [
+          {
+            "schema": {
+              "columnNames": [
+                "l_orderkey"
+              ],
+              "columnTypes": [
+                "DOUBLE_TYPE"
+              ]
+            },
+            "opName": "MyriaQueryScan",
+            "opType": "DbQueryScan",
+            "opId": 5,
+            "sql": "SELECT \"public:adhoc10GB5GB:lineitem\".l_orderkey AS l_orderkey \nFROM \"public:adhoc10GB5GB:lineitem\""
+          },
+          {
+            "opName": "MyriaSink",
+            "opType": "SinkRoot",
+            "opId": 3,
+            "argChild": 5
+          }
+        ],
+        "overrideWorkers": [
+          1
+        ]
+      }
+    ],
+    "type": "SubQuery"
+  }
+}

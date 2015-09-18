@@ -1,0 +1,12 @@
+--500MB read
+
+reading_lineitem = load("https://s3-us-west-2.amazonaws.com/tpchssb/500MB/lineitem-part1", csv(schema( l_orderkey:float, l_linenumber:float, l_custkey:float, l_partkey:float, l_suppkey:float, l_orderdate:string, l_orderpriority:string, l_shippriority:float, l_quantity:float, l_extendedprice:float, l_ordtotalprice:float, l_discount:float, l_revenue:float, l_supplycost:float, l_tax:float, l_commitdate:float, l_shipmode:string),delimiter="|"));
+
+Sink(reading_lineitem);
+--1GB read
+
+reading_lineitem = load("https://s3-us-west-2.amazonaws.com/tpchssb/1GB/lineitem-part1", csv(schema( l_orderkey:float, l_linenumber:float, l_custkey:float, l_partkey:float, l_suppkey:float, l_orderdate:string, l_orderpriority:string, l_shippriority:float, l_quantity:float, l_extendedprice:float, l_ordtotalprice:float, l_discount:float, l_revenue:float, l_supplycost:float, l_tax:float, l_commitdate:float, l_shipmode:string),delimiter="|"));
+
+Sink(reading_lineitem);
+
+--probably best to use 

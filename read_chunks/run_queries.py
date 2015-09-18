@@ -16,7 +16,7 @@ port = 8753
 connection = myria.MyriaConnection(hostname=hostname, port=port)
 
 qList = ['500MB', '1GB', '2GB', '3GB', '4GB', '5GB']
-p = '/root/PSLAQueries/read_chunks/'
+p = '/root/PSLAQueries/read_chunks/ioquery/'
 q_type = 'ioquery_'
 
 for q in qList:

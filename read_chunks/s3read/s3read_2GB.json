@@ -1,0 +1,73 @@
+{
+  "logicalRa": "",
+  "language": "myrial",
+  "rawQuery": "Query 243 for type-3 on 4 starting datanodes",
+  "plan": {
+    "fragments": [
+      {
+        "operators": [
+          {
+            "schema": {
+              "columnNames": [
+                "l_orderkey",
+                "l_linenumber",
+                "l_custkey",
+                "l_partkey",
+                "l_suppkey",
+                "l_orderdate",
+                "l_orderpriority",
+                "l_shippriority",
+                "l_quantity",
+                "l_extendedprice",
+                "l_ordtotalprice",
+                "l_discount",
+                "l_revenue",
+                "l_supplycost",
+                "l_tax",
+                "l_commitdate",
+                "l_shipmode"
+              ],
+              "columnTypes": [
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "STRING_TYPE"
+              ]
+            },
+            "opType": "FileScan",
+            "opId": 5,
+            "source": {
+              "uri": "https://s3-us-west-2.amazonaws.com/tpchssb/2GB/lineitem-part1",
+              "dataType": "URI"
+            },
+            "delimiter": "|",
+            "opName": "MyriaFileScan(https://s3-us-west-2.amazonaws.com/tpchssb/2GB/lineitem-part1)"
+          },
+          {
+            "opName": "MyriaSink",
+            "opType": "SinkRoot",
+            "opId": 3,
+            "argChild": 5
+          }
+        ],
+        "overrideWorkers": [
+          1
+        ]
+      }
+    ],
+    "type": "SubQuery"
+  }
+}
