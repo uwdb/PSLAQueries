@@ -1,4 +1,3 @@
-#imported some  from myria-web-py
 import copy
 import json
 import os
@@ -15,9 +14,11 @@ port = 8753
 
 connection = myria.MyriaConnection(hostname=hostname, port=port)
 
-qList = ['500MB', '1GB', '2GB', '3GB', '4GB', '5GB']
-p = '/root/PSLAQueries/read_chunks/ioquery/'
+qList = ['500MB','1GB','2GB','3GB']
+p = '/root/PSLAQueries/ioquery/'
 q_type = 'ioquery_'
+f = open(os.path.expanduser(p + "runtimes.txt"), 'w');
+cluster_name  = 'mycluster-local'
 
 for q in qList:
 	q = q.strip()
@@ -26,11 +27,12 @@ for q in qList:
 	json_data=open(os.path.expanduser(p + q_type + str(q) + ".json"))
 	data = json.load(json_data)
 	json_data.close()
-
+	
+	list_query_runtimes = []
 	#try running the query
 	for j in range(3):
 		#call bash scripts
-		command = "ssh mycluster-node001 'sudo service postgresql restart && free && sync && echo \"echo 1 > /proc/sys/vm/drop_caches\" | sudo sh'"
+		command = "ssh " + cluster_name + "-node001 'sudo service postgresql restart && free && sync && echo \"echo 1 > /proc/sys/vm/drop_caches\" | sudo sh'"
 		os.system(command)
 		print("postgres and os cleared")
 		try:
@@ -53,3 +55,13 @@ for q in qList:
 			elif status=='KILLED':
 				break;
 			time.sleep(2);
+		#done, add the runtime
+		totalElapsedTime = int((connection.get_query_status(query_id))['elapsedNanos'])
+		list_query_runtimes.append(totalElapsedTime)
+	#loop through times and get min, max and average
+	f.write(str(q) + ': ' + '\n')
+	f.write('average: ' + str(sum(list_query_runtimes)/float(len(list_query_runtimes)))+ '\n')
+	f.write('min :' + str(min(list_query_runtimes))+ '\n')
+	f.write('max : ' + str(max(list_query_runtimes))+ '\n')
+	f.write('\n')
+f.close()
