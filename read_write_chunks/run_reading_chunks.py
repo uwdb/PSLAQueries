@@ -1,4 +1,4 @@
-#attempt at automating scaling via s3/raco 
+#attempt at automating scaling 
 
 from myria import MyriaConnection, MyriaRelation, MyriaQuery, MyriaSchema
 import sys
@@ -15,6 +15,8 @@ from myria import MyriaRelation
 from raco.language.myrialang import compile_to_json
 from raco.scheme import Scheme
 from raco.language.myrialang import MyriaQueryScan
+import subprocess
+import json
 
 connection = MyriaConnection(hostname = "localhost", port=8753)
 
@@ -27,70 +29,74 @@ f = open(os.path.expanduser("runtimes.txt"), 'w');
 startWorkers = 4
 receiveWorkers = [6]#[6,8,10,12]
 correspondingChunks = [3]#[3,2,5,3]
-
-s3Read = False
+numberChunksToMove = [1,1,3,2]
 
 positionCount = 0
 for r in receiveWorkers: #first case is 6
 
 	finishWorkers = list(set(range(1,r+1))- set(range(1,startWorkers+1)))
-
-	collectRuntimesFromOneWorker = []
-	runtime = 0
-
+	collectRuntimes_perLoop = []
 	print 'r',r 
-	for d in range(1, startWorkers+1): #for each data node
-		#basically how many chunks should it provide from d worker? assume '1' for now
-		#build query
 
-		if s3Read:
-			chunkRead = 'https://s3-us-west-2.amazonaws.com/read-lineitem-chunks/' + str(startWorkers) + 'Workers/'+ 'Worker' + str(d) +  '/Chunks-' + str(correspondingChunks[positionCount]) +'/lineitem-part' + str('1')
-			pretty_list = '(' + ','.join(map(lambda x :  x[0].lower() + ':'  + x[1].lower(), zippedSchema)) + ')'
-			pretty_list = pretty_list.replace('long_type', 'float').replace('double_type', 'float').replace('string_type', 'string')
-			load = 'load(\"' + str(chunkRead) + '\", csv(schema' + str(pretty_list) + ',delimiter = \'|\'))'
-			store = 'public:adhoc10GBFromS3'+ str(startWorkers) + 'to' + str(r) + 'FromWorker' + str(d) + 'part' + str('1') + ':lineitem'
-		else:
+	for loop in range(1): #for each loop, we read from n data nodes and move a chunk via RR on destination
+		#build query
+		currentChunksToMove = numberChunksToMove[positionCount]
+		chunkTimes = []
+		runtime = 0
+		for c in range(1,currentChunksToMove+1):
+			#clear cache
+			subprocess.call(['/bin/bash',"../queries/clear-tpch.sh"])
+			print("postgres and os cleared")
+
 			chunkRead = 'public:adhoc10GB' + str(startWorkers) + 'WorkersChunks' + str(correspondingChunks[positionCount]) + ':lineitemPart1'
 			load = 'scan('+ str(chunkRead) + ')'
-			store = 'public:adhoc10GBFromDisk'+ str(startWorkers) + 'to' + str(r) + 'FromWorker' + str(d) + 'part' + str('1') + ':lineitem'
+			store = 'public:adhoc10GBFromDisk'+ str(startWorkers) + 'to' + str(r) + 'part' + str(c) + ':lineitem'
 
-		current_query = 'T1 = ' + load + '; Store(T1,' + store + ');';
-		
-		#schema
-		FromFileCatalog.scheme_write_to_file(path='schema.py',new_rel_key=chunkRead, new_rel_schema=str(schema))
-		catalog = FromFileCatalog.load_from_file('schema.py')
+			current_query = 'T1 = ' + load + '; Store(T1,' + store + ');';
+			
+			#schema
+			FromFileCatalog.scheme_write_to_file(path='schema.py',new_rel_key=chunkRead, new_rel_schema=str(schema))
+			catalog = FromFileCatalog.load_from_file('schema.py')
 
-		_parser = parser.Parser()
-		statement_list = _parser.parse(current_query);
-		processor = interpreter.StatementProcessor(catalog, True)
-		processor.evaluate(statement_list)
-		p = processor.get_logical_plan()
-		#modify p
-		tail = p.args[0].input
-		p.args[0].input = alg.Shuffle(tail, [UnnamedAttributeRef(0), UnnamedAttributeRef(1)])
-		p = processor.get_physical_plan()
-		finalplan = processor.get_json()
-		#modify json
-		finalplan['plan']['fragments'][0]['overrideWorkers'] = finishWorkers
+			_parser = parser.Parser()
+			statement_list = _parser.parse(current_query);
+			processor = interpreter.StatementProcessor(catalog, True)
+			processor.evaluate(statement_list)
+			p = processor.get_logical_plan()
+			#modify p
+			tail = p.args[0].input
+			p.args[0].input = alg.Shuffle(tail, [UnnamedAttributeRef(0), UnnamedAttributeRef(1)])
+			p = processor.get_physical_plan()
+			p.input.input.input = MyriaQueryScan(sql="select * from \"" + chunkRead + "\"", scheme=Scheme(zippedSchema))
+			finalplan = compile_to_json('chunkQuery',p,p)
 
+			#modify json
+			finalplan['plan']['fragments'][0]['overrideWorkers'] = finishWorkers
+			finalplan['plan']['fragments'][1]['overrideWorkers'] = range(1,startWorkers+1)
 
-		print 'd',d
-		query_status= connection.submit_query(finalplan)
-		query_id = query_status['queryId']
-		status = (connection.get_query_status(query_id))['status']
-
-		while status!='SUCCESS':
+			print 'chunk',c
+			query_status= connection.submit_query(finalplan)
+			query_id = query_status['queryId']
 			status = (connection.get_query_status(query_id))['status']
-			time.sleep(2);
-			if status=='ERROR':
-				break;
 
-		totalElapsedTime = int((connection.get_query_status(query_id))['elapsedNanos'])
-		runtime += totalElapsedTime
-		collectRuntimesFromOneWorker.append(runtime)
+			while status!='SUCCESS':
+				status = (connection.get_query_status(query_id))['status']
+				time.sleep(1);
+				if status=='ERROR':
+					break;
 
-	print "Round finished " + str(startWorkers) + " to " +  str(receiveWorkers[positionCount])
-	f.write("Round finished " + str(startWorkers) + " to " +  str(receiveWorkers[positionCount]))
-	f.write(str(sum(collectRuntimesFromOneWorker)))
+			totalElapsedTime = int((connection.get_query_status(query_id))['elapsedNanos'])
+			chunkTimes.append(totalElapsedTime)
+			print chunkTimes
+		runtime += sum(chunkTimes) #adding runtime from all chunks
+		print "sum chunk times", runtime
+	collectRuntimes_perLoop.append(runtime)
+	print collectRuntimes_perLoop
+	print "Round finished " + str(startWorkers) + " to " +  str(receiveWorkers[positionCount]) + " " 
+	f.write("Round finished " + str(startWorkers) + " to " +  str(receiveWorkers[positionCount]) + " ")
+	f.write('average: ' + str(sum(collectRuntimes_perLoop)/float(len(collectRuntimes_perLoop)))+ '\n')
+	f.write('min :' + str(min(collectRuntimes_perLoop))+ '\n')
+	f.write('max : ' + str(max(collectRuntimes_perLoop))+ '\n')
+	f.write('\n')
 	positionCount = positionCount + 1
 f.close()
