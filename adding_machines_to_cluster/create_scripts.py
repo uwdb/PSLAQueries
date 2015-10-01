@@ -1,7 +1,8 @@
 machines = []
 
 config_password = 'p47f8iqnct'
-starting_machine_count = 8
+starting_machine_count = 13
+key_name = 'jortiz16Key.rsa '
 
 #read machines list
 with open('machines_to_add.txt') as f:
@@ -14,8 +15,8 @@ machines_to_add_config = open('./config_to_add.txt', 'w+')
 
 for m in machines:
 	file_change_passwords.write('ssh ' + m + ' echo \"ALTER USER uwdb WITH PASSWORD \\\'' + config_password + '\\\'\" | sudo -u postgres psql myria' + '\n')
-	file_passwordless_ssh.write('cat ~/.ssh/id_rsa.pub | ssh -i jortiz16Key.rsa root@' + m + ' \'cat >> .ssh/authorized_keys\'' + '\n')
-	machines_to_add_config.write(str(starting_machine_count) + " = " + m + ":9001:myria" + '\n')
+	file_passwordless_ssh.write('cat ~/.ssh/id_rsa.pub | ssh -i ' + key_name + ' root@' + m + ' \'cat >> .ssh/authorized_keys\'' + '\n')
+	machines_to_add_config.write(str(starting_machine_count) + " = " + m + ":9001::myria" + '\n')
 	starting_machine_count = starting_machine_count + 1
 file_change_passwords.close()
 file_passwordless_ssh.close()

@@ -1,5 +1,6 @@
 from myria import MyriaConnection, MyriaRelation, MyriaQuery, MyriaSchema
 import sys
+import time
 
 connection = MyriaConnection(hostname = "localhost", port=8753)
 
@@ -14,7 +15,7 @@ for nw in range(1,numberWorkers + 1):
 	for tc in totalChunks:
 		for currentChunk in range(1,tc+1): 
 			relName = str(numberWorkers) + 'Workers'
-			relation = MyriaRelation('public:adhoc10GB'+ relName + '-Chunks' + str(tc) +':lineitem-part' + str(currentChunk) , connection=connection, schema=schema)
+			relation = MyriaRelation('public:adhoc10GB'+ relName + 'Chunks' + str(tc) +':lineitemPart' + str(currentChunk) , connection=connection, schema=schema)
 			print relation.name
 			work = [(nw, 'https://s3-us-west-2.amazonaws.com/read-lineitem-chunks/' + relName + '/'+ str(nw)+ 'Workers' +  '/lineitem-part' + str(currentChunk))]
 			print 'https://s3-us-west-2.amazonaws.com/read-lineitem-chunks/' + relName + '/Worker' + str(nw)  + '/Chunks-' + str(tc) +  '/lineitem-part' + str(currentChunk)

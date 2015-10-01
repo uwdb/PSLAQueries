@@ -1,0 +1,111 @@
+{
+  "rawQuery": "moving data",
+  "logicalRa": "",
+  "plan": {
+    "type": "SubQuery",
+    "fragments": [
+      {
+        "workers": null,
+        "overrideWorkers": [
+          1,
+          2,
+          3,
+          4,5,6,7,8,9,10
+        ],
+        "operators": [
+          {
+            "opType": "ShuffleConsumer",
+            "opId": 0,
+            "opName": "MyriaShuffleConsumer",
+            "argOperatorId": 1
+          },
+          {
+            "opType": "DbInsert",
+            "opId": 2,
+            "opName": "MyriaStore(public:finalAt4:lineitem)",
+            "argChild": 0,
+            "relationKey": {
+              "userName": "public",
+              "programName": "finalAt4",
+              "relationName": "lineitem"
+            },
+            "argOverwriteTable": true,
+            "indexes": null,
+            "connectionInfo": null
+          }
+        ],
+        "fragmentIndex": -1
+      },
+      {
+        "workers": null,
+        "overrideWorkers": [
+          1,2,3,4,5,6,7,8,9,10,11,12
+        ],
+        "operators": [
+          {
+            "opType": "DbQueryScan",
+            "opId": 3,
+            "opName": "MyriaQueryScan('select * from \"public:adhoc10GB12W:lineitem\"')",
+            "schema": {
+              "columnTypes": [
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE",
+                "LONG_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "DOUBLE_TYPE",
+                "LONG_TYPE",
+                "STRING_TYPE"
+              ],
+              "columnNames": [
+                "l_orderkey",
+                "l_linenumber",
+                "l_custkey",
+                "l_partkey",
+                "l_suppkey",
+                "l_orderdate",
+                "l_orderpriority",
+                "l_shippriority",
+                "l_quantity",
+                "l_extendedprice",
+                "l_ordtotalprice",
+                "l_discount",
+                "l_revenue",
+                "l_supplycost",
+                "l_tax",
+                "l_commitdate",
+                "l_shipmode"
+              ]
+            },
+            "sql": "select * from \"public:adhoc10GB12W:lineitem\""
+          },
+          {
+            "opType": "ShuffleProducer",
+            "opId": 1,
+            "opName": "MyriaShuffleProducer(h($0,$1))",
+            "argChild": 3,
+            "argPf": {
+              "type": "MultiFieldHash",
+              "numPartitions": null,
+              "indexes": [
+                0,
+                1
+              ]
+            },
+            "argBufferStateType": null
+          }
+        ],
+        "fragmentIndex": -1
+      }
+    ]
+  }
+}
