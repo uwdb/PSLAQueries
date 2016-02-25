@@ -1,0 +1,76 @@
+{
+  "profilingMode": [
+    "QUERY",
+    "RESOURCE"
+  ],
+  "logicalRa": "MyriaSink[MyriaQueryScan('SELECT input.l_orderpriority AS l_orderpriority, input.l_shipmode AS l_shipmode, input.l_extendedprice AS l_extendedprice, input.l_quantity AS l_quantity, input.l_ordtotalprice AS l_ordtotalprice, input.l_discount AS l_discount, input.l_tax AS l_tax, input.l_custkey AS l_custkey, input.l_suppkey AS l_suppkey, input.l_partkey AS l_partkey, input.l_linenumber AS l_linenumber, input.l_orderkey AS l_orderkey, input.l_shippriority AS l_shippriority, input.l_revenue AS l_revenue, input.l_supplycost AS l_supplycost, input.l_commitdate AS l_commitdate, input.l_orderdate AS l_orderdate \\nFROM (SELECT \"public:adhoc10GB8W:lineitem\".l_orderkey AS l_orderkey, \"public:adhoc10GB8W:lineitem\".l_linenumber AS l_linenumber, \"public:adhoc10GB8W:lineitem\".l_custkey AS l_custkey, \"public:adhoc10GB8W:lineitem\".l_partkey AS l_partkey, \"public:adhoc10GB8W:lineitem\".l_suppkey AS l_suppkey, \"public:adhoc10GB8W:lineitem\".l_orderdate AS l_orderdate, \"public:adhoc10GB8W:lineitem\".l_orderpriority AS l_orderpriority, \"public:adhoc10GB8W:lineitem\".l_shippriority AS l_shippriority, \"public:adhoc10GB8W:lineitem\".l_quantity AS l_quantity, \"public:adhoc10GB8W:lineitem\".l_extendedprice AS l_extendedprice, \"public:adhoc10GB8W:lineitem\".l_ordtotalprice AS l_ordtotalprice, \"public:adhoc10GB8W:lineitem\".l_discount AS l_discount, \"public:adhoc10GB8W:lineitem\".l_revenue AS l_revenue, \"public:adhoc10GB8W:lineitem\".l_supplycost AS l_supplycost, \"public:adhoc10GB8W:lineitem\".l_tax AS l_tax, \"public:adhoc10GB8W:lineitem\".l_commitdate AS l_commitdate, \"public:adhoc10GB8W:lineitem\".l_shipmode AS l_shipmode \\nFROM \"public:adhoc10GB8W:lineitem\") AS input')]",
+  "rawQuery": "Query 67 for type-2 on 12 workers",
+  "language": "myrial",
+  "plan": {
+    "fragments": [
+      {
+        "operators": [
+          {
+            "opName": "MyriaQueryScan('SELECT input.l_orderpriority AS l_orderpriority, input.l_shipmode AS l_shipmode, input.l_extendedprice AS l_extendedprice, input.l_quantity AS l_quantity, input.l_ordtotalprice AS l_ordtotalprice, input.l_discount AS l_discount, input.l_tax AS l_tax, input.l_custkey AS l_custkey, input.l_suppkey AS l_suppkey, input.l_partkey AS l_partkey, input.l_linenumber AS l_linenumber, input.l_orderkey AS l_orderkey, input.l_shippriority AS l_shippriority, input.l_revenue AS l_revenue, input.l_supplycost AS l_supplycost, input.l_commitdate AS l_commitdate, input.l_orderdate AS l_orderdate \\nFROM (SELECT \"public:adhoc10GB8W:lineitem\".l_orderkey AS l_orderkey, \"public:adhoc10GB8W:lineitem\".l_linenumber AS l_linenumber, \"public:adhoc10GB8W:lineitem\".l_custkey AS l_custkey, \"public:adhoc10GB8W:lineitem\".l_partkey AS l_partkey, \"public:adhoc10GB8W:lineitem\".l_suppkey AS l_suppkey, \"public:adhoc10GB8W:lineitem\".l_orderdate AS l_orderdate, \"public:adhoc10GB8W:lineitem\".l_orderpriority AS l_orderpriority, \"public:adhoc10GB8W:lineitem\".l_shippriority AS l_shippriority, \"public:adhoc10GB8W:lineitem\".l_quantity AS l_quantity, \"public:adhoc10GB8W:lineitem\".l_extendedprice AS l_extendedprice, \"public:adhoc10GB8W:lineitem\".l_ordtotalprice AS l_ordtotalprice, \"public:adhoc10GB8W:lineitem\".l_discount AS l_discount, \"public:adhoc10GB8W:lineitem\".l_revenue AS l_revenue, \"public:adhoc10GB8W:lineitem\".l_supplycost AS l_supplycost, \"public:adhoc10GB8W:lineitem\".l_tax AS l_tax, \"public:adhoc10GB8W:lineitem\".l_commitdate AS l_commitdate, \"public:adhoc10GB8W:lineitem\".l_shipmode AS l_shipmode \\nFROM \"public:adhoc10GB8W:lineitem\") AS input')",
+            "opType": "DbQueryScan",
+            "opId": 0,
+            "sql": "SELECT input.l_orderpriority AS l_orderpriority, input.l_shipmode AS l_shipmode, input.l_extendedprice AS l_extendedprice, input.l_quantity AS l_quantity, input.l_ordtotalprice AS l_ordtotalprice, input.l_discount AS l_discount, input.l_tax AS l_tax, input.l_custkey AS l_custkey, input.l_suppkey AS l_suppkey, input.l_partkey AS l_partkey, input.l_linenumber AS l_linenumber, input.l_orderkey AS l_orderkey, input.l_shippriority AS l_shippriority, input.l_revenue AS l_revenue, input.l_supplycost AS l_supplycost, input.l_commitdate AS l_commitdate, input.l_orderdate AS l_orderdate \nFROM (SELECT \"public:adhoc10GB8W:lineitem\".l_orderkey AS l_orderkey, \"public:adhoc10GB8W:lineitem\".l_linenumber AS l_linenumber, \"public:adhoc10GB8W:lineitem\".l_custkey AS l_custkey, \"public:adhoc10GB8W:lineitem\".l_partkey AS l_partkey, \"public:adhoc10GB8W:lineitem\".l_suppkey AS l_suppkey, \"public:adhoc10GB8W:lineitem\".l_orderdate AS l_orderdate, \"public:adhoc10GB8W:lineitem\".l_orderpriority AS l_orderpriority, \"public:adhoc10GB8W:lineitem\".l_shippriority AS l_shippriority, \"public:adhoc10GB8W:lineitem\".l_quantity AS l_quantity, \"public:adhoc10GB8W:lineitem\".l_extendedprice AS l_extendedprice, \"public:adhoc10GB8W:lineitem\".l_ordtotalprice AS l_ordtotalprice, \"public:adhoc10GB8W:lineitem\".l_discount AS l_discount, \"public:adhoc10GB8W:lineitem\".l_revenue AS l_revenue, \"public:adhoc10GB8W:lineitem\".l_supplycost AS l_supplycost, \"public:adhoc10GB8W:lineitem\".l_tax AS l_tax, \"public:adhoc10GB8W:lineitem\".l_commitdate AS l_commitdate, \"public:adhoc10GB8W:lineitem\".l_shipmode AS l_shipmode \nFROM \"public:adhoc10GB8W:lineitem\") AS input",
+            "schema": {
+              "columnNames": [
+                "l_orderpriority",
+                "l_shipmode",
+                "l_extendedprice",
+                "l_quantity",
+                "l_ordtotalprice",
+                "l_discount",
+                "l_tax",
+                "l_custkey",
+                "l_suppkey",
+                "l_partkey",
+                "l_linenumber",
+                "l_orderkey",
+                "l_shippriority",
+                "l_revenue",
+                "l_supplycost",
+                "l_commitdate",
+                "l_orderdate"
+              ],
+              "columnTypes": [
+                "STRING_TYPE",
+                "STRING_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "STRING_TYPE"
+              ]
+            }
+          },
+          {
+            "opName": "MyriaSink",
+            "opType": "SinkRoot",
+            "opId": 1,
+            "argChild": 0
+          }
+        ],
+        "overrideWorkers": [
+          1,
+          2,
+          3,
+          4,5,6,7,8
+        ]
+      }
+    ],
+    "type": "SubQuery"
+  }
+}

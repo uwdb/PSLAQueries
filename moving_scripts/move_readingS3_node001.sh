@@ -1,6 +1,6 @@
 starcluster sshmaster $1 'mkdir /root/PSLAQueries'
 
-starcluster put $1 --node $1-node001 readingS3 /root/PSLAQueries
+starcluster put $1 --node $1-node001 ../readingS3 /root/PSLAQueries
 
 starcluster sshnode $1 $1-node001 "sudo apt-get install openjdk-7-jdk"
 starcluster sshnode $1 $1-node001 "export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64"

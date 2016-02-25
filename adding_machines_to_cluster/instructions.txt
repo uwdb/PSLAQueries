@@ -10,7 +10,7 @@ First, kill myria on both clusters
 
 scp -i /Users/jortiz16/.ssh/jortiz16-westkey.pem /Users/jortiz16/.ssh/jortiz16-westkey.pem root@MASTER:~/PSLAQueries/adding_machines_to_cluster/
 
-4. From the master, ensure passwordless ssh to the new machines run ./passwordless_ssh.sh
+4. From the master, ensure passwordless ssh to the new machines run ./passwordless_ssh.sh.
 
 5. From the master, get the postgres password changed on all the machines of the added cluster. The password should be from the first. Run ./change_passwords.sh 
 

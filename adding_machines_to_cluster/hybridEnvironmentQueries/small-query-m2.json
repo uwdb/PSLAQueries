@@ -1,0 +1,70 @@
+{
+  "profilingMode": [],
+  "language": "myrial",
+  "logicalRa": "bigjoin",
+  "rawQuery": "bigjoin",
+  "plan": {
+    "type": "SubQuery",
+    "fragments": [
+      {
+        "overrideWorkers": [
+          1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16
+        ],
+        "operators": [
+          {
+            "schema": {
+              "columnNames": [
+                "l_orderkey",
+                "l_linenumber",
+                "l_custkey",
+                "l_partkey",
+                "l_suppkey",
+                "l_orderdate",
+                "l_orderpriority",
+                "l_shippriority",
+                "l_quantity",
+                "l_extendedprice",
+                "l_ordtotalprice",
+                "l_discount",
+                "l_revenue",
+                "l_supplycost",
+                "l_tax",
+                "l_commitdate",
+                "l_shipmode"
+              ],
+              "columnTypes": [
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "STRING_TYPE",
+                "STRING_TYPE",
+                "LONG_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "DOUBLE_TYPE",
+                "LONG_TYPE",
+                "LONG_TYPE",
+                "DOUBLE_TYPE",
+                "LONG_TYPE",
+                "STRING_TYPE"
+              ]
+            },
+            "opId": 1,
+            "opName": "MyriaQueryScan",
+            "opType": "DbQueryScan",
+            "sql": "SELECT input.l_orderkey, input.l_linenumber, input.l_custkey, input.l_partkey, input.l_suppkey, input.l_orderdate, input.l_orderpriority, input.l_shippriority, input.l_quantity, input.l_extendedprice, input.l_ordtotalprice, input.l_discount, input.l_revenue, input.l_supplycost, input.l_tax, input.l_commitdate, input.l_shipmode \nFROM (SELECT \"public:adhoc10GB16W:lineitem\".l_orderkey AS l_orderkey, \"public:adhoc10GB16W:lineitem\".l_linenumber AS l_linenumber, \"public:adhoc10GB16W:lineitem\".l_custkey AS l_custkey, \"public:adhoc10GB16W:lineitem\".l_partkey AS l_partkey, \"public:adhoc10GB16W:lineitem\".l_suppkey AS l_suppkey, \"public:adhoc10GB16W:lineitem\".l_orderdate AS l_orderdate, \"public:adhoc10GB16W:lineitem\".l_orderpriority AS l_orderpriority, \"public:adhoc10GB16W:lineitem\".l_shippriority AS l_shippriority, \"public:adhoc10GB16W:lineitem\".l_quantity AS l_quantity, \"public:adhoc10GB16W:lineitem\".l_extendedprice AS l_extendedprice, \"public:adhoc10GB16W:lineitem\".l_ordtotalprice AS l_ordtotalprice, \"public:adhoc10GB16W:lineitem\".l_discount AS l_discount, \"public:adhoc10GB16W:lineitem\".l_revenue AS l_revenue, \"public:adhoc10GB16W:lineitem\".l_supplycost AS l_supplycost, \"public:adhoc10GB16W:lineitem\".l_tax AS l_tax, \"public:adhoc10GB16W:lineitem\".l_commitdate AS l_commitdate, \"public:adhoc10GB16W:lineitem\".l_shipmode AS l_shipmode \nFROM \"public:adhoc10GB16W:lineitem\" WHERE \"public:adhoc10GB16W:lineitem\".l_linenumber <= 1 and \"public:adhoc10GB16W:lineitem\".l_orderkey <= 4005) AS input"
+          },
+          {
+            "opId": 2,
+            "opName": "MyriaSink",
+            "argChild": 1,
+            "opType": "SinkRoot"
+          }
+        ]
+      }
+    ]
+  }
+}
